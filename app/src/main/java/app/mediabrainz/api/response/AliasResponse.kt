@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class AliasResponse(
-    @Json(name = "name") val name: String = "",
+    @Json(name = "name") val name: String,
     @Json(name = "sort-name") val sortName: String = "",
     @Json(name = "locale") val locale: String = "",
     @Json(name = "type") val type: String = "",

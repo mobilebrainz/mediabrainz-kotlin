@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 
 
 @JsonClass(generateAdapter = true)
-data class UrlK (
-    @Json(name ="id") val mbid : String = "",
-    @Json(name ="resource") val resource : String = ""
+data class RatingResponse(
+    @Json(name = "value") val value: Float = 0.0f,
+    @Json(name = "votes-count") val votesCount: Int = 0
 )
