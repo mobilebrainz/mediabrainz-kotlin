@@ -1,5 +1,6 @@
 package app.mediabrainz.api.response
 
+import app.mediabrainz.api.search.BaseSearchResponse
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -50,14 +51,14 @@ data class ReleaseResponse(
     @Json(name = "media") val media: List<Media> = ArrayList(),
     //inc=...-rels
     @Json(name = "relations") val relations: List<RelationResponse> = ArrayList()
-) : BaseLookupResponse()
+) : BaseLookupResponse
 
 @JsonClass(generateAdapter = true)
 data class ReleaseSearchResponse(
     @Json(name = "count") val count: Int = 0,
     @Json(name = "offset") val offset: Int = 0,
     @Json(name = "releases") val releases: List<ReleaseResponse> = ArrayList()
-) : BaseSearchResponse()
+) : BaseSearchResponse
 
 @JsonClass(generateAdapter = true)
 data class ReleaseBrowseResponse(
@@ -82,13 +83,17 @@ enum class Status(val status: String) {
     OFFICIAL("official"),
     PROMOTIONAL("promotional"),
     BOOTLEG("bootleg"),
-    PSEUDO_RELEASE("pseudo-release")
+    PSEUDO_RELEASE("pseudo-release");
+
+    override fun toString() = status
 }
 
 // TODO: Check all types. (is "normal" type?)
 enum class DataQuality(val quality: String) {
     HIGH_QUALITY("High quality"),
     DEFAULT_QUALITY("Default quality"),
-    LOW_QUALITY("Low quality")
+    LOW_QUALITY("Low quality");
+
+    override fun toString() = quality
 }
 

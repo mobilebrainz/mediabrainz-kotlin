@@ -12,4 +12,4 @@ data class ISWCResponse(
     @Json(name = "works") val works: List<WorkResponse> = ArrayList(),
     //inc=...-rels
     @Json(name = "relations") val relations: List<RelationResponse> = ArrayList()
-) : BaseLookupResponse()
+) : BaseLookupResponse

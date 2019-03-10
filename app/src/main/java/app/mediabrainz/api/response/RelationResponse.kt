@@ -54,4 +54,6 @@ enum class ArtistArtistRelationType(val type: String) {
     IS_PERSON("is person"),
     TEACHER("teacher"),
     COMPOSER_IN_RESIDENCE("composer-in-residence");
+
+    override fun toString() = type
 }

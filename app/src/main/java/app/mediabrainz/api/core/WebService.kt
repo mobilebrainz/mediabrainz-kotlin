@@ -1,0 +1,45 @@
+package app.mediabrainz.api.core
+
+import app.mediabrainz.ui.BuildConfig
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
+
+
+object WebService {
+
+    val TIMEOUT = 20000L
+
+    //set lately WebService.userAgentHeader = "app.mediabrainz/0.0.1 (algerd75@mail.ru)"
+    var userAgentHeader = ""
+
+    private val headerInterceptor = Interceptor { chain ->
+        val request = chain.request()
+            .newBuilder()
+            .header("User-Agent", userAgentHeader)
+            .build()
+        chain.proceed(request)
+    }
+
+    private val loggingIntercepter = HttpLoggingInterceptor().apply {
+        level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
+        else HttpLoggingInterceptor.Level.NONE
+    }
+
+    private val httpClient: OkHttpClient = OkHttpClient.Builder()
+        //.callTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
+        //.connectTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
+        .addNetworkInterceptor(loggingIntercepter)
+        .addInterceptor(headerInterceptor)
+        .build()
+
+    fun <T> createJsonRetrofitService(retrofitClass: Class<T>, url: String) =
+        Retrofit.Builder().baseUrl(url)
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .addConverterFactory(MoshiConverterFactory.create())
+            .client(httpClient).build()
+            .create(retrofitClass)
+}

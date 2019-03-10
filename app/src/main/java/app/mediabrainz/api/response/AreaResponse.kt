@@ -1,6 +1,6 @@
 package app.mediabrainz.api.response
 
-import android.nfc.Tag
+import app.mediabrainz.api.search.BaseSearchResponse
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -30,14 +30,14 @@ data class AreaResponse(
     @Json(name = "user-tags") val userTags : List<TagResponse> = ArrayList(),
     //inc=...-rels
     @Json(name = "relations") val relations : List<RelationResponse> = ArrayList()
-) : BaseLookupResponse()
+) : BaseLookupResponse
 
 @JsonClass(generateAdapter = true)
 data class AreaSearchResponse(
     @Json(name = "count") val count: Int = 0,
     @Json(name = "offset") val offset: Int = 0,
     @Json(name = "areas") val areas: List<AreaResponse> = ArrayList()
-) : BaseSearchResponse()
+) : BaseSearchResponse
 
 @JsonClass(generateAdapter = true)
 data class AreaBrowseResponse(
@@ -53,5 +53,7 @@ enum class AreaType(val type: String) {
     MUNICIPALITY("municipality"),
     CITY("city"),
     DISTRICT("district"),
-    ISLAND("island")
+    ISLAND("island");
+
+    override fun toString() = type
 }

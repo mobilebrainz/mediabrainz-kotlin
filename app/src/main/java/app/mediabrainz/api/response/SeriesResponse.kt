@@ -1,5 +1,6 @@
 package app.mediabrainz.api.response
 
+import app.mediabrainz.api.search.BaseSearchResponse
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -21,14 +22,14 @@ data class SeriesResponse(
     @Json(name = "user-tags") val userTags: List<TagResponse> = ArrayList(),
     //inc=...-rels
     @Json(name = "relations") val relations: List<RelationResponse> = ArrayList()
-) : BaseLookupResponse()
+) : BaseLookupResponse
 
 @JsonClass(generateAdapter = true)
 data class SeriesSearchResponse(
     @Json(name = "count") val count: Int = 0,
     @Json(name = "offset") val offset: Int = 0,
     @Json(name = "series") val series: List<SeriesResponse> = ArrayList()
-) : BaseSearchResponse()
+) : BaseSearchResponse
 
 @JsonClass(generateAdapter = true)
 data class SeriesBrowseResponse(
@@ -46,5 +47,7 @@ enum class SeriesType(val type: String) {
     EVENT("Event"),
     TOUR("Tour"),
     FESTIVAL("Festival"),
-    RUN("Run")
+    RUN("Run");
+
+    override fun toString() = type
 }

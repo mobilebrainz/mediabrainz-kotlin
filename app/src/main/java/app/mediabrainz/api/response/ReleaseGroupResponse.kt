@@ -1,5 +1,6 @@
 package app.mediabrainz.api.response
 
+import app.mediabrainz.api.search.BaseSearchResponse
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -38,14 +39,14 @@ data class ReleaseGroupResponse(
     @Json(name = "user-genres") val userGenres: List<TagResponse> = ArrayList(),
     //inc=...-rels
     @Json(name = "relations") val relations: List<RelationResponse> = ArrayList()
-) : BaseLookupResponse()
+) : BaseLookupResponse
 
 @JsonClass(generateAdapter = true)
 data class ReleaseGroupSearchResponse(
     @Json(name = "count") val count: Int = 0,
     @Json(name = "offset") val offset: Int = 0,
     @Json(name = "release-groups") val releaseGroups: List<ReleaseGroupResponse> = ArrayList()
-) : BaseSearchResponse()
+) : BaseSearchResponse
 
 @JsonClass(generateAdapter = true)
 data class ReleaseGroupBrowseResponse(
@@ -68,7 +69,9 @@ enum class ReleaseGroupPrimaryType(val type: String) : ReleaseGroupType {
 
     EMPTY(""),
     ANY("(*)"),
-    NOTHING("(-*)")
+    NOTHING("(-*)");
+
+    override fun toString() = type
 }
 
 /**
@@ -88,5 +91,7 @@ enum class ReleaseGroupSecondaryType(val type: String) : ReleaseGroupType {
 
     EMPTY(""),
     ANY("(*)"),
-    NOTHING("(-*)")
+    NOTHING("(-*)");
+
+    override fun toString() = type
 }

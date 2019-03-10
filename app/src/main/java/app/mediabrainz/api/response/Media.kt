@@ -23,4 +23,6 @@ enum class Format(val format: String) {
     CD("CD"),
     DIGITAL_MEDIA("Digital Media"),
     VINYL("Vinyl");
+
+    override fun toString() = format
 }

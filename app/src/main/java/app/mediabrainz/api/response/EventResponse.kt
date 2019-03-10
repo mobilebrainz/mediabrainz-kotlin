@@ -1,5 +1,6 @@
 package app.mediabrainz.api.response
 
+import app.mediabrainz.api.search.BaseSearchResponse
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -29,14 +30,14 @@ data class EventResponse(
     @Json(name = "user-tags") val userTags: List<TagResponse> = ArrayList(),
     //inc=...-rels
     @Json(name = "relations") val relations: List<RelationResponse> = ArrayList()
-) : BaseLookupResponse()
+) : BaseLookupResponse
 
 @JsonClass(generateAdapter = true)
 data class EventSearchResponse(
     @Json(name = "count") val count: Int = 0,
     @Json(name = "offset") val offset: Int = 0,
     @Json(name = "events") val events: List<EventResponse> = ArrayList()
-) : BaseSearchResponse()
+) : BaseSearchResponse
 
 @JsonClass(generateAdapter = true)
 data class EventBrowseResponse(
@@ -55,4 +56,6 @@ enum class EventType(val type: String) {
     // TODO: check Masterclass/Clinic
     MASTERCLASS("Masterclass"),
     CLINIC("Clinic");
+
+    override fun toString() = type
 }

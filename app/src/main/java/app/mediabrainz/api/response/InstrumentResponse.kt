@@ -1,5 +1,6 @@
 package app.mediabrainz.api.response
 
+import app.mediabrainz.api.search.BaseSearchResponse
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -23,14 +24,14 @@ data class InstrumentResponse(
     @Json(name = "user-tags") val userTags : List<TagResponse> = ArrayList(),
     //inc=...-rels
     @Json(name = "relations") val relations: List<RelationResponse> = ArrayList()
-) : BaseLookupResponse()
+) : BaseLookupResponse
 
 @JsonClass(generateAdapter = true)
 data class InstrumentSearchResponse(
     @Json(name = "count") val count: Int = 0,
     @Json(name = "offset") val offset: Int = 0,
     @Json(name = "instruments") val instruments: List<InstrumentResponse> = ArrayList()
-) : BaseSearchResponse()
+) : BaseSearchResponse
 
 enum class InstrumentType(val type: String) {
     WIND_INSTRUMENT("Wind instrument"),
@@ -38,5 +39,7 @@ enum class InstrumentType(val type: String) {
     PERCUSSION_INSTRUMENT("Percussion instrument"),
     ELECTRONIC_INSTRUMENT("Electronic instrument"),
     OTHER_INSTRUMENT("Other instrument"),
-    UNCLASSIFIED_INSTRUMENT("Unclassified instrument")
+    UNCLASSIFIED_INSTRUMENT("Unclassified instrument");
+
+    override fun toString() = type
 }

@@ -28,7 +28,7 @@ data class CollectionResponse(
     @Json(name = "work-count") val workCount: Int = 0,
     //inc=...-rels
     @Json(name = "relations") val relations: List<RelationResponse> = ArrayList()
-) : BaseLookupResponse()
+) : BaseLookupResponse
 
 @JsonClass(generateAdapter = true)
 data class CollectionBrowseResponse(
@@ -52,7 +52,9 @@ enum class CollectionType(val type: String) {
     WISHLIST_RELEASE("Wishlist"),
     RELEASE_GROUP("Release group"),
     SERIES("Series"),
-    WORK("Work")
+    WORK("Work");
+
+    override fun toString() = type
 }
 
 enum class CollectionEntityType(val type: String) {
@@ -66,5 +68,7 @@ enum class CollectionEntityType(val type: String) {
     RELEASE("release"),
     RELEASE_GROUP("release_group"),
     SERIES("series"),
-    WORK("work")
+    WORK("work");
+
+    override fun toString() = type
 }
