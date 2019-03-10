@@ -5,7 +5,7 @@ import retrofit2.Response
 
 
 interface SearchServiceInterface <R, P>
-    where R : BaseSearchResponse, P : Enum<P>, P : SearchFieldInterface {
+    where R : SearchResponseInterface, P : Enum<P>, P : SearchFieldInterface {
 
     fun search(): Deferred<Response<R>>
     fun search(query: String): Deferred<Response<R>>
@@ -18,7 +18,7 @@ interface SearchServiceInterface <R, P>
 }
 
 interface SearchFieldInterface
-interface BaseSearchResponse
+interface SearchResponseInterface
 
 enum class SearchParamType(val param: String) {
     FORMAT("fmt"),

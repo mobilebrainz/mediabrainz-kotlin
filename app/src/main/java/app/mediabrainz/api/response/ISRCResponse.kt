@@ -1,5 +1,6 @@
 package app.mediabrainz.api.response
 
+import app.mediabrainz.api.lookup.LookupResponseInterface
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -11,4 +12,4 @@ data class ISRCResponse(
     @Json(name = "recordings") val recordings : List<RecordingResponse> = ArrayList(),
     //inc=...-rels
     @Json(name = "relations") val relations: List<RelationResponse> = ArrayList()
-) : BaseLookupResponse
+) : LookupResponseInterface

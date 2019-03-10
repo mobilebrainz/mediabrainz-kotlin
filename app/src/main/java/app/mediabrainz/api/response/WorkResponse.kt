@@ -1,6 +1,7 @@
 package app.mediabrainz.api.response
 
-import app.mediabrainz.api.search.BaseSearchResponse
+import app.mediabrainz.api.lookup.LookupResponseInterface
+import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -31,14 +32,14 @@ data class WorkResponse(
     @Json(name = "user-tags") val userTags: List<TagResponse> = ArrayList(),
     //inc=...-rels
     @Json(name = "relations") val relations: List<RelationResponse> = ArrayList()
-) : BaseLookupResponse
+) : LookupResponseInterface
 
 @JsonClass(generateAdapter = true)
 data class WorkSearchResponse(
     @Json(name = "count") val count: Int = 0,
     @Json(name = "offset") val offset: Int = 0,
     @Json(name = "works") val works: List<WorkResponse> = ArrayList()
-) : BaseSearchResponse
+) : SearchResponseInterface
 
 @JsonClass(generateAdapter = true)
 data class WorkBrowseResponse(

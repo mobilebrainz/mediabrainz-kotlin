@@ -1,6 +1,6 @@
 package app.mediabrainz.api.response
 
-import app.mediabrainz.api.search.BaseSearchResponse
+import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -24,4 +24,4 @@ data class CDStubSearch(
     @Json(name = "count") val count: Int = 0,
     @Json(name = "offset") val offset: Int = 0,
     @Json(name = "cdstubs") val cdstubs: List<CDStubResponse> = ArrayList()
-) : BaseSearchResponse
+) : SearchResponseInterface

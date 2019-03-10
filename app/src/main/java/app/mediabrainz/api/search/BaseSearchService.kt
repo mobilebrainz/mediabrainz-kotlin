@@ -6,7 +6,7 @@ import retrofit2.Response
 
 
 abstract class BaseSearchService <R, P> : SearchServiceInterface<R, P>
-        where R : BaseSearchResponse, P : Enum<P>, P : SearchFieldInterface {
+        where R : SearchResponseInterface, P : Enum<P>, P : SearchFieldInterface {
 
     private val expression = LuceneBuilder()
     private val params: MutableMap<SearchParamType, String> = mutableMapOf(
