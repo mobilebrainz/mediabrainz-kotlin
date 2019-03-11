@@ -3,81 +3,75 @@ package app.mediabrainz.api.response
 import app.mediabrainz.api.lookup.LookupResponseInterface
 import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 
 /**
  * https://musicbrainz.org/doc/Release
  */
-@JsonClass(generateAdapter = true)
 data class ReleaseResponse(
-    @Json(name = "id") val mbid: String,
-    @Json(name = "title") val title: String,
-    @Json(name = "cover-art-archive") val coverArt: CoverArtResponse? = null,
-    @Json(name = "score") val score: Int = 0,
-    @Json(name = "count") val count: Int = 0,
-    @Json(name = "status") val status: String = "",
-    @Json(name = "status-id") val statusId: String = "",
-    @Json(name = "packaging") val packaging: String = "",
-    @Json(name = "packaging-id") val packagingId: String = "",
-    @Json(name = "date") val date: String = "", //"yyyy-mm-dd"
-    @Json(name = "country") val country: String = "",
-    @Json(name = "barcode") val barcode: String = "",
-    @Json(name = "disambiguation") val disambiguation: String = "",
-    @Json(name = "asin") val asin: String = "",
-    @Json(name = "track-count") val trackCount: Int = 0,
-    @Json(name = "text-representation") val textRepresentation: TextRepresentationResponse? = null,
-    @Json(name = "release-events") val releaseEvents: List<ReleaseEventResponse> = ArrayList(),
-    @Json(name = "quality") val quality: String = "",
+    @field:Json(name = "id") val mbid: String,
+    @field:Json(name = "title") val title: String,
+    @field:Json(name = "cover-art-archive") val coverArt: CoverArtResponse?,
+    @field:Json(name = "score") val score: Int?,
+    @field:Json(name = "count") val count: Int?,
+    @field:Json(name = "status") val status: String?,
+    @field:Json(name = "status-id") val statusId: String?,
+    @field:Json(name = "packaging") val packaging: String?,
+    @field:Json(name = "packaging-id") val packagingId: String?,
+    @field:Json(name = "date") val date: String?, //"yyyy-mm-dd"
+    @field:Json(name = "country") val country: String?,
+    @field:Json(name = "barcode") val barcode: String?,
+    @field:Json(name = "disambiguation") val disambiguation: String?,
+    @field:Json(name = "asin") val asin: String?,
+    @field:Json(name = "track-count") val trackCount: Int?,
+    @field:Json(name = "text-representation") val textRepresentation: TextRepresentationResponse?,
+    @field:Json(name = "release-events") val releaseEvents: List<ReleaseEventResponse>?,
+    @field:Json(name = "quality") val quality: String?,
     //inc=aliases
-    @Json(name = "aliases") val aliases: List<AliasResponse> = ArrayList(),
+    @field:Json(name = "aliases") val aliases: List<AliasResponse>?,
     //inc=annotation
-    @Json(name = "annotation") val annotation: String = "",
+    @field:Json(name = "annotation") val annotation: String?,
     //inc=tags
-    @Json(name = "tags") val tags: List<TagResponse> = ArrayList(),
+    @field:Json(name = "tags") val tags: List<TagResponse>?,
     //inc=user-tags
-    @Json(name = "user-tags") val userTags: List<TagResponse> = ArrayList(),
+    @field:Json(name = "user-tags") val userTags: List<TagResponse>?,
     //inc=genres
-    @Json(name = "genres") val genres: List<TagResponse> = ArrayList(),
+    @field:Json(name = "genres") val genres: List<TagResponse>?,
     //inc=user-genres
-    @Json(name = "user-genres") val userGenres: List<TagResponse> = ArrayList(),
+    @field:Json(name = "user-genres") val userGenres: List<TagResponse>?,
     //inc=artists || inc=artist-credits
-    @Json(name = "artist-credit") val artistCredits: List<ArtistCreditResponse> = ArrayList(),
+    @field:Json(name = "artist-credit") val artistCredits: List<ArtistCreditResponse>?,
     //inc=collections
-    @Json(name = "collections") val collections: List<CollectionResponse> = ArrayList(),
+    @field:Json(name = "collections") val collections: List<CollectionResponse>?,
     //inc=labels
-    @Json(name = "label-info") val labelInfo: List<LabelInfoResponse> = ArrayList(),
+    @field:Json(name = "label-info") val labelInfo: List<LabelInfoResponse>?,
     //inc=release-groups
-    @Json(name = "release-group") val releaseGroup: ReleaseGroupResponse? = null,
+    @field:Json(name = "release-group") val releaseGroup: ReleaseGroupResponse?,
     //inc=media, inc=recordings equal inc=media with track infos
-    @Json(name = "media") val media: List<Media> = ArrayList(),
+    @field:Json(name = "media") val media: List<Media>?,
     //inc=...-rels
-    @Json(name = "relations") val relations: List<RelationResponse> = ArrayList()
+    @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 
-@JsonClass(generateAdapter = true)
 data class ReleaseSearchResponse(
-    @Json(name = "count") val count: Int = 0,
-    @Json(name = "offset") val offset: Int = 0,
-    @Json(name = "releases") val releases: List<ReleaseResponse> = ArrayList()
+    @field:Json(name = "count") val count: Int,
+    @field:Json(name = "offset") val offset: Int,
+    @field:Json(name = "releases") val releases: List<ReleaseResponse>
 ) : SearchResponseInterface
 
-@JsonClass(generateAdapter = true)
 data class ReleaseBrowseResponse(
-    @Json(name = "release-count") val count: Int = 0,
-    @Json(name = "release-offset") val offset: Int = 0,
-    @Json(name = "releases") val releases: List<ReleaseResponse> = ArrayList()
+    @field:Json(name = "release-count") val count: Int,
+    @field:Json(name = "release-offset") val offset: Int,
+    @field:Json(name = "releases") val releases: List<ReleaseResponse>
 )
 
-@JsonClass(generateAdapter = true)
 data class TextRepresentationResponse(
-    @Json(name = "language") val language: String = "",
-    @Json(name = "script") val script: String = ""
+    @field:Json(name = "language") val language: String?,
+    @field:Json(name = "script") val script: String?
 )
 
-@JsonClass(generateAdapter = true)
 data class ReleaseEventResponse(
-    @Json(name = "date") val date: String = "", //"yyyy-mm-dd"
-    @Json(name = "area") val area: AreaResponse? = null
+    @field:Json(name = "date") val date: String?, //"yyyy-mm-dd"
+    @field:Json(name = "area") val area: AreaResponse?
 )
 
 enum class Status(val status: String) {

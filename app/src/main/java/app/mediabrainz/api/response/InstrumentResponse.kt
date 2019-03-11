@@ -3,35 +3,32 @@ package app.mediabrainz.api.response
 import app.mediabrainz.api.lookup.LookupResponseInterface
 import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 
 
-@JsonClass(generateAdapter = true)
 data class InstrumentResponse(
-    @Json(name = "id") val id: String,
-    @Json(name = "name") val name: String,
-    @Json(name = "score") val score: Int = 0,
-    @Json(name = "type") val type: String = "",
-    @Json(name = "type-id") val typeId: String = "",
-    @Json(name = "description") val description: String = "",
-    @Json(name = "disambiguation") val disambiguation: String = "",
+    @field:Json(name = "id") val id: String,
+    @field:Json(name = "name") val name: String,
+    @field:Json(name = "score") val score: Int?,
+    @field:Json(name = "type") val type: String?,
+    @field:Json(name = "type-id") val typeId: String?,
+    @field:Json(name = "description") val description: String?,
+    @field:Json(name = "disambiguation") val disambiguation: String?,
     //inc=aliases
-    @Json(name = "aliases") val aliases: List<AliasResponse> = ArrayList(),
+    @field:Json(name = "aliases") val aliases: List<AliasResponse>?,
     //inc=annotation
-    @Json(name = "annotation") val annotation: String = "",
+    @field:Json(name = "annotation") val annotation: String?,
     //inc=tags
-    @Json(name = "tags") val tags : List<TagResponse> = ArrayList(),
+    @field:Json(name = "tags") val tags: List<TagResponse>?,
     //inc=user-tags
-    @Json(name = "user-tags") val userTags : List<TagResponse> = ArrayList(),
+    @field:Json(name = "user-tags") val userTags: List<TagResponse>?,
     //inc=...-rels
-    @Json(name = "relations") val relations: List<RelationResponse> = ArrayList()
+    @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 
-@JsonClass(generateAdapter = true)
 data class InstrumentSearchResponse(
-    @Json(name = "count") val count: Int = 0,
-    @Json(name = "offset") val offset: Int = 0,
-    @Json(name = "instruments") val instruments: List<InstrumentResponse> = ArrayList()
+    @field:Json(name = "count") val count: Int,
+    @field:Json(name = "offset") val offset: Int,
+    @field:Json(name = "instruments") val instruments: List<InstrumentResponse>
 ) : SearchResponseInterface
 
 enum class InstrumentType(val type: String) {

@@ -2,23 +2,20 @@ package app.mediabrainz.api.response
 
 import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 
 /**
  * https://musicbrainz.org/doc/Annotation
  */
-@JsonClass(generateAdapter = true)
 data class AnnotationResponse(
-    @Json(name = "entity") val id: String = "",
-    @Json(name = "type") val type: String = "",
-    @Json(name = "score") val score: Int = 0,
-    @Json(name = "name") val name: String = "",
-    @Json(name = "text") val text: String = ""
+    @field:Json(name = "entity") val id: String,
+    @field:Json(name = "type") val type: String?,
+    @field:Json(name = "score") val score: Int?,
+    @field:Json(name = "name") val name: String?,
+    @field:Json(name = "text") val text: String?
 )
 
-@JsonClass(generateAdapter = true)
 data class AnnotationSearchResponse(
-    @Json(name = "count") val count: Int = 0,
-    @Json(name = "offset") val offset: Int = 0,
-    @Json(name = "annotations") val annotations: List<Annotation> = ArrayList()
+    @field:Json(name = "count") val count: Int,
+    @field:Json(name = "offset") val offset: Int,
+    @field:Json(name = "annotations") val annotations: List<Annotation>
 ) : SearchResponseInterface

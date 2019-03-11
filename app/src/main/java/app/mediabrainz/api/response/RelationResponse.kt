@@ -1,40 +1,39 @@
 package app.mediabrainz.api.response
 
 import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 
-@JsonClass(generateAdapter = true)
+
 data class RelationResponse(
     /**
      * https://musicbrainz.org/relationship-attributes
      */
-    @Json(name = "attributes") val attributes: List<String> = ArrayList(),
-    @Json(name = "attribute-credits") val attributeCredits: Map<String, String> = HashMap(),
+    @field:Json(name = "attributes") val attributes: List<String>?,
+    @field:Json(name = "attribute-credits") val attributeCredits: Map<String, String>?,
     /**
      * attribute-values: Map<String, String> - значения аттрибутов, имена которых заданы в attributes:
      * attributes["time"],  attribute-values{time: "23:45"} (inc=event-rels)
      */
-    @Json(name = "attribute-values") val attributeValues: Map<String, String> = HashMap(),
-    @Json(name = "begin") val begin: String = "",
-    @Json(name = "direction") val direction: String = "",
-    @Json(name = "end") val end: String = "",
-    @Json(name = "ended") val ended: Boolean = false,
-    @Json(name = "source-credit") val sourceCredit: String = "",
-    @Json(name = "target-type") val targetType: String = "",
-    @Json(name = "type") val type: String = "",
-    @Json(name = "type-id") val typeId: String = "",
-    @Json(name = "area") val area: AreaResponse? = null,
-    @Json(name = "artist") val artist: ArtistResponse? = null,
-    @Json(name = "event") val event: EventResponse? = null,
-    @Json(name = "instrument") val instrument: InstrumentResponse? = null,
-    @Json(name = "label") val label: LabelResponse? = null,
-    @Json(name = "place") val place: PlaceResponse? = null,
-    @Json(name = "recording") val recording: RecordingResponse? = null,
-    @Json(name = "release") val release: ReleaseResponse? = null,
-    @Json(name = "release_group") val releaseGroup: ReleaseGroupResponse? = null,
-    @Json(name = "url") val url: UrlResponse? = null,
-    @Json(name = "work") val work: WorkResponse? = null,
-    @Json(name = "series") val series: SeriesResponse? = null
+    @field:Json(name = "attribute-values") val attributeValues: Map<String, String>?,
+    @field:Json(name = "begin") val begin: String?,
+    @field:Json(name = "direction") val direction: String?,
+    @field:Json(name = "end") val end: String?,
+    @field:Json(name = "ended") val ended: Boolean?,
+    @field:Json(name = "source-credit") val sourceCredit: String?,
+    @field:Json(name = "target-type") val targetType: String?,
+    @field:Json(name = "type") val type: String?,
+    @field:Json(name = "type-id") val typeId: String?,
+    @field:Json(name = "area") val area: AreaResponse?,
+    @field:Json(name = "artist") val artist: ArtistResponse?,
+    @field:Json(name = "event") val event: EventResponse?,
+    @field:Json(name = "instrument") val instrument: InstrumentResponse?,
+    @field:Json(name = "label") val label: LabelResponse?,
+    @field:Json(name = "place") val place: PlaceResponse?,
+    @field:Json(name = "recording") val recording: RecordingResponse?,
+    @field:Json(name = "release") val release: ReleaseResponse?,
+    @field:Json(name = "release_group") val releaseGroup: ReleaseGroupResponse?,
+    @field:Json(name = "url") val url: UrlResponse?,
+    @field:Json(name = "work") val work: WorkResponse?,
+    @field:Json(name = "series") val series: SeriesResponse?
 )
 
 /**

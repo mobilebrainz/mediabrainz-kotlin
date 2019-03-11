@@ -1,17 +1,15 @@
 package app.mediabrainz.api.response
 
 import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 
 
-@JsonClass(generateAdapter = true)
 data class AliasResponse(
-    @Json(name = "name") val name: String,
-    @Json(name = "sort-name") val sortName: String = "",
-    @Json(name = "locale") val locale: String = "",
-    @Json(name = "type") val type: String = "",
-    @Json(name = "primary") val primary: Boolean = false,
-    @Json(name = "begin-date") val beginDate: String = "",
-    @Json(name = "end-date") val endDate: String = "",
-    @Json(name = "type-id") val typeId: String = ""
+    @field:Json(name = "name") val name: String,
+    @field:Json(name = "sort-name") val sortName: String?,
+    @field:Json(name = "locale") val locale: String?,
+    @field:Json(name = "type") val type: String?,
+    @field:Json(name = "type-id") val typeId: String?,
+    @field:Json(name = "primary") val primary: Boolean?,
+    @field:Json(name = "begin-date") val beginDate: String?,
+    @field:Json(name = "end-date") val endDate: String?
 )

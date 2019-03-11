@@ -2,15 +2,13 @@ package app.mediabrainz.api.response
 
 import app.mediabrainz.api.lookup.LookupResponseInterface
 import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 
 
-@JsonClass(generateAdapter = true)
 data class ISWCResponse(
-    @Json(name = "id") val id: String,
-    @Json(name = "work-count") val workCount: Int = 0,
-    @Json(name = "work-offset") val workOffset: Int = 0,
-    @Json(name = "works") val works: List<WorkResponse> = ArrayList(),
+    @field:Json(name = "id") val id: String,
+    @field:Json(name = "work-count") val workCount: Int?,
+    @field:Json(name = "work-offset") val workOffset: Int?,
+    @field:Json(name = "works") val works: List<WorkResponse>?,
     //inc=...-rels
-    @Json(name = "relations") val relations: List<RelationResponse> = ArrayList()
+    @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface

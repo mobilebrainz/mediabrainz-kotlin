@@ -3,19 +3,17 @@ package app.mediabrainz.api.response
 import app.mediabrainz.api.lookup.LookupResponseInterface
 import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 
 /**
  * https://musicbrainz.org/doc/Recording
  */
-@JsonClass(generateAdapter = true)
 data class RecordingResponse(
-    @Json(name = "id") val mbid: String,
-    @Json(name = "title") val title: String,
-    @Json(name = "score") val score: Int = 0,
-    @Json(name = "length") val length: Long = 0L,
-    @Json(name = "disambiguation") val disambiguation: String = "",
-    @Json(name = "video") val video: Boolean = false,
+    @field:Json(name = "id") val mbid: String,
+    @field:Json(name = "title") val title: String,
+    @field:Json(name = "score") val score: Int?,
+    @field:Json(name = "length") val length: Long?,
+    @field:Json(name = "disambiguation") val disambiguation: String?,
+    @field:Json(name = "video") val video: Boolean?,
     // TODO: do adapter for ISRCS
     /*
      conflict with return type isrcs field
@@ -24,43 +22,40 @@ data class RecordingResponse(
      search return array of objects with fields id = isrc
      lookup ISRCS return array of String isrc
      */
-    @Json(name = "isrcs") val isrcs: List<String> = ArrayList(), // from lookup inc=isrcs
+    @field:Json(name = "isrcs") val isrcs: List<String>?, // from lookup inc=isrcs
     //@Json(name = "isrcs") val isrcs: List<ISRCResponse> = ArrayList(), // from search query=isrc - ERROR!
     //inc=aliases
-    @Json(name = "aliases") val aliases: List<AliasResponse> = ArrayList(),
+    @field:Json(name = "aliases") val aliases: List<AliasResponse>?,
     //inc=annotation
-    @Json(name = "annotation") val annotation: String = "",
+    @field:Json(name = "annotation") val annotation: String?,
     //inc=ratings
-    @Json(name = "rating") val rating: RatingResponse = RatingResponse(),
+    @field:Json(name = "rating") val rating: RatingResponse?,
     //inc=user-ratings
-    @Json(name = "user-rating") val userRating: RatingResponse = RatingResponse(),
+    @field:Json(name = "user-rating") val userRating: RatingResponse?,
     //inc=tags
-    @Json(name = "tags") val tags: List<TagResponse> = ArrayList(),
+    @field:Json(name = "tags") val tags: List<TagResponse>?,
     //inc=user-tags
-    @Json(name = "user-tags") val userTags: List<TagResponse> = ArrayList(),
+    @field:Json(name = "user-tags") val userTags: List<TagResponse>?,
     //inc=genres
-    @Json(name = "genres") val genres: List<TagResponse> = ArrayList(),
+    @field:Json(name = "genres") val genres: List<TagResponse>?,
     //inc=user-genres
-    @Json(name = "user-genres") val userGenres: List<TagResponse> = ArrayList(),
+    @field:Json(name = "user-genres") val userGenres: List<TagResponse>?,
     //inc=artists || inc=artist-credits
-    @Json(name = "artist-credit") val artistCredits: List<ArtistCreditResponse> = ArrayList(),
+    @field:Json(name = "artist-credit") val artistCredits: List<ArtistCreditResponse>?,
     //inc=releases
-    @Json(name = "releases") val releases: List<ReleaseResponse> = ArrayList(),
+    @field:Json(name = "releases") val releases: List<ReleaseResponse>?,
     //inc=...-rels
-    @Json(name = "relations")
-    val relations: List<RelationResponse> = ArrayList()
+    @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 
-@JsonClass(generateAdapter = true)
 data class RecordingSearchResponse(
-    @Json(name = "count") val count: Int = 0,
-    @Json(name = "offset") val offset: Int = 0,
-    @Json(name = "recordings") val recordings: List<RecordingResponse> = ArrayList()
+    @field:Json(name = "count") val count: Int,
+    @field:Json(name = "offset") val offset: Int,
+    @field:Json(name = "recordings") val recordings: List<RecordingResponse>
 ) : SearchResponseInterface
 
-@JsonClass(generateAdapter = true)
 data class RecordingBrowseResponse(
-    @Json(name = "recording-count") val count: Int = 0,
-    @Json(name = "recording-offset") val offset: Int = 0,
-    @Json(name = "recordings") val recordings: List<RecordingResponse> = ArrayList()
+    @field:Json(name = "recording-count") val count: Int,
+    @field:Json(name = "recording-offset") val offset: Int,
+    @field:Json(name = "recordings") val recordings: List<RecordingResponse>
 )

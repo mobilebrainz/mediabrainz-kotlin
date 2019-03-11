@@ -5,13 +5,14 @@ import kotlinx.coroutines.Deferred
 import retrofit2.Response
 
 
-abstract class BaseSearchService <R, P> : SearchServiceInterface<R, P>
+abstract class BaseSearchService<R, P> : SearchServiceInterface<R, P>
         where R : SearchResponseInterface, P : Enum<P>, P : SearchFieldInterface {
 
     private val expression = LuceneBuilder()
     private val params: MutableMap<SearchParamType, String> = mutableMapOf(
         SearchParamType.QUERY to "empty",
-        SearchParamType.FORMAT to FORMAT_JSON)
+        SearchParamType.FORMAT to FORMAT_JSON
+    )
 
     override fun search(query: String): Deferred<Response<R>> {
         params[SearchParamType.QUERY] = query
@@ -48,7 +49,7 @@ abstract class BaseSearchService <R, P> : SearchServiceInterface<R, P>
         return this
     }
 
-    protected fun getParams(): Map<String, String> {
+    protected fun buildParams(): Map<String, String> {
         val map = mutableMapOf<String, String>()
         for ((key, value) in params) {
             map[key.toString()] = value
@@ -58,11 +59,6 @@ abstract class BaseSearchService <R, P> : SearchServiceInterface<R, P>
             map[SearchParamType.QUERY.param] = query
         }
         return map
-    }
-
-    fun clear() {
-        params.clear()
-        expression.clear()
     }
 
 }

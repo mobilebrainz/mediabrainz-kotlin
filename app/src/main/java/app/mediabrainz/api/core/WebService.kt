@@ -14,7 +14,7 @@ object WebService {
     val TIMEOUT = 20000L
 
     //set lately WebService.userAgentHeader = "app.mediabrainz/0.0.1 (algerd75@mail.ru)"
-    var userAgentHeader = ""
+    var userAgentHeader = "app.mediabrainz/0.0.1 (algerd75@mail.ru)"
 
     private val headerInterceptor = Interceptor { chain ->
         val request = chain.request()
@@ -32,6 +32,8 @@ object WebService {
     private val httpClient: OkHttpClient = OkHttpClient.Builder()
         //.callTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
         //.connectTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
+        //.readTimeout(120, TimeUnit.SECONDS)
+        //.writeTimeout(90, TimeUnit.SECONDS)
         .addNetworkInterceptor(loggingIntercepter)
         .addInterceptor(headerInterceptor)
         .build()

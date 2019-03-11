@@ -5,8 +5,11 @@ import com.squareup.moshi.Json
 
 
 data class DiscResponse(
-    @Json(name = "offset-count") val offsetCount: Int = 0,
-    @Json(name = "sectors") val sectors: Int = 0,
-    @Json(name = "offsets") val offsets: List<Int> = ArrayList(),
-    @Json(name = "releases") val releases : List<ReleaseResponse> = ArrayList()
+    @field:Json(name = "id") val id: String,
+    @field:Json(name = "offset-count") val offsetCount: Int?,
+    @field:Json(name = "sectors") val sectors: Int?,
+    @field:Json(name = "offsets") val offsets: List<Int>?,
+    @field:Json(name = "releases") val releases : List<ReleaseResponse>?,
+    //inc=...-rels
+    @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface

@@ -2,40 +2,37 @@ package app.mediabrainz.api.response
 
 import app.mediabrainz.api.lookup.LookupResponseInterface
 import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 
 /**
  * lookup example: https://musicbrainz.org/ws/2/collection/0a5c389a-fd5b-4901-83e7-171419318172?fmt=json
  */
-@JsonClass(generateAdapter = true)
 data class CollectionResponse(
-    @Json(name = "id") val id: String,
-    @Json(name = "name") val name: String,
-    @Json(name = "editor") val editor: String,
-    @Json(name = "type") val type: String = "",
-    @Json(name = "type-id") val typeId: String = "",
-    @Json(name = "entity-type") val entityType: String = "",
+    @field:Json(name = "id") val id: String,
+    @field:Json(name = "name") val name: String,
+    @field:Json(name = "editor") val editor: String,
+    @field:Json(name = "type") val type: String?,
+    @field:Json(name = "type-id") val typeId: String?,
+    @field:Json(name = "entity-type") val entityType: String?,
     // counts:
-    @Json(name = "area-count") val areaCount: Int = 0,
-    @Json(name = "artist-count") val artistCount: Int = 0,
-    @Json(name = "event-count") val eventCount: Int = 0,
-    @Json(name = "instrument-count") val instrumentCount: Int = 0,
-    @Json(name = "label-count") val labelCount: Int = 0,
-    @Json(name = "place-count") val placeCount: Int = 0,
-    @Json(name = "recording-count") val recordingCount: Int = 0,
-    @Json(name = "release-count") val releaseCount: Int = 0,
-    @Json(name = "release-group-count") val releaseGroupCount: Int = 0,
-    @Json(name = "series-count") val seriesCount: Int = 0,
-    @Json(name = "work-count") val workCount: Int = 0,
+    @field:Json(name = "area-count") val areaCount: Int?,
+    @field:Json(name = "artist-count") val artistCount: Int?,
+    @field:Json(name = "event-count") val eventCount: Int?,
+    @field:Json(name = "instrument-count") val instrumentCount: Int?,
+    @field:Json(name = "label-count") val labelCount: Int?,
+    @field:Json(name = "place-count") val placeCount: Int?,
+    @field:Json(name = "recording-count") val recordingCount: Int?,
+    @field:Json(name = "release-count") val releaseCount: Int?,
+    @field:Json(name = "release-group-count") val releaseGroupCount: Int?,
+    @field:Json(name = "series-count") val seriesCount: Int?,
+    @field:Json(name = "work-count") val workCount: Int?,
     //inc=...-rels
-    @Json(name = "relations") val relations: List<RelationResponse> = ArrayList()
+    @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 
-@JsonClass(generateAdapter = true)
 data class CollectionBrowseResponse(
-    @Json(name = "collection-count") val count: Int = 0,
-    @Json(name = "collection-offset") val offset: Int = 0,
-    @Json(name = "collections") val collections: List<CollectionResponse> = ArrayList()
+    @field:Json(name = "collection-count") val count: Int,
+    @field:Json(name = "collection-offset") val offset: Int,
+    @field:Json(name = "collections") val collections: List<CollectionResponse>
 )
 
 enum class CollectionType(val type: String) {

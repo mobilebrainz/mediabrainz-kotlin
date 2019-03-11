@@ -3,59 +3,55 @@ package app.mediabrainz.api.response
 import app.mediabrainz.api.lookup.LookupResponseInterface
 import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 
 
 data class LabelResponse(
-    @Json(name = "id") val mbid: String,
-    @Json(name = "name") val name: String,
-    @Json(name = "sort-name") val sortName: String = "",
-    @Json(name = "type") val type: String = "",
-    @Json(name = "type-id") val typeId: String = "",
-    @Json(name = "score") val score: Int = 0,
-    @Json(name = "country") val country: String = "",
-    @Json(name = "area") val area: AreaResponse? = null,
-    @Json(name = "life-span") val lifeSpan: LifeSpanResponse? = null,
-    @Json(name = "label-code") val labelCode: String = "",
-    @Json(name = "disambiguation") val disambiguation: String = "",
-    @Json(name = "isnis") val isnis: List<String> = ArrayList(),
-    @Json(name = "ipis") val ipis: List<String> = ArrayList(),
+    @field:Json(name = "id") val mbid: String,
+    @field:Json(name = "name") val name: String,
+    @field:Json(name = "sort-name") val sortName: String?,
+    @field:Json(name = "type") val type: String?,
+    @field:Json(name = "type-id") val typeId: String?,
+    @field:Json(name = "score") val score: Int?,
+    @field:Json(name = "country") val country: String?,
+    @field:Json(name = "area") val area: AreaResponse?,
+    @field:Json(name = "life-span") val lifeSpan: LifeSpanResponse?,
+    @field:Json(name = "label-code") val labelCode: String?,
+    @field:Json(name = "disambiguation") val disambiguation: String?,
+    @field:Json(name = "isnis") val isnis: List<String>?,
+    @field:Json(name = "ipis") val ipis: List<String>?,
     //inc=aliases
-    @Json(name = "aliases") val aliases: List<AliasResponse> = ArrayList(),
+    @field:Json(name = "aliases") val aliases: List<AliasResponse>?,
     //inc=releases
-    @Json(name = "releases") val releases : List<ReleaseResponse> = ArrayList(),
+    @field:Json(name = "releases") val releases : List<ReleaseResponse>?,
     //inc=annotation
-    @Json(name = "annotation") val annotation: String = "",
+    @field:Json(name = "annotation") val annotation: String?,
     //inc=ratings
-    @Json(name = "rating") val rating : RatingResponse = RatingResponse(),
+    @field:Json(name = "rating") val rating : RatingResponse?,
     //inc=user-ratings
-    @Json(name = "user-rating") val userRating : RatingResponse = RatingResponse(),
+    @field:Json(name = "user-rating") val userRating : RatingResponse?,
     //inc=tags
-    @Json(name = "tags") val tags : List<TagResponse> = ArrayList(),
+    @field:Json(name = "tags") val tags : List<TagResponse>?,
     //inc=user-tags
-    @Json(name = "user-tags") val userTags : List<TagResponse> = ArrayList(),
+    @field:Json(name = "user-tags") val userTags : List<TagResponse>?,
     //inc=...-rels
-    @Json(name = "relations") val relations : List<RelationResponse> = ArrayList()
+    @field:Json(name = "relations") val relations : List<RelationResponse>?
 ) : LookupResponseInterface
 
-@JsonClass(generateAdapter = true)
 data class LabelSearchResponse(
-    @Json(name = "count") val count: Int = 0,
-    @Json(name = "offset") val offset: Int = 0,
-    @Json(name = "labels") val labels: List<LabelResponse> = ArrayList()
+    @field:Json(name = "count") val count: Int,
+    @field:Json(name = "offset") val offset: Int,
+    @field:Json(name = "labels") val labels: List<LabelResponse>
 ) : SearchResponseInterface
 
-@JsonClass(generateAdapter = true)
 data class LabelBrowseResponse(
-    @Json(name = "label-count") val count: Int = 0,
-    @Json(name = "label-offset") val offset: Int = 0,
-    @Json(name = "labels") val labels: List<LabelResponse> = ArrayList()
+    @field:Json(name = "label-count") val count: Int,
+    @field:Json(name = "label-offset") val offset: Int,
+    @field:Json(name = "labels") val labels: List<LabelResponse>
 )
 
-@JsonClass(generateAdapter = true)
 data class LabelInfoResponse(
-    @Json(name = "catalog-number") val catalogNumber: String = "",
-    @Json(name = "label") val label: LabelResponse
+    @field:Json(name = "catalog-number") val catalogNumber: String?,
+    @field:Json(name = "label") val label: LabelResponse?
 )
 
 enum class LabelType(val type: String) {

@@ -13,7 +13,7 @@ class ArtistSearchService :
 
     override fun search() = WebService
         .createJsonRetrofitService(RetrofitService::class.java, Config.WEB_SERVICE)
-        .searchArtist(getParams())
+        .searchArtist(buildParams())
 
 }
 

@@ -3,57 +3,53 @@ package app.mediabrainz.api.response
 import app.mediabrainz.api.lookup.LookupResponseInterface
 import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 
 
-@JsonClass(generateAdapter = true)
 data class ReleaseGroupResponse(
-    @Json(name = "id") val mbid: String,
-    @Json(name = "title") val title: String = "",
-    @Json(name = "count") val count: Int = 0,
-    @Json(name = "score") val score: Int = 0,
-    @Json(name = "primary-type") val primaryType: String = "",
-    @Json(name = "primary-type-id") val primaryTypeId: String = "",
-    @Json(name = "secondary-types") val secondaryTypes: List<String> = ArrayList(),
-    @Json(name = "secondary-type-ids") val secondaryTypeIds: List<String> = ArrayList(),
-    @Json(name = "disambiguation") val disambiguation: String = "",
-    @Json(name = "first-release-date") val firstReleaseDate: String = "", //"yyyy-mm-dd"
+    @field:Json(name = "id") val mbid: String,
+    @field:Json(name = "title") val title: String,
+    @field:Json(name = "count") val count: Int?,
+    @field:Json(name = "score") val score: Int?,
+    @field:Json(name = "primary-type") val primaryType: String?,
+    @field:Json(name = "primary-type-id") val primaryTypeId: String?,
+    @field:Json(name = "secondary-types") val secondaryTypes: List<String>?,
+    @field:Json(name = "secondary-type-ids") val secondaryTypeIds: List<String>?,
+    @field:Json(name = "disambiguation") val disambiguation: String?,
+    @field:Json(name = "first-release-date") val firstReleaseDate: String?, //"yyyy-mm-dd"
     //inc=releases
-    @Json(name = "releases") val releases: List<ReleaseResponse> = ArrayList(),
+    @field:Json(name = "releases") val releases: List<ReleaseResponse>?,
     //inc=artists || inc=artist-credits
-    @Json(name = "artist-credit") val artistCredits: List<ArtistCreditResponse> = ArrayList(),
+    @field:Json(name = "artist-credit") val artistCredits: List<ArtistCreditResponse>?,
     //inc=aliases
-    @Json(name = "aliases") val aliases: List<AliasResponse> = ArrayList(),
+    @field:Json(name = "aliases") val aliases: List<AliasResponse>?,
     //inc=annotation
-    @Json(name = "annotation") val annotation: String = "",
+    @field:Json(name = "annotation") val annotation: String?,
     //inc=ratings
-    @Json(name = "rating") val rating: RatingResponse = RatingResponse(),
+    @field:Json(name = "rating") val rating: RatingResponse?,
     //inc=user-ratings
-    @Json(name = "user-rating") val userRating: RatingResponse = RatingResponse(),
+    @field:Json(name = "user-rating") val userRating: RatingResponse?,
     //inc=tags
-    @Json(name = "tags") val tags: List<TagResponse> = ArrayList(),
+    @field:Json(name = "tags") val tags: List<TagResponse>?,
     //inc=user-tags
-    @Json(name = "user-tags") val userTags: List<TagResponse> = ArrayList(),
+    @field:Json(name = "user-tags") val userTags: List<TagResponse>?,
     //inc=genres
-    @Json(name = "genres") val genres: List<TagResponse> = ArrayList(),
+    @field:Json(name = "genres") val genres: List<TagResponse>?,
     //inc=user-genres
-    @Json(name = "user-genres") val userGenres: List<TagResponse> = ArrayList(),
+    @field:Json(name = "user-genres") val userGenres: List<TagResponse>?,
     //inc=...-rels
-    @Json(name = "relations") val relations: List<RelationResponse> = ArrayList()
+    @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 
-@JsonClass(generateAdapter = true)
 data class ReleaseGroupSearchResponse(
-    @Json(name = "count") val count: Int = 0,
-    @Json(name = "offset") val offset: Int = 0,
-    @Json(name = "release-groups") val releaseGroups: List<ReleaseGroupResponse> = ArrayList()
+    @field:Json(name = "count") val count: Int,
+    @field:Json(name = "offset") val offset: Int,
+    @field:Json(name = "release-groups") val releaseGroups: List<ReleaseGroupResponse>
 ) : SearchResponseInterface
 
-@JsonClass(generateAdapter = true)
 data class ReleaseGroupBrowseResponse(
-    @Json(name = "release-group-count") val count: Int = 0,
-    @Json(name = "release-group-offset") val offset: Int = 0,
-    @Json(name = "release-groups") val releaseGroups: List<ReleaseGroupResponse> = ArrayList()
+    @field:Json(name = "release-group-count") val count: Int,
+    @field:Json(name = "release-group-offset") val offset: Int,
+    @field:Json(name = "release-groups") val releaseGroups: List<ReleaseGroupResponse>
 )
 
 interface ReleaseGroupType
