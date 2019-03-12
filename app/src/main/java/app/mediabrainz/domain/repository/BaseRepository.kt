@@ -25,34 +25,35 @@ abstract class BaseRepository {
     }
 
     fun <IN, OUT> call(
-        mutableLiveData: MutableLiveData<Resource<OUT?>>,
+        mutableLiveData: MutableLiveData<Resource<OUT>>,
         deferred: Deferred<Response<IN>>,
         action503: () -> Unit,
-        map: (IN) -> OUT
+        map: IN.() -> OUT
     ) {
         // todo: Dispatchers? GlobalScope.launch(Dispatchers.Main)
         CoroutineScope(Dispatchers.IO).launch {
             try {
+                var httpError = false
                 val response = deferred.await()
                 when {
                     response.code() == 200 -> {
                         cancelTimers()
-                        val out =
-                            if (response.body() == null) null
-                            else map.invoke(response.body()!!)
-                        mutableLiveData.postValue(Resource.success(out))
+                        if (response.body() != null) {
+                            mutableLiveData.postValue(Resource.success(map.invoke(response.body()!!)))
+                        } else {
+                            httpError = true
+                        }
                     }
                     response.code() == 503 -> {
-                        val retrySt = response.headers().get("retry-after")
-                        if (retrySt != null && retrySt != "") {
+                        val retryStr = response.headers().get("retry-after")
+                        if (retryStr != null && retryStr != "") {
                             if (retryCount503 < retryLimit503) {
                                 retryCount503++
-                                val retryInt = retrySt.toLong() * 1000 + retryTimeout503
+                                val retryInt = retryStr.toLong() * 1000 + retryTimeout503
                                 Thread.sleep(retryInt)
                                 action503.invoke()
                             } else {
-                                cancelTimers()
-                                mutableLiveData.postValue(Resource.error("Http Error!", null))
+                                httpError = true
                             }
                         } else {
                             if (count503 < limit503) {
@@ -60,15 +61,17 @@ abstract class BaseRepository {
                                 Thread.sleep(timeout503)
                                 action503.invoke()
                             } else {
-                                cancelTimers()
-                                mutableLiveData.postValue(Resource.error("Http Error!", null))
+                                httpError = true
                             }
                         }
                     }
                     else -> {
-                        cancelTimers()
-                        mutableLiveData.postValue(Resource.error("Http Error!", null))
+                        httpError = true
                     }
+                }
+                if (httpError) {
+                    cancelTimers()
+                    mutableLiveData.postValue(Resource.error("Http Error!", null))
                 }
             } catch (e: HttpException) {
                 cancelTimers()

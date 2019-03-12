@@ -2,7 +2,6 @@ package app.mediabrainz.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import app.mediabrainz.api.response.ArtistSearchResponse
 import app.mediabrainz.domain.model.Artist
 import app.mediabrainz.domain.repository.ArtistSearchRepository
 import app.mediabrainz.domain.repository.Resource
@@ -10,7 +9,7 @@ import app.mediabrainz.domain.repository.Resource
 
 class SearchViewModel : ViewModel() {
 
-    val artistsResource: MutableLiveData<Resource<List<Artist>?>> = MutableLiveData()
+    val artistsResource: MutableLiveData<Resource<List<Artist>>> = MutableLiveData()
     var query: String = ""
     var limit: Int = 0
     var offset: Int = 0

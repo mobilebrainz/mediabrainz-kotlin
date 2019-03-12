@@ -1,6 +1,7 @@
 package app.mediabrainz.api.core
 
 import app.mediabrainz.api.core.Config.ARTIST_QUERY
+import app.mediabrainz.api.core.Config.RECORDING_QUERY
 import app.mediabrainz.api.response.ArtistBrowseResponse
 import app.mediabrainz.api.response.ArtistResponse
 import app.mediabrainz.api.response.ArtistSearchResponse
@@ -12,6 +13,9 @@ import retrofit2.http.QueryMap
 
 
 interface RetrofitService {
+
+    @GET(RECORDING_QUERY)
+    fun searchRecording(@QueryMap params: Map<String, String>): Deferred<Response<ArtistSearchResponse>>
 
     @GET(ARTIST_QUERY)
     fun searchArtist(@QueryMap params: Map<String, String>): Deferred<Response<ArtistSearchResponse>>
