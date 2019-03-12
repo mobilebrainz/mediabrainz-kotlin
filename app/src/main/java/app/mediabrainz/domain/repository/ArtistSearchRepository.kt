@@ -3,26 +3,14 @@ package app.mediabrainz.domain.repository
 import androidx.lifecycle.MutableLiveData
 import app.mediabrainz.api.response.ArtistSearchResponse
 import app.mediabrainz.api.service.ApiServiceProvider
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import retrofit2.HttpException
-import retrofit2.Response
+import app.mediabrainz.domain.mapper.ArtistMapper
+import app.mediabrainz.domain.model.Artist
 
 
-class ArtistSearchRepository {
-
-    private val retryTimeout503 = 250L
-    private var retryLimit503 = 4
-    private var retryCount503 = 0
-
-    private val timeout503 = 1000L
-    private val limit503 = 10
-    private var count503 = 0
+class ArtistSearchRepository : BaseRepository() {
 
     fun search(
-        mutableLiveData: MutableLiveData<Resource<ArtistSearchResponse?>>,
+        mutableLiveData: MutableLiveData<Resource<List<Artist>?>>,
         artist: String,
         limit: Int,
         offset: Int
@@ -32,46 +20,15 @@ class ArtistSearchRepository {
     }
 
     fun search503(
-        mutableLiveData: MutableLiveData<Resource<ArtistSearchResponse?>>,
+        mutableLiveData: MutableLiveData<Resource<List<Artist>?>>,
         artist: String,
         limit: Int,
         offset: Int
     ) {
         val request = ApiServiceProvider.createArtistSearchService().search(artist, limit, offset)
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val response = request.await()
-                when {
-                    response.code() == 200 -> mutableLiveData.postValue(Resource.success(response.body()))
-                    response.code() == 503 -> {
-                        val retrySt = response.headers().get("retry-after")
-                        if (retrySt != null && retrySt != "") {
-                            if (retryCount503 < retryLimit503) {
-                                retryCount503++
-                                val retryInt = retrySt.toLong() * 1000 + retryTimeout503
-                                Thread.sleep(retryInt)
-                                search503(mutableLiveData, artist, limit, offset)
-                            } else {
-                                mutableLiveData.postValue(Resource.error("Http Error!", null))
-                            }
-                        } else {
-                            if (count503 < limit503) {
-                                count503++
-                                Thread.sleep(timeout503)
-                                search503(mutableLiveData, artist, limit, offset)
-                            } else {
-                                mutableLiveData.postValue(Resource.error("Http Error!", null))
-                            }
-                        }
-                    }
-                    else -> mutableLiveData.postValue(Resource.error("Http Error!", null))
-                }
-            } catch (e: HttpException) {
-                mutableLiveData.postValue(Resource.error("Http Error!", null))
-            } catch (e: Throwable) {
-                mutableLiveData.postValue(Resource.error("Application Error!", null))
-            }
-        }
+        call(mutableLiveData, request, { search503(mutableLiveData, artist, limit, offset) }, this::map)
     }
+
+    fun map(source: ArtistSearchResponse) = ArtistMapper().mapToArtists(source.artists)
 
 }
