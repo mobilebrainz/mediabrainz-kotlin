@@ -26,6 +26,22 @@ class MainActivity : AppCompatActivity() {
             }
         })
         vm.fetchArtists("Riverside", 25, 0)
+        vm.fetchArtists("Riversid", 25, 0)
+        vm.fetchArtists("Riversi", 25, 0)
+        vm.fetchArtists("Rivers", 25, 0)
+        vm.fetchArtists("River", 25, 0)
+        vm.fetchArtists("Rive", 25, 0)
+        vm.fetchArtists("Riv", 25, 0)
+        vm.fetchArtists("R", 25, 0)
+        vm.fetchArtists("Riverside", 25, 0)
+        vm.fetchArtists("Riversid", 25, 0)
+        vm.fetchArtists("Riversi", 25, 0)
+        vm.fetchArtists("Rivers", 25, 0)
+        vm.fetchArtists("River", 25, 0)
+        vm.fetchArtists("Rive", 25, 0)
+        vm.fetchArtists("Riv", 25, 0)
+        vm.fetchArtists("R", 25, 0)
+
 
     }
 }

@@ -13,6 +13,10 @@ import retrofit2.Response
 
 class ArtistSearchRepository {
 
+    private val retryTimeout503 = 250L
+    private var retryLimit503 = 4
+    private var retryCount503 = 0
+
     private val timeout503 = 1000L
     private val limit503 = 10
     private var count503 = 0
@@ -24,26 +28,40 @@ class ArtistSearchRepository {
         offset: Int
     ) {
         mutableLiveData.value = Resource.loading(null)
-        val request = ApiServiceProvider.createArtistSearchService().search(artist, limit, offset)
-        search(mutableLiveData, request)
+        search503(mutableLiveData, artist, limit, offset)
     }
 
-    fun search(
+    fun search503(
         mutableLiveData: MutableLiveData<Resource<ArtistSearchResponse?>>,
-        request: Deferred<Response<ArtistSearchResponse>>
+        artist: String,
+        limit: Int,
+        offset: Int
     ) {
+        val request = ApiServiceProvider.createArtistSearchService().search(artist, limit, offset)
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = request.await()
                 when {
                     response.code() == 200 -> mutableLiveData.postValue(Resource.success(response.body()))
                     response.code() == 503 -> {
-                        if (count503 < limit503) {
-                            count503++
-                            Thread.sleep(timeout503)
-                            search(mutableLiveData, request)
+                        val retrySt = response.headers().get("retry-after")
+                        if (retrySt != null && retrySt != "") {
+                            if (retryCount503 < retryLimit503) {
+                                retryCount503++
+                                val retryInt = retrySt.toLong() * 1000 + retryTimeout503
+                                Thread.sleep(retryInt)
+                                search503(mutableLiveData, artist, limit, offset)
+                            } else {
+                                mutableLiveData.postValue(Resource.error("Http Error!", null))
+                            }
                         } else {
-                            mutableLiveData.postValue(Resource.error("Http Error!", null))
+                            if (count503 < limit503) {
+                                count503++
+                                Thread.sleep(timeout503)
+                                search503(mutableLiveData, artist, limit, offset)
+                            } else {
+                                mutableLiveData.postValue(Resource.error("Http Error!", null))
+                            }
                         }
                     }
                     else -> mutableLiveData.postValue(Resource.error("Http Error!", null))
