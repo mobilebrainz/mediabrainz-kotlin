@@ -21,7 +21,7 @@ import retrofit2.http.GET
 import retrofit2.http.QueryMap
 
 
-interface RetrofitSearchService {
+interface SearchRequestService {
 
     @GET(ANNOTATION_QUERY)
     fun searchAnnotation(@QueryMap params: Map<String, String>): Deferred<Response<AnnotationSearchResponse>>

@@ -39,7 +39,7 @@ data class RelationResponse(
 /**
  * https://musicbrainz.org/relationships/artist-artist
  */
-enum class ArtistArtistRelationType(val type: String) {
+enum class ArtistsRelationType(val type: String) {
     MEMBER_OF_BAND("member of band"),
     SUBGROUP("subgroup"),
     CONDUCTOR_POSITION("conductor position"),

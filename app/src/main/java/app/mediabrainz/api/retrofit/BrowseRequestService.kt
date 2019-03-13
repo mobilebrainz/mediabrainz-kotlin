@@ -8,7 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.QueryMap
 
 
-interface RetrofitBrowseService {
+interface BrowseRequestService {
 
     @GET(ARTIST_QUERY)
     fun browseArtist(@QueryMap params: Map<String, String>): Deferred<Response<ArtistBrowseResponse>>

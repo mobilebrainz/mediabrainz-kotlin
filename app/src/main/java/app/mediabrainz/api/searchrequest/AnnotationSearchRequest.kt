@@ -1,18 +1,18 @@
-package app.mediabrainz.api.searchservice
+package app.mediabrainz.api.searchrequest
 
 import app.mediabrainz.api.core.Config
 import app.mediabrainz.api.core.WebService
 import app.mediabrainz.api.response.AnnotationSearchResponse
-import app.mediabrainz.api.retrofit.RetrofitSearchService
-import app.mediabrainz.api.search.BaseSearchService
+import app.mediabrainz.api.retrofit.SearchRequestService
+import app.mediabrainz.api.search.BaseSearchRequest
 import app.mediabrainz.api.search.SearchFieldInterface
 
 
-class AnnotationSearchService :
-    BaseSearchService<AnnotationSearchResponse, AnnotationSearchField>() {
+class AnnotationSearchRequest :
+    BaseSearchRequest<AnnotationSearchResponse, AnnotationSearchField>() {
 
     override fun search() = WebService
-        .createJsonRetrofitService(RetrofitSearchService::class.java, Config.WEB_SERVICE)
+        .createJsonRetrofitService(SearchRequestService::class.java, Config.WEB_SERVICE)
         .searchAnnotation(buildParams())
 }
 

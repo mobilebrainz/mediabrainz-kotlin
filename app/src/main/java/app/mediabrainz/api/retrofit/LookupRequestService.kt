@@ -9,7 +9,7 @@ import retrofit2.http.Path
 import retrofit2.http.QueryMap
 
 
-interface RetrofitLookupService {
+interface LookupRequestService {
 
     @GET(ARTIST_QUERY + "/{mbid}")
     fun lookupArtist(
