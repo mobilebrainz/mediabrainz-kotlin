@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val vm = ViewModelProviders.of(this).get(SearchViewModel::class.java)
-        vm.artistsResource.observe(this, Observer { resource ->
+        vm.annotationsResource.observe(this, Observer { resource ->
             when (resource.status) {
                 Resource.Status.LOADING -> Log.i("", "")
                 Resource.Status.SUCCESS -> {
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
                 Resource.Status.ERROR -> Log.i("", "")
             }
         })
-        vm.fetchArtists("Riverside", 25, 0)
+        vm.fetchAnnotations("River", 25, 0)
         /*
         vm.fetchArtists("Riversid", 25, 0)
         vm.fetchArtists("Riversi", 25, 0)
@@ -43,7 +43,10 @@ class MainActivity : AppCompatActivity() {
         vm.fetchArtists("Rive", 25, 0)
         vm.fetchArtists("Riv", 25, 0)
         vm.fetchArtists("R", 25, 0)
+        vm.fetchArtists("River", 25, 0)
+        vm.fetchArtists("Rive", 25, 0)
+        vm.fetchArtists("Riv", 25, 0)
+        vm.fetchArtists("R", 25, 0)
         */
-
     }
 }
