@@ -4,7 +4,7 @@ import kotlinx.coroutines.Deferred
 import retrofit2.Response
 
 
-interface SearchServiceInterface <R, P>
+interface SearchRequestInterface <R, P>
     where R : SearchResponseInterface, P : Enum<P>, P : SearchFieldInterface {
 
     fun search(): Deferred<Response<R>>
@@ -12,9 +12,9 @@ interface SearchServiceInterface <R, P>
     fun search(limit: Int, offset: Int): Deferred<Response<R>>
     fun search(query: String, limit: Int, offset: Int): Deferred<Response<R>>
 
-    fun add(query: String): SearchServiceInterface<R, P>
-    fun add(searchField: P, value: String): SearchServiceInterface<R, P>
-    fun add(operator: LuceneOperator): SearchServiceInterface<R, P>
+    fun add(query: String): SearchRequestInterface<R, P>
+    fun add(searchField: P, value: String): SearchRequestInterface<R, P>
+    fun add(operator: LuceneOperator): SearchRequestInterface<R, P>
 }
 
 interface SearchFieldInterface

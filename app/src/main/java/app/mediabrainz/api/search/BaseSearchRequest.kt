@@ -5,7 +5,7 @@ import kotlinx.coroutines.Deferred
 import retrofit2.Response
 
 
-abstract class BaseSearchRequest<R, P> : SearchServiceInterface<R, P>
+abstract class BaseSearchRequest<R, P> : SearchRequestInterface<R, P>
         where R : SearchResponseInterface, P : Enum<P>, P : SearchFieldInterface {
 
     private val expression = LuceneBuilder()
@@ -30,19 +30,19 @@ abstract class BaseSearchRequest<R, P> : SearchServiceInterface<R, P>
         return search(expression.build(), limit, offset)
     }
 
-    override fun add(query: String): SearchServiceInterface<R, P> {
+    override fun add(query: String): SearchRequestInterface<R, P> {
         if (query != "") {
             expression.add(query)
         }
         return this
     }
 
-    override fun add(operator: LuceneOperator): SearchServiceInterface<R, P> {
+    override fun add(operator: LuceneOperator): SearchRequestInterface<R, P> {
         expression.add(operator)
         return this
     }
 
-    override fun add(searchField: P, value: String): SearchServiceInterface<R, P> {
+    override fun add(searchField: P, value: String): SearchRequestInterface<R, P> {
         if (value != "") {
             expression.add(searchField, value)
         }
