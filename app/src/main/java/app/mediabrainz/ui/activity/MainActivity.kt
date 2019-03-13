@@ -7,7 +7,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import app.mediabrainz.domain.repository.Resource
 import app.mediabrainz.ui.R
-import app.mediabrainz.ui.viewmodel.SearchViewModel
+import app.mediabrainz.ui.viewmodel.AnnotationSearchViewModel
+import app.mediabrainz.ui.viewmodel.ArtistSearchViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val vm = ViewModelProviders.of(this).get(SearchViewModel::class.java)
+        val vm = ViewModelProviders.of(this).get(AnnotationSearchViewModel::class.java)
         vm.annotationsResource.observe(this, Observer { resource ->
             when (resource.status) {
                 Resource.Status.LOADING -> Log.i("", "")
