@@ -22,8 +22,8 @@ class ReleaseGroupSearchViewModel : ViewModel() {
         if (releaseGroupsResource.value == null
             || artistQuery != artist || rgQuery != rg || this.offset != offset
         ) {
-            artistQuery = artist
-            rgQuery = rg
+            this.artistQuery = artist
+            this.rgQuery = rg
             this.limit = limit
             this.offset = offset
             searchReleaseGroup()

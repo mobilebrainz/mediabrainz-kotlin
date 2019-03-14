@@ -13,9 +13,9 @@ class ArtistSearchViewModel : ViewModel() {
     private var limit: Int = 0
     private var offset: Int = 0
 
-    fun searchArtist(artist: String, limit: Int, offset: Int) {
-        if (artistsResource.value == null || query != artist || this.offset != offset) {
-            query = artist
+    fun searchArtist(query: String, limit: Int, offset: Int) {
+        if (artistsResource.value == null || this.query != query || this.offset != offset) {
+            this.query = query
             this.limit = limit
             this.offset = offset
             searchArtist()

@@ -24,9 +24,9 @@ class RecordingSearchViewModel : ViewModel() {
             || artistQuery != artist || releaseQuery != release || recordingQuery != recording
             || this.offset != offset
         ) {
-            artistQuery = artist
-            releaseQuery = release
-            recordingQuery = recording
+            this.artistQuery = artist
+            this.releaseQuery = release
+            this.recordingQuery = recording
             this.limit = limit
             this.offset = offset
             searchRecording()
