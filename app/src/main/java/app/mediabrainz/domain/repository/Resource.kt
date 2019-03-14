@@ -13,7 +13,7 @@ class Resource<T> private constructor(
 
     companion object {
         fun <T> success(data: T) = Resource(Status.SUCCESS, data, null)
-        fun <T> error(msg: String, data: T?) = Resource(Status.ERROR, data, msg)
-        fun <T> loading(data: T?) = Resource(Status.LOADING, data, null)
+        fun <T> error(msg: String, data: T? = null) = Resource(Status.ERROR, data, msg)
+        fun <T> loading(data: T? = null) = Resource(Status.LOADING, data, null)
     }
 }

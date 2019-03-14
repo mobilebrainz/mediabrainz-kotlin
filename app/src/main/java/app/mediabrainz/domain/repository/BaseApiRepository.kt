@@ -34,10 +34,9 @@ abstract class BaseApiRepository<IN, OUT> {
                         }
                     }
                     response.code() == 503 -> {
-                        val retryStr = response.headers().get("retry-after")
-                        if (retryStr != null && retryStr != "") {
-                            val retryInt = retryStr.toLong() * 1000 + extraTimeout
-                            delay(retryInt)
+                        val retryAfter = response.headers().get("retry-after")
+                        if (retryAfter != null && retryAfter != "") {
+                            delay(retryAfter.toLong() * 1000 + extraTimeout)
                             action503.invoke()
                         } else {
                             httpError = true
@@ -48,12 +47,12 @@ abstract class BaseApiRepository<IN, OUT> {
                     }
                 }
                 if (httpError) {
-                    mutableLiveData.postValue(Resource.error("Http Error!", null))
+                    mutableLiveData.postValue(Resource.error("Http Error!"))
                 }
             } catch (e: HttpException) {
-                mutableLiveData.postValue(Resource.error("Http Error!", null))
+                mutableLiveData.postValue(Resource.error("Http Error!"))
             } catch (e: Throwable) {
-                mutableLiveData.postValue(Resource.error("Application Error!", null))
+                mutableLiveData.postValue(Resource.error("Application Error!"))
             }
         }
     }

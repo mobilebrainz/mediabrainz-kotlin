@@ -4,17 +4,19 @@ import app.mediabrainz.api.response.ArtistSearchResponse
 import app.mediabrainz.api.ApiRequestProvider
 import app.mediabrainz.domain.mapper.ArtistMapper
 import app.mediabrainz.domain.model.Artist
+import app.mediabrainz.domain.parenthesesString
 
 
 class ArtistSearchRepository : BaseApiRepository<ArtistSearchResponse, List<Artist>>() {
 
     fun search(artist: String, limit: Int, offset: Int) {
-        mutableLiveData.value = Resource.loading(null)
+        mutableLiveData.value = Resource.loading()
         recursiveSearch(artist, limit, offset)
     }
 
     private fun recursiveSearch(artist: String, limit: Int, offset: Int) {
-        val request = ApiRequestProvider.createArtistSearchRequest().search(artist, limit, offset)
+        val request = ApiRequestProvider.createArtistSearchRequest()
+            .search(parenthesesString(artist), limit, offset)
         call(request,
             { recursiveSearch(artist, limit, offset) },
             { ArtistMapper().mapToList(artists) })

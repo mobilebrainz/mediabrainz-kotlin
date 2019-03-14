@@ -9,6 +9,7 @@ import app.mediabrainz.domain.repository.Resource
 import app.mediabrainz.ui.R
 import app.mediabrainz.ui.viewmodel.AnnotationSearchViewModel
 import app.mediabrainz.ui.viewmodel.ArtistSearchViewModel
+import app.mediabrainz.ui.viewmodel.ReleaseGroupSearchViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,8 +17,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val vm = ViewModelProviders.of(this).get(AnnotationSearchViewModel::class.java)
-        vm.annotationsResource.observe(this, Observer { resource ->
+        val vm = ViewModelProviders.of(this).get(ReleaseGroupSearchViewModel::class.java)
+        vm.releaseGroupsResource.observe(this, Observer { resource ->
             when (resource.status) {
                 Resource.Status.LOADING -> Log.i("", "")
                 Resource.Status.SUCCESS -> {
@@ -27,27 +28,6 @@ class MainActivity : AppCompatActivity() {
                 Resource.Status.ERROR -> Log.i("", "")
             }
         })
-        vm.fetchAnnotations("River", 25, 0)
-        /*
-        vm.fetchArtists("Riversid", 25, 0)
-        vm.fetchArtists("Riversi", 25, 0)
-        vm.fetchArtists("Rivers", 25, 0)
-        vm.fetchArtists("River", 25, 0)
-        vm.fetchArtists("Rive", 25, 0)
-        vm.fetchArtists("Riv", 25, 0)
-        vm.fetchArtists("R", 25, 0)
-        vm.fetchArtists("Riverside", 25, 0)
-        vm.fetchArtists("Riversid", 25, 0)
-        vm.fetchArtists("Riversi", 25, 0)
-        vm.fetchArtists("Rivers", 25, 0)
-        vm.fetchArtists("River", 25, 0)
-        vm.fetchArtists("Rive", 25, 0)
-        vm.fetchArtists("Riv", 25, 0)
-        vm.fetchArtists("R", 25, 0)
-        vm.fetchArtists("River", 25, 0)
-        vm.fetchArtists("Rive", 25, 0)
-        vm.fetchArtists("Riv", 25, 0)
-        vm.fetchArtists("R", 25, 0)
-        */
+        vm.fetchReleaseGroups("Black Sabbath", "Iron", 25, 0)
     }
 }
