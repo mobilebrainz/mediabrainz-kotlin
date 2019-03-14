@@ -12,5 +12,6 @@ object ApiRequestProvider {
     fun createReleaseGroupSearchRequest() = ReleaseGroupSearchRequest()
     fun createCDStubSearchRequest() = CDStubSearchRequest()
     fun createEventSearchRequest() = EventSearchRequest()
+    fun createInstrumentSearchRequest() = InstrumentSearchRequest()
 
 }
