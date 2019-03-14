@@ -13,5 +13,6 @@ object ApiRequestProvider {
     fun createCDStubSearchRequest() = CDStubSearchRequest()
     fun createEventSearchRequest() = EventSearchRequest()
     fun createInstrumentSearchRequest() = InstrumentSearchRequest()
+    fun createLabelSearchRequest() = LabelSearchRequest()
 
 }

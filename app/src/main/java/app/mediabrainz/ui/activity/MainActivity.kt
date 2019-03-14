@@ -15,8 +15,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val vm = ViewModelProviders.of(this).get(InstrumentSearchViewModel::class.java)
-        vm.instrumentsResource.observe(this, Observer { resource ->
+        val vm = ViewModelProviders.of(this).get(LabelSearchViewModel::class.java)
+        vm.labelsResource.observe(this, Observer { resource ->
             when (resource.status) {
                 Resource.Status.LOADING -> Log.i("", "")
                 Resource.Status.SUCCESS -> {
@@ -26,6 +26,6 @@ class MainActivity : AppCompatActivity() {
                 Resource.Status.ERROR -> Log.i("", "")
             }
         })
-        vm.searchInstrument("drum", 25, 0)
+        vm.searchLabel("drum", 25, 0)
     }
 }
