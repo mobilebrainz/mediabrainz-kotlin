@@ -48,7 +48,7 @@ interface SearchRequestService {
     fun searchPlace(@QueryMap params: Map<String, String>): Deferred<Response<PlaceSearchResponse>>
 
     @GET(RECORDING_QUERY)
-    fun searchRecording(@QueryMap params: Map<String, String>): Deferred<Response<ArtistSearchResponse>>
+    fun searchRecording(@QueryMap params: Map<String, String>): Deferred<Response<RecordingSearchResponse>>
 
     @GET(RELEASE_QUERY)
     fun searchRelease(@QueryMap params: Map<String, String>): Deferred<Response<ReleaseSearchResponse>>

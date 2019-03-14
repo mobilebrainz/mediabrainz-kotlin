@@ -17,9 +17,24 @@ class AnnotationSearchRequest :
 }
 
 enum class AnnotationSearchField(val field: String) : SearchFieldInterface {
+    /**
+     * the annotated entity's name or title
+     */
     NAME("name"),
+
+    /**
+     * the annotated entity's MBID
+     */
     ENTITY("entity"),
+
+    /**
+     * the annotation's content (includes wiki formatting)
+     */
     TEXT("text"),
+
+    /**
+     * the annotated entity's entity type
+     */
     TYPE("type");
 
     override fun toString() = field
