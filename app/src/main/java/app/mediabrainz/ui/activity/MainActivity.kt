@@ -7,8 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import app.mediabrainz.domain.repository.Resource
 import app.mediabrainz.ui.R
-import app.mediabrainz.ui.viewmodel.AnnotationSearchViewModel
-import app.mediabrainz.ui.viewmodel.ArtistSearchViewModel
+import app.mediabrainz.ui.viewmodel.RecordingSearchViewModel
 import app.mediabrainz.ui.viewmodel.ReleaseGroupSearchViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -17,8 +16,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val vm = ViewModelProviders.of(this).get(ReleaseGroupSearchViewModel::class.java)
-        vm.releaseGroupsResource.observe(this, Observer { resource ->
+        val vm = ViewModelProviders.of(this).get(RecordingSearchViewModel::class.java)
+        vm.recordingsResource.observe(this, Observer { resource ->
             when (resource.status) {
                 Resource.Status.LOADING -> Log.i("", "")
                 Resource.Status.SUCCESS -> {
@@ -28,6 +27,6 @@ class MainActivity : AppCompatActivity() {
                 Resource.Status.ERROR -> Log.i("", "")
             }
         })
-        vm.fetchReleaseGroups("Black Sabbath", "Iron", 25, 0)
+        vm.searchRecording("Black Sabbath", "Iron", "The", 25, 0)
     }
 }

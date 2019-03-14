@@ -1,7 +1,6 @@
 package app.mediabrainz.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
-import app.mediabrainz.domain.repository.AnnotationSearchRepository
 import app.mediabrainz.domain.repository.ArtistSearchRepository
 
 
@@ -14,17 +13,17 @@ class ArtistSearchViewModel : ViewModel() {
     private var limit: Int = 0
     private var offset: Int = 0
 
-    fun fetchArtists(artist: String, limit: Int, offset: Int) {
+    fun searchArtists(artist: String, limit: Int, offset: Int) {
         if (artistsResource.value == null || query != artist || this.offset != offset) {
             query = artist
             this.limit = limit
             this.offset = offset
-            loadArtists()
+            searchArtists()
         }
     }
 
     // retry when error
-    fun loadArtists() {
+    fun searchArtists() {
         if (query != "" && limit > 0) {
             artistSearchRepository.search(query, limit, offset)
         }

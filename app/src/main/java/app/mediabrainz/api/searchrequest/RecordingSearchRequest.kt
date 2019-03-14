@@ -8,6 +8,11 @@ import app.mediabrainz.api.search.BaseSearchRequest
 import app.mediabrainz.api.search.SearchFieldInterface
 
 
+/**
+ * unconditional search: Recording search terms with no fields search the RECORDING field only
+ *   RecordingSearchService().search("Stair")
+ *   RecordingSearchService().search("Stair", 2, 10)
+ */
 class RecordingSearchRequest :
     BaseSearchRequest<RecordingSearchResponse, RecordingSearchField>() {
 

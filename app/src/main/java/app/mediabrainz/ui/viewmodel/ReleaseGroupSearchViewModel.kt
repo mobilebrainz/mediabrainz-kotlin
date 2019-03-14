@@ -14,11 +14,11 @@ class ReleaseGroupSearchViewModel : ViewModel() {
     private var limit: Int = 0
     private var offset: Int = 0
 
-    fun fetchReleaseGroups(rg: String, limit: Int, offset: Int) {
-        fetchReleaseGroups("", rg, limit, offset)
+    fun searchReleaseGroups(rg: String, limit: Int, offset: Int) {
+        searchReleaseGroups("", rg, limit, offset)
     }
 
-    fun fetchReleaseGroups(artist: String, rg: String, limit: Int, offset: Int) {
+    fun searchReleaseGroups(artist: String, rg: String, limit: Int, offset: Int) {
         if (releaseGroupsResource.value == null
             || artistQuery != artist || rgQuery != rg || this.offset != offset
         ) {
@@ -26,12 +26,12 @@ class ReleaseGroupSearchViewModel : ViewModel() {
             rgQuery = rg
             this.limit = limit
             this.offset = offset
-            loadReleaseGroups()
+            searchReleaseGroups()
         }
     }
 
     // retry when error
-    fun loadReleaseGroups() {
+    fun searchReleaseGroups() {
         if (rgQuery != "" && limit > 0) {
             rgSearchRepository.search(artistQuery, rgQuery, limit, offset)
         }
