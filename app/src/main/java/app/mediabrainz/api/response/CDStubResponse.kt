@@ -17,7 +17,7 @@ data class CDStubResponse(
     @field:Json(name = "comment") val comment: String?
 )
 
-data class CDStubSearch(
+data class CDStubSearchResponse(
     @field:Json(name = "count") val count: Int,
     @field:Json(name = "offset") val offset: Int,
     @field:Json(name = "cdstubs") val cdstubs: List<CDStubResponse>

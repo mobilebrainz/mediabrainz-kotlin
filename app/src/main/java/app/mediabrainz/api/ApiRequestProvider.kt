@@ -10,5 +10,6 @@ object ApiRequestProvider {
     fun createArtistSearchRequest() = ArtistSearchRequest()
     fun createRecordingSearchRequest() = RecordingSearchRequest()
     fun createReleaseGroupSearchRequest() = ReleaseGroupSearchRequest()
+    fun createCDStubSearchRequest() = CDStubSearchRequest()
 
 }

@@ -33,7 +33,7 @@ interface SearchRequestService {
     fun searchArtist(@QueryMap params: Map<String, String>): Deferred<Response<ArtistSearchResponse>>
 
     @GET(CDSTUB_QUERY)
-    fun searchCDStub(@QueryMap params: Map<String, String>): Deferred<Response<CDStubResponse>>
+    fun searchCDStub(@QueryMap params: Map<String, String>): Deferred<Response<CDStubSearchResponse>>
 
     @GET(EVENT_QUERY)
     fun searchEvent(@QueryMap params: Map<String, String>): Deferred<Response<EventSearchResponse>>

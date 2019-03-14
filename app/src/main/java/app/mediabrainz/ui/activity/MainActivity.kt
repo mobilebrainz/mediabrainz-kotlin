@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import app.mediabrainz.domain.repository.Resource
 import app.mediabrainz.ui.R
 import app.mediabrainz.ui.viewmodel.AreaSearchViewModel
+import app.mediabrainz.ui.viewmodel.CDStubSearchViewModel
 import app.mediabrainz.ui.viewmodel.RecordingSearchViewModel
 import app.mediabrainz.ui.viewmodel.ReleaseGroupSearchViewModel
 
@@ -17,8 +18,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val vm = ViewModelProviders.of(this).get(AreaSearchViewModel::class.java)
-        vm.areasResource.observe(this, Observer { resource ->
+        val vm = ViewModelProviders.of(this).get(CDStubSearchViewModel::class.java)
+        vm.cdstubResource.observe(this, Observer { resource ->
             when (resource.status) {
                 Resource.Status.LOADING -> Log.i("", "")
                 Resource.Status.SUCCESS -> {
@@ -28,6 +29,6 @@ class MainActivity : AppCompatActivity() {
                 Resource.Status.ERROR -> Log.i("", "")
             }
         })
-        vm.searchArea("London", 25, 0)
+        vm.searchCDStub("London", 25, 0)
     }
 }
