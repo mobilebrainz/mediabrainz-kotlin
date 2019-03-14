@@ -13,17 +13,17 @@ class AnnotationSearchViewModel : ViewModel() {
     private var limit: Int = 0
     private var offset: Int = 0
 
-    fun searchAnnotations(query: String, limit: Int, offset: Int) {
+    fun searchAnnotation(query: String, limit: Int, offset: Int) {
         if (annotationsResource.value == null || this.query != query || this.offset != offset) {
             this.query = query
             this.limit = limit
             this.offset = offset
-            searchAnnotations()
+            searchAnnotation()
         }
     }
 
     // retry when error
-    fun searchAnnotations() {
+    fun searchAnnotation() {
         if (query != "" && limit > 0) {
             annotationSearchRepository.search(query, limit, offset)
         }

@@ -24,12 +24,12 @@ class ReleaseGroupSearchRequest :
         .searchReleaseGroup(buildParams())
 
     fun addPrimaryType(type: ReleaseGroupPrimaryType): ReleaseGroupSearchRequest {
-        add(ReleaseGroupSearchField.PRIMARY_TYPE, type.toString())
+        add(ReleaseGroupSearchField.PRIMARY_TYPE, type.type)
         return this
     }
 
     fun addSecondaryType(type: ReleaseGroupSecondaryType): ReleaseGroupSearchRequest {
-        add(ReleaseGroupSearchField.SECONDARY_TYPE, type.toString())
+        add(ReleaseGroupSearchField.SECONDARY_TYPE, type.type)
         return this
     }
 

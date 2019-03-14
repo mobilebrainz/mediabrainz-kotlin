@@ -1,16 +1,14 @@
 package app.mediabrainz.api
 
-import app.mediabrainz.api.searchrequest.AnnotationSearchRequest
-import app.mediabrainz.api.searchrequest.ArtistSearchRequest
-import app.mediabrainz.api.searchrequest.RecordingSearchRequest
-import app.mediabrainz.api.searchrequest.ReleaseGroupSearchRequest
+import app.mediabrainz.api.searchrequest.*
 
 
 object ApiRequestProvider {
 
     fun createAnnotationSearchRequest() = AnnotationSearchRequest()
+    fun createAreaSearchRequest() = AreaSearchRequest()
     fun createArtistSearchRequest() = ArtistSearchRequest()
-    fun createReleaseGroupSearchRequest() = ReleaseGroupSearchRequest()
     fun createRecordingSearchRequest() = RecordingSearchRequest()
+    fun createReleaseGroupSearchRequest() = ReleaseGroupSearchRequest()
 
 }

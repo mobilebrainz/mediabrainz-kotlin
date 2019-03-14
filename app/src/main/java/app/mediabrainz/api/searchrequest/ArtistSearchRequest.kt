@@ -22,7 +22,7 @@ class ArtistSearchRequest :
         .searchArtist(buildParams())
 
     fun addType(artistType: ArtistType): ArtistSearchRequest {
-        add(ArtistSearchField.TYPE, artistType.toString())
+        add(ArtistSearchField.TYPE, artistType.type)
         return this
     }
 
