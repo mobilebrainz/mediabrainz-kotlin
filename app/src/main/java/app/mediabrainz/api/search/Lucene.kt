@@ -3,7 +3,7 @@ package app.mediabrainz.api.search
 import java.util.*
 
 
-class LuceneBuilder() {
+class LuceneBuilder {
 
     private val terms = ArrayList<LuceneTerm>()
 

@@ -28,7 +28,7 @@ class ReleaseGroupSearchRepository : BaseApiRepository<ReleaseGroupSearchRespons
         val request = ApiRequestProvider.createReleaseGroupSearchRequest()
             .add(ReleaseGroupSearchField.ARTIST, parenthesesString(artist))
             .add(ReleaseGroupSearchField.RELEASE_GROUP, parenthesesString(rg))
-            .search(artist, limit, offset)
+            .search(limit, offset)
         call(request,
             { recursiveSearch(artist, rg, limit, offset) },
             { ReleaseGroupMapper().mapToList(releaseGroups) })

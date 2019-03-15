@@ -30,6 +30,7 @@ abstract class BaseSearchRequest<R, P> : SearchRequestInterface<R, P>
         return search(expression.build(), limit, offset)
     }
 
+
     override fun add(query: String): SearchRequestInterface<R, P> {
         if (query != "") {
             expression.add(query)

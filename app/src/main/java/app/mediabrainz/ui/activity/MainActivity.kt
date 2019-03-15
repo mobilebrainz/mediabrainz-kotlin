@@ -16,8 +16,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val vm = ViewModelProviders.of(this).get(LabelSearchViewModel::class.java)
-        vm.labelsResource.observe(this, Observer {
+        val vm = ViewModelProviders.of(this).get(RecordingSearchViewModel::class.java)
+        vm.recordingsResource.observe(this, Observer {
             when (it.status) {
                 LOADING -> Log.i("", "")
                 SUCCESS -> {
@@ -27,6 +27,6 @@ class MainActivity : AppCompatActivity() {
                 ERROR -> Log.i("", "")
             }
         })
-        vm.searchLabel("drum", 25, 0)
+        vm.searchRecording("Black Sabbath", "Iron", "The", 25, 0)
     }
 }
