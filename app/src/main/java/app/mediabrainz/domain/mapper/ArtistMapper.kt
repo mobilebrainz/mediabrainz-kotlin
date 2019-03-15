@@ -6,12 +6,9 @@ import app.mediabrainz.domain.model.Artist
 
 class ArtistMapper {
 
-    fun mapTo(response: ArtistResponse): Artist {
-        val artist = Artist(
-            response.mbid,
-            response.name
-        )
-        return artist
+    fun mapTo(response: ArtistResponse) = with(response) {
+        val artist = Artist(mbid, name)
+        artist
     }
 
     fun mapToList(responseList: List<ArtistResponse>): List<Artist> {

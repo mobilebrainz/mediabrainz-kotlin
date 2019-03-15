@@ -1,19 +1,14 @@
 package app.mediabrainz.domain.mapper
 
-import app.mediabrainz.api.response.ArtistResponse
 import app.mediabrainz.api.response.ReleaseGroupResponse
-import app.mediabrainz.domain.model.Artist
 import app.mediabrainz.domain.model.ReleaseGroup
 
 
 class ReleaseGroupMapper {
 
-    fun mapTo(response: ReleaseGroupResponse): ReleaseGroup {
-        val artist = ReleaseGroup(
-            response.mbid,
-            response.title
-        )
-        return artist
+    fun mapTo(response: ReleaseGroupResponse) = with(response) {
+        val rg = ReleaseGroup(mbid, title)
+        rg
     }
 
     fun mapToList(responseList: List<ReleaseGroupResponse>): List<ReleaseGroup> {

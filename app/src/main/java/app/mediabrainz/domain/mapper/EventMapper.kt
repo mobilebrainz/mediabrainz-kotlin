@@ -6,12 +6,9 @@ import app.mediabrainz.domain.model.Event
 
 class EventMapper {
 
-    fun mapTo(response: EventResponse): Event {
-        val event = Event(
-            response.id,
-            response.name
-        )
-        return event
+    fun mapTo(response: EventResponse) = with(response) {
+        val event = Event(id, name)
+        event
     }
 
     fun mapToList(responseList: List<EventResponse>): List<Event> {

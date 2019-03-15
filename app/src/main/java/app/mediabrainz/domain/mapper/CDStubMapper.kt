@@ -6,12 +6,9 @@ import app.mediabrainz.domain.model.CDStub
 
 class CDStubMapper {
 
-    fun mapTo(response: CDStubResponse): CDStub {
-        val cdstub = CDStub(
-            response.id,
-            response.title ?: ""
-        )
-        return cdstub
+    fun mapTo(response: CDStubResponse) = with(response) {
+        val cdstub = CDStub(id, title ?: "")
+        cdstub
     }
 
     fun mapToList(responseList: List<CDStubResponse>): List<CDStub> {

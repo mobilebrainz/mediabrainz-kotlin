@@ -6,12 +6,9 @@ import app.mediabrainz.domain.model.Annotation
 
 class AnnotationMapper {
 
-    fun mapTo(response: AnnotationResponse): Annotation {
-        val annotation = Annotation(
-            response.id,
-            response.name?:"",
-            response.text?:"")
-        return annotation
+    fun mapTo(response: AnnotationResponse) = with(response) {
+        val annotation = Annotation(id, name ?: "", text ?: "")
+        annotation
     }
 
     fun mapToList(responseList: List<AnnotationResponse>): List<Annotation> {
