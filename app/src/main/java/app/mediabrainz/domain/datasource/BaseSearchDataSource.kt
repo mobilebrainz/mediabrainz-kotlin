@@ -46,8 +46,9 @@ abstract class BaseSearchDataSource<IN, OUT, T : BaseSearchResponse<IN>> : PageK
                 val response = getRequest(offset).await()
                 when {
                     response.code() == 200 -> {
-                        if (response.body() != null) {
-                            val entities = PageMapper(getMap()).mapTo(response.body()!!)
+                        val body = response.body()
+                        if (body != null) {
+                            val entities = PageMapper(getMap()).mapTo(body)
                             val nextOffset = entities.offset + SEARCH_LIMIT
                             val nextPageKey = if (entities.count > nextOffset) nextOffset else null
 

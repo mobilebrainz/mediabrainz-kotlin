@@ -27,8 +27,9 @@ abstract class BaseApiRepository<IN, OUT> {
                 val response = deferred.await()
                 when {
                     response.code() == 200 -> {
-                        if (response.body() != null) {
-                            mutableLiveData.postValue(Resource.success(map.invoke(response.body()!!)))
+                        val body = response.body()
+                        if (body != null) {
+                            mutableLiveData.postValue(Resource.success(map.invoke(body)))
                         } else {
                             httpError = true
                         }
