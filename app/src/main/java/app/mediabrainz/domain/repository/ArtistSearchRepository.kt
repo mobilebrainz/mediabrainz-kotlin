@@ -1,7 +1,7 @@
 package app.mediabrainz.domain.repository
 
-import app.mediabrainz.api.response.ArtistSearchResponse
 import app.mediabrainz.api.ApiRequestProvider
+import app.mediabrainz.api.response.ArtistSearchResponse
 import app.mediabrainz.domain.mapper.ArtistMapper
 import app.mediabrainz.domain.model.Artist
 import app.mediabrainz.domain.parenthesesString
@@ -19,7 +19,7 @@ class ArtistSearchRepository : BaseApiRepository<ArtistSearchResponse, List<Arti
             .search(parenthesesString(artist), limit, offset)
         call(request,
             { recursiveSearch(artist, limit, offset) },
-            { ArtistMapper().mapToList(artists) })
+            { ArtistMapper().mapToList(getItems()) })
     }
 
 }

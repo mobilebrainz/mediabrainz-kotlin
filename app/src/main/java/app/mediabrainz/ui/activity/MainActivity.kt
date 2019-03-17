@@ -16,8 +16,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val vm = ViewModelProviders.of(this).get(RecordingSearchViewModel::class.java)
-        vm.recordingsResource.observe(this, Observer {
+        /*
+        val vm = ViewModelProviders.of(this).get(ArtistSearchViewModel::class.java)
+        vm.artistsResource.observe(this, Observer {
             when (it.status) {
                 LOADING -> Log.i("", "")
                 SUCCESS -> {
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
                 ERROR -> Log.i("", "")
             }
         })
-        vm.searchRecording("Black Sabbath", "Iron", "The", 25, 0)
+        vm.searchArtist("Black Sabbath", 25, 0)
+        */
     }
 }

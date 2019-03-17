@@ -1,6 +1,7 @@
 package app.mediabrainz.api.search
 
 import app.mediabrainz.api.core.Config.FORMAT_JSON
+import app.mediabrainz.api.search.SearchParamType.*
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 
@@ -10,19 +11,19 @@ abstract class BaseSearchRequest<R, P> : SearchRequestInterface<R, P>
 
     private val expression = LuceneBuilder()
     private val params: MutableMap<SearchParamType, String> = mutableMapOf(
-        SearchParamType.QUERY to "empty",
-        SearchParamType.FORMAT to FORMAT_JSON
+        QUERY to "empty",
+        FORMAT to FORMAT_JSON
     )
 
     override fun search(query: String): Deferred<Response<R>> {
-        params[SearchParamType.QUERY] = query
+        params[QUERY] = query
         return search()
     }
 
     override fun search(query: String, limit: Int, offset: Int): Deferred<Response<R>> {
-        params[SearchParamType.QUERY] = query
-        params[SearchParamType.LIMIT] = Integer.toString(limit)
-        params[SearchParamType.OFFSET] = Integer.toString(offset)
+        params[QUERY] = query
+        params[LIMIT] = Integer.toString(limit)
+        params[OFFSET] = Integer.toString(offset)
         return search()
     }
 
@@ -57,7 +58,7 @@ abstract class BaseSearchRequest<R, P> : SearchRequestInterface<R, P>
         }
         val query = expression.build()
         if (query != "") {
-            map[SearchParamType.QUERY.param] = query
+            map[QUERY.param] = query
         }
         return map
     }
