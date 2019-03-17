@@ -1,7 +1,7 @@
 package app.mediabrainz.domain.datasource
 
 import androidx.paging.PageKeyedDataSource
-import app.mediabrainz.api.search.BaseSearchResponse
+import app.mediabrainz.api.response.BaseSearchResponse
 import app.mediabrainz.domain.mapper.PageMapper
 import kotlinx.coroutines.*
 import retrofit2.HttpException

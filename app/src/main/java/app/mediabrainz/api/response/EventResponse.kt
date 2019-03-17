@@ -1,7 +1,6 @@
 package app.mediabrainz.api.response
 
 import app.mediabrainz.api.lookup.LookupResponseInterface
-import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
 
 
@@ -31,11 +30,12 @@ data class EventResponse(
     @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 
-data class EventSearchResponse(
-    @field:Json(name = "count") val count: Int,
-    @field:Json(name = "offset") val offset: Int,
-    @field:Json(name = "events") val events: List<EventResponse>
-) : SearchResponseInterface
+class EventSearchResponse : BaseSearchResponse<EventResponse>() {
+    @field:Json(name = "events")
+    val events: List<EventResponse> = ArrayList()
+
+    override fun getItems() = events
+}
 
 data class EventBrowseResponse(
     @field:Json(name = "event-count") val count: Int,

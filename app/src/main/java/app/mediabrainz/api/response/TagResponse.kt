@@ -1,6 +1,5 @@
 package app.mediabrainz.api.response
 
-import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
 
 /**
@@ -12,11 +11,12 @@ data class TagResponse(
     @field:Json(name = "score") val score: Int?
 )
 
-data class TagSearchResponse(
-    @field:Json(name = "count") val count: Int,
-    @field:Json(name = "offset") val offset: Int,
-    @field:Json(name = "tags") val tags: List<TagResponse>
-) : SearchResponseInterface
+class TagSearchResponse : BaseSearchResponse<TagResponse>() {
+    @field:Json(name = "tags")
+    val tags: List<TagResponse> = ArrayList()
+
+    override fun getItems() = tags
+}
 
 enum class TagType {
     GENRE, TAG

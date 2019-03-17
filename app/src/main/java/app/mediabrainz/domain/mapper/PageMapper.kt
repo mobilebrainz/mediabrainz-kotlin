@@ -1,6 +1,6 @@
 package app.mediabrainz.domain.mapper
 
-import app.mediabrainz.api.search.BaseSearchResponse
+import app.mediabrainz.api.response.BaseSearchResponse
 import app.mediabrainz.domain.model.Entities
 
 

@@ -1,6 +1,5 @@
 package app.mediabrainz.api.response
 
-import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
 
 /**
@@ -14,8 +13,9 @@ data class AnnotationResponse(
     @field:Json(name = "score") val score: Int?
 )
 
-data class AnnotationSearchResponse(
-    @field:Json(name = "count") val count: Int,
-    @field:Json(name = "offset") val offset: Int,
-    @field:Json(name = "annotations") val annotations: List<AnnotationResponse>
-) : SearchResponseInterface
+class AnnotationSearchResponse : BaseSearchResponse<AnnotationResponse>() {
+    @field:Json(name = "annotations")
+    val annotations: List<AnnotationResponse> = ArrayList()
+
+    override fun getItems() = annotations
+}

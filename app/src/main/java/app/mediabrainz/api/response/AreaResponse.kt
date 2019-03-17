@@ -1,7 +1,6 @@
 package app.mediabrainz.api.response
 
 import app.mediabrainz.api.lookup.LookupResponseInterface
-import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
 
 /**
@@ -24,18 +23,19 @@ data class AreaResponse(
     //inc=annotation
     @field:Json(name = "annotation") val annotation: String?,
     //inc=tags
-    @field:Json(name = "tags") val tags : List<TagResponse>?,
+    @field:Json(name = "tags") val tags: List<TagResponse>?,
     //inc=user-tags
-    @field:Json(name = "user-tags") val userTags : List<TagResponse>?,
+    @field:Json(name = "user-tags") val userTags: List<TagResponse>?,
     //inc=...-rels
-    @field:Json(name = "relations") val relations : List<RelationResponse>?
+    @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 
-data class AreaSearchResponse(
-    @field:Json(name = "count") val count: Int,
-    @field:Json(name = "offset") val offset: Int,
-    @field:Json(name = "areas") val areas: List<AreaResponse>
-) : SearchResponseInterface
+class AreaSearchResponse : BaseSearchResponse<AreaResponse>() {
+    @field:Json(name = "areas")
+    val areas: List<AreaResponse> = ArrayList()
+
+    override fun getItems() = areas
+}
 
 data class AreaBrowseResponse(
     @field:Json(name = "area-count") val count: Int,

@@ -1,7 +1,6 @@
 package app.mediabrainz.api.response
 
 import app.mediabrainz.api.lookup.LookupResponseInterface
-import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
 
 
@@ -40,11 +39,12 @@ data class ReleaseGroupResponse(
     @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 
-data class ReleaseGroupSearchResponse(
-    @field:Json(name = "count") val count: Int,
-    @field:Json(name = "offset") val offset: Int,
-    @field:Json(name = "release-groups") val releaseGroups: List<ReleaseGroupResponse>
-) : SearchResponseInterface
+class ReleaseGroupSearchResponse : BaseSearchResponse<ReleaseGroupResponse>() {
+    @field:Json(name = "release-groups")
+    val releaseGroups: List<ReleaseGroupResponse> = ArrayList()
+
+    override fun getItems() = releaseGroups
+}
 
 data class ReleaseGroupBrowseResponse(
     @field:Json(name = "release-group-count") val count: Int,
