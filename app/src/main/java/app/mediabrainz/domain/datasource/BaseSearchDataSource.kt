@@ -66,6 +66,7 @@ abstract class BaseSearchDataSource<IN, OUT, T : BaseSearchResponse<IN>> :
     }
 
     override fun refresh() {
+        //todo: перезагружает сразу все ранее загруженные страницы, а надо только первые как при начальной загрузке?
         invalidate()
     }
 
