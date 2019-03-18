@@ -1,8 +1,11 @@
 package app.mediabrainz.domain.datasource
 
+import androidx.annotation.StringRes
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import app.mediabrainz.api.response.BaseSearchResponse
 import app.mediabrainz.domain.mapper.PageMapper
+import app.mediabrainz.ui.R
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import retrofit2.Response
@@ -10,25 +13,51 @@ import retrofit2.Response
 
 abstract class BaseSearchDataSource<IN, OUT, T : BaseSearchResponse<IN>> : PageKeyedDataSource<Int, OUT>() {
 
+    val initialLoadState = MutableLiveData<NetworkState>()
+    val afterLoadState = MutableLiveData<NetworkState>()
+
+    private var isInitialLoad: Boolean = false
     private val extraTimeout = 250L
     private val job = Job()
     private val scope = CoroutineScope(Dispatchers.IO + job)
     //private val scope = CoroutineScope(Dispatchers.Default + job)
+    private var retryAction: (() -> Unit)? = null
 
     protected abstract fun request(loadSize: Int, offset: Int): Deferred<Response<T>>
 
     protected abstract fun map(): (IN) -> OUT
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, OUT>) {
-        call(callback, null, params.requestedLoadSize, 0)
+        isInitialLoad = true
+        postLoading()
+        callInitial(callback, params.requestedLoadSize)
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, OUT>) {
-        call(null, callback, params.requestedLoadSize, params.key)
+        isInitialLoad = false
+        postLoading()
+        callAfter(callback, params.requestedLoadSize, params.key)
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, OUT>) {
-        //call(null, callback, params.requestedLoadSize, params.key)
+        //isInitialLoad = false
+        //postLoading()
+        //callAfter(callback, params.requestedLoadSize, params.key)
+    }
+
+    private fun callInitial(loadInitialCallback: LoadInitialCallback<Int, OUT>?, loadSize: Int) =
+        call(loadInitialCallback, null, loadSize, 0)
+
+
+    private fun callAfter(callback: LoadCallback<Int, OUT>, loadSize: Int, offset: Int) =
+        call(null, callback, loadSize, offset)
+
+
+    fun retry() {
+        retryAction?.let {
+            postLoading()
+            it.invoke()
+        }
     }
 
     private fun call(
@@ -39,12 +68,14 @@ abstract class BaseSearchDataSource<IN, OUT, T : BaseSearchResponse<IN>> : PageK
     ) {
         scope.launch {
             try {
-                var httpError = false
+                var httpError = true
                 val response = request(loadSize, offset).await()
                 when {
                     response.code() == 200 -> {
                         val body = response.body()
                         if (body != null) {
+                            httpError = false
+                            retryAction = null
                             val entities = PageMapper(map()).mapTo(body)
                             val nextOffset = entities.offset + loadSize
                             val nextPageKey = if (entities.count > nextOffset) nextOffset else null
@@ -54,31 +85,54 @@ abstract class BaseSearchDataSource<IN, OUT, T : BaseSearchResponse<IN>> : PageK
                             } else {
                                 loadCallback?.onResult(entities.items, nextPageKey)
                             }
-                        } else {
-                            httpError = true
+                            postSuccess()
                         }
                     }
                     response.code() == 503 -> {
+                        httpError = false
+                        retryAction = null
                         val retryAfter = response.headers().get("retry-after")
                         if (retryAfter != null && retryAfter != "") {
                             delay(retryAfter.toLong() * 1000 + extraTimeout)
                             call(loadInitialCallback, loadCallback, loadSize, offset)
-                        } else {
-                            httpError = true
                         }
-                    }
-                    else -> {
-                        httpError = true
                     }
                 }
                 if (httpError) {
-                    //mutableLiveData.postValue(Resource.error("Http Error!"))
+                    retryAction = { call(loadInitialCallback, loadCallback, loadSize, offset) }
+                    postError(R.string.http_error)
                 }
             } catch (e: HttpException) {
-                //mutableLiveData.postValue(Resource.error("Http Error!"))
+                retryAction = { call(loadInitialCallback, loadCallback, loadSize, offset) }
+                postError(R.string.http_error)
             } catch (e: Throwable) {
-                //mutableLiveData.postValue(Resource.error("Application Error!"))
+                retryAction = { call(loadInitialCallback, loadCallback, loadSize, offset) }
+                postError(R.string.app_error)
             }
+        }
+    }
+
+    private fun postLoading() {
+        if (isInitialLoad) {
+            initialLoadState.postValue(NetworkState.loading())
+        } else {
+            afterLoadState.postValue(NetworkState.loading())
+        }
+    }
+
+    private fun postSuccess() {
+        if (isInitialLoad) {
+            initialLoadState.postValue(NetworkState.success())
+        } else {
+            afterLoadState.postValue(NetworkState.success())
+        }
+    }
+
+    private fun postError(@StringRes messageResId: Int) {
+        if (isInitialLoad) {
+            initialLoadState.postValue(NetworkState.error(messageResId))
+        } else {
+            afterLoadState.postValue(NetworkState.error(messageResId))
         }
     }
 

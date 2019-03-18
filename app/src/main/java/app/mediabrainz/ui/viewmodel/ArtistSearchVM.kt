@@ -2,6 +2,7 @@ package app.mediabrainz.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
@@ -33,6 +34,26 @@ class ArtistSearchVM : ViewModel() {
         super.onCleared()
         if (::dataSource.isInitialized) {
             dataSource.value?.cancelJob()
+        }
+    }
+
+    //todo: to BaseDataSourceViewModel : ViewModel()
+    fun getAfterLoadState() = Transformations.switchMap(dataSource) { it.afterLoadState }
+
+    //todo: to BaseDataSourceViewModel : ViewModel()
+    fun getInitialLoadState() = Transformations.switchMap(dataSource) { it.initialLoadState }
+
+    //todo: to BaseDataSourceViewModel : ViewModel()
+    fun refresh() {
+        if (::dataSource.isInitialized) {
+            dataSource.value?.invalidate()
+        }
+    }
+
+    //todo: to BaseDataSourceViewModel : ViewModel()
+    fun retry() {
+        if (::dataSource.isInitialized) {
+            dataSource.value?.retry()
         }
     }
 
