@@ -6,11 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import app.mediabrainz.domain.datasource.ArtistSearchDataSource
-import app.mediabrainz.domain.datasource.BaseSearchDataSource.Companion.SEARCH_LIMIT
 import app.mediabrainz.domain.model.Artist
 
 
 class ArtistSearchVM : ViewModel() {
+
+    private val initialLoadSize = 25
+    private val loadSize = 25
 
     lateinit var pagedItems: LiveData<PagedList<Artist>>
     lateinit var dataSource: MutableLiveData<ArtistSearchDataSource>
@@ -18,7 +20,8 @@ class ArtistSearchVM : ViewModel() {
     fun search(query: String) {
         val factory = ArtistSearchDataSource.Factory(query)
         val config = PagedList.Config.Builder()
-            .setPageSize(SEARCH_LIMIT)
+            .setInitialLoadSizeHint(initialLoadSize)
+            .setPageSize(loadSize)
             .setEnablePlaceholders(false)
             .build()
 

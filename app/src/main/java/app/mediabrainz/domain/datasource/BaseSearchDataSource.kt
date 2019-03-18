@@ -10,46 +10,43 @@ import retrofit2.Response
 
 abstract class BaseSearchDataSource<IN, OUT, T : BaseSearchResponse<IN>> : PageKeyedDataSource<Int, OUT>() {
 
-    companion object {
-        const val SEARCH_LIMIT = 25
-    }
-
     private val extraTimeout = 250L
     private val job = Job()
     private val scope = CoroutineScope(Dispatchers.IO + job)
     //private val scope = CoroutineScope(Dispatchers.Default + job)
 
-    protected abstract fun getRequest(offset: Int): Deferred<Response<T>>
+    protected abstract fun request(loadSize: Int, offset: Int): Deferred<Response<T>>
 
-    protected abstract fun getMap(): (IN) -> OUT
+    protected abstract fun map(): (IN) -> OUT
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, OUT>) {
-        call(callback, null, 0)
+        call(callback, null, params.requestedLoadSize, 0)
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, OUT>) {
-        call(null, callback, params.key)
+        call(null, callback, params.requestedLoadSize, params.key)
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, OUT>) {
-        //call(null, callback, params.key)
+        //call(null, callback, params.requestedLoadSize, params.key)
     }
 
     private fun call(
         loadInitialCallback: LoadInitialCallback<Int, OUT>?,
         loadCallback: LoadCallback<Int, OUT>?,
-        offset: Int = 0
+        loadSize: Int,
+        offset: Int
     ) {
         scope.launch {
             try {
                 var httpError = false
-                val response = getRequest(offset).await()
+                val response = request(loadSize, offset).await()
                 when {
                     response.code() == 200 -> {
                         val body = response.body()
                         if (body != null) {
-                            val entities = PageMapper(getMap()).mapTo(body)
-                            val nextOffset = entities.offset + SEARCH_LIMIT
+                            val entities = PageMapper(map()).mapTo(body)
+                            val nextOffset = entities.offset + loadSize
                             val nextPageKey = if (entities.count > nextOffset) nextOffset else null
 
                             if (loadInitialCallback != null) {
@@ -65,7 +62,7 @@ abstract class BaseSearchDataSource<IN, OUT, T : BaseSearchResponse<IN>> : PageK
                         val retryAfter = response.headers().get("retry-after")
                         if (retryAfter != null && retryAfter != "") {
                             delay(retryAfter.toLong() * 1000 + extraTimeout)
-                            call(loadInitialCallback, loadCallback, offset)
+                            call(loadInitialCallback, loadCallback, loadSize, offset)
                         } else {
                             httpError = true
                         }

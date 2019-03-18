@@ -13,10 +13,10 @@ import app.mediabrainz.domain.parenthesesString
 
 class ArtistSearchDataSource(val query: String) : BaseSearchDataSource<ArtistResponse, Artist, ArtistSearchResponse>() {
 
-    override fun getRequest(offset: Int) = ApiRequestProvider.createArtistSearchRequest()
-        .search(parenthesesString(query), Companion.SEARCH_LIMIT, offset)
+    override fun request(loadSize: Int, offset: Int) = ApiRequestProvider.createArtistSearchRequest()
+        .search(parenthesesString(query), loadSize, offset)
 
-    override fun getMap() = ArtistMapper()::mapTo
+    override fun map() = ArtistMapper()::mapTo
 
     class Factory(val query: String) : DataSource.Factory<Int, Artist>() {
         val dataSourceLiveData = MutableLiveData<ArtistSearchDataSource>()
