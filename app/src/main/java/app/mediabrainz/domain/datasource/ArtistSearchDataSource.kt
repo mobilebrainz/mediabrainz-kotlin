@@ -19,7 +19,7 @@ class ArtistSearchDataSource(val query: String) : BaseSearchDataSource<ArtistRes
     override fun map() = ArtistMapper()::mapTo
 
     class Factory(val query: String) : DataSource.Factory<Int, Artist>() {
-        val dataSourceLiveData = MutableLiveData<ArtistSearchDataSource>()
+        val dataSourceLiveData = MutableLiveData<DataSourceInterface>()
 
         override fun create(): PageKeyedDataSource<Int, Artist> {
             val dataSource = ArtistSearchDataSource(query)

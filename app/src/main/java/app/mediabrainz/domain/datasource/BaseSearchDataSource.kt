@@ -11,10 +11,15 @@ import retrofit2.HttpException
 import retrofit2.Response
 
 
-abstract class BaseSearchDataSource<IN, OUT, T : BaseSearchResponse<IN>> : PageKeyedDataSource<Int, OUT>() {
+abstract class BaseSearchDataSource<IN, OUT, T : BaseSearchResponse<IN>> :
+    PageKeyedDataSource<Int, OUT>(),
+    DataSourceInterface {
 
-    val initialLoadState = MutableLiveData<NetworkState>()
-    val afterLoadState = MutableLiveData<NetworkState>()
+    private val initialLoadState = MutableLiveData<NetworkState>()
+    override fun initialLoadState() = initialLoadState
+
+    private val afterLoadState = MutableLiveData<NetworkState>()
+    override fun afterLoadState() = afterLoadState
 
     private var isInitialLoad: Boolean = false
     private val extraTimeout = 250L
@@ -53,11 +58,15 @@ abstract class BaseSearchDataSource<IN, OUT, T : BaseSearchResponse<IN>> : PageK
         call(null, callback, loadSize, offset)
 
 
-    fun retry() {
+    override fun retry() {
         retryAction?.let {
             postLoading()
             it.invoke()
         }
+    }
+
+    override fun refresh() {
+        invalidate()
     }
 
     private fun call(
@@ -136,7 +145,7 @@ abstract class BaseSearchDataSource<IN, OUT, T : BaseSearchResponse<IN>> : PageK
         }
     }
 
-    fun cancelJob() {
+    override fun cancelJob() {
         job.cancel()
     }
 }
