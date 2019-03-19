@@ -11,11 +11,4 @@ class RecordingMapper {
         recording
     }
 
-    fun mapToList(responseList: List<RecordingResponse>): List<Recording> {
-        val recordings = ArrayList<Recording>()
-        for (response in responseList) {
-            recordings.add(mapTo(response))
-        }
-        return recordings
-    }
 }

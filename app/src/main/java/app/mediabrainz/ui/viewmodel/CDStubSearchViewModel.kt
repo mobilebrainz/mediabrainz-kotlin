@@ -1,37 +1,36 @@
 package app.mediabrainz.ui.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import app.mediabrainz.domain.model.CDStub
 import app.mediabrainz.domain.repository.CDStubSearchRepository
+import app.mediabrainz.domain.repository.Resource
 
 
 class CDStubSearchViewModel : ViewModel() {
 
-    private val cdstubSearchRepository = CDStubSearchRepository()
-    val cdstubResource = cdstubSearchRepository.mutableLiveData
+    private val cdStubSearchRepository = CDStubSearchRepository()
+    val cdStubResource: MutableLiveData<Resource<List<CDStub>>> = MutableLiveData()
 
     private var query: String = ""
-    private var limit: Int = 0
-    private var offset: Int = 0
 
-    fun searchCDStub(query: String, limit: Int, offset: Int) {
-        if (cdstubResource.value == null || this.query != query || this.offset != offset) {
+    fun searchCDStub(query: String) {
+        if (cdStubResource.value != null || this.query != query) {
             this.query = query
-            this.limit = limit
-            this.offset = offset
             searchCDStub()
         }
     }
 
     // retry when error
     fun searchCDStub() {
-        if (query != "" && limit > 0) {
-            cdstubSearchRepository.search(query, limit, offset)
+        if (query != "") {
+            cdStubSearchRepository.search(cdStubResource, query)
         }
     }
 
     override fun onCleared() {
         super.onCleared()
-        cdstubSearchRepository.cancelJob()
+        cdStubSearchRepository.cancelJob()
     }
 
 }

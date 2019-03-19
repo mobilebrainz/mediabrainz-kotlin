@@ -7,7 +7,7 @@ import app.mediabrainz.domain.datasource.ArtistSearchDataSource
 import app.mediabrainz.domain.model.Artist
 
 
-class ArtistSearchVM : BaseDataSourceViewModel() {
+class PagedArtistSearchViewModel : BaseDataSourceViewModel() {
 
     private val initialLoadSize = 25
     private val loadSize = 25

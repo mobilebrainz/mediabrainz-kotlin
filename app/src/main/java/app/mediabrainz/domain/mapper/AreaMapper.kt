@@ -11,11 +11,4 @@ class AreaMapper {
         area
     }
 
-    fun mapToList(responseList: List<AreaResponse>): List<Area> {
-        val areas = ArrayList<Area>()
-        for (response in responseList) {
-            areas.add(mapTo(response))
-        }
-        return areas
-    }
 }

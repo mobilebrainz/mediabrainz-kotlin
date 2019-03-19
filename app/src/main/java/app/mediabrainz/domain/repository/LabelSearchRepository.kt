@@ -1,25 +1,27 @@
 package app.mediabrainz.domain.repository
 
+import androidx.lifecycle.MutableLiveData
 import app.mediabrainz.api.ApiRequestProvider
-import app.mediabrainz.api.response.LabelSearchResponse
+import app.mediabrainz.api.response.LabelResponse
 import app.mediabrainz.domain.mapper.LabelMapper
+import app.mediabrainz.domain.mapper.PageMapper
 import app.mediabrainz.domain.model.Label
 import app.mediabrainz.domain.parenthesesString
 
 
-class LabelSearchRepository : BaseApiRepository<LabelSearchResponse, List<Label>>() {
+class LabelSearchRepository : BaseApiRepository() {
 
-    fun search(query: String, limit: Int, offset: Int) {
-        mutableLiveData.value = Resource.loading()
-        recursiveSearch(query, limit, offset)
-    }
-
-    private fun recursiveSearch(query: String, limit: Int, offset: Int) {
-        val request = ApiRequestProvider.createLabelSearchRequest()
-            .search(parenthesesString(query), limit, offset)
-        call(request,
-            { recursiveSearch(query, limit, offset) },
-            { LabelMapper().mapToList(labels) })
+    fun search(mutableLiveData: MutableLiveData<Resource<List<Label>>>, query: String) {
+        val limit = 100
+        call(mutableLiveData,
+            {
+                ApiRequestProvider.createLabelSearchRequest()
+                    .search(parenthesesString(query), limit, 0)
+            },
+            {
+                PageMapper<LabelResponse, Label> { LabelMapper().mapTo(it) }.mapToList(getItems())
+            }
+        )
     }
 
 }

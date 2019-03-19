@@ -11,11 +11,4 @@ class EventMapper {
         event
     }
 
-    fun mapToList(responseList: List<EventResponse>): List<Event> {
-        val events = ArrayList<Event>()
-        for (response in responseList) {
-            events.add(mapTo(response))
-        }
-        return events
-    }
 }

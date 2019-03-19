@@ -1,31 +1,30 @@
 package app.mediabrainz.ui.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import app.mediabrainz.domain.model.Event
 import app.mediabrainz.domain.repository.EventSearchRepository
+import app.mediabrainz.domain.repository.Resource
 
 
 class EventSearchViewModel : ViewModel() {
 
     private val eventSearchRepository = EventSearchRepository()
-    val eventsResource = eventSearchRepository.mutableLiveData
+    val eventResource: MutableLiveData<Resource<List<Event>>> = MutableLiveData()
 
     private var query: String = ""
-    private var limit: Int = 0
-    private var offset: Int = 0
 
-    fun searchEvent(query: String, limit: Int, offset: Int) {
-        if (eventsResource.value == null || this.query != query || this.offset != offset) {
+    fun searchEvent(query: String) {
+        if (eventResource.value != null || this.query != query) {
             this.query = query
-            this.limit = limit
-            this.offset = offset
             searchEvent()
         }
     }
 
     // retry when error
     fun searchEvent() {
-        if (query != "" && limit > 0) {
-            eventSearchRepository.search(query, limit, offset)
+        if (query != "") {
+            eventSearchRepository.search(eventResource, query)
         }
     }
 

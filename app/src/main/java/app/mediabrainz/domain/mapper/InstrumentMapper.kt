@@ -11,11 +11,4 @@ class InstrumentMapper {
         instrument
     }
 
-    fun mapToList(responseList: List<InstrumentResponse>): List<Instrument> {
-        val instruments = ArrayList<Instrument>()
-        for (response in responseList) {
-            instruments.add(mapTo(response))
-        }
-        return instruments
-    }
 }

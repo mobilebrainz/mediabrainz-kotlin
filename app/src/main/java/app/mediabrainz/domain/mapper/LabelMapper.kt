@@ -11,11 +11,4 @@ class LabelMapper {
         label
     }
 
-    fun mapToList(responseList: List<LabelResponse>): List<Label> {
-        val labels = ArrayList<Label>()
-        for (response in responseList) {
-            labels.add(mapTo(response))
-        }
-        return labels
-    }
 }

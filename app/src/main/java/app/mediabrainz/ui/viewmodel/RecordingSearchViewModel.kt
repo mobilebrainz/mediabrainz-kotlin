@@ -1,42 +1,40 @@
 package app.mediabrainz.ui.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import app.mediabrainz.domain.model.Recording
 import app.mediabrainz.domain.repository.RecordingSearchRepository
+import app.mediabrainz.domain.repository.Resource
 
 
 class RecordingSearchViewModel : ViewModel() {
 
     private val recordingSearchRepository = RecordingSearchRepository()
-    val recordingsResource = recordingSearchRepository.mutableLiveData
+    val recordingsResource: MutableLiveData<Resource<List<Recording>>> = MutableLiveData()
 
     private var artistQuery: String = ""
     private var releaseQuery: String = ""
     private var recordingQuery: String = ""
-    private var limit: Int = 0
-    private var offset: Int = 0
 
-    fun searchRecording(recording: String, limit: Int, offset: Int) {
-        searchRecording("", "", recording, limit, offset)
+    fun searchRecording(recording: String) {
+        searchRecording("", "", recording)
     }
 
-    fun searchRecording(artist: String, release: String, recording: String, limit: Int, offset: Int) {
+    fun searchRecording(artist: String, release: String, recording: String) {
         if (recordingsResource.value == null
             || artistQuery != artist || releaseQuery != release || recordingQuery != recording
-            || this.offset != offset
         ) {
             this.artistQuery = artist
             this.releaseQuery = release
             this.recordingQuery = recording
-            this.limit = limit
-            this.offset = offset
             searchRecording()
         }
     }
 
     // retry when error
     fun searchRecording() {
-        if (recordingQuery != "" && limit > 0) {
-            recordingSearchRepository.search(artistQuery, releaseQuery, recordingQuery, limit, offset)
+        if (recordingQuery != "") {
+            recordingSearchRepository.search(recordingsResource, artistQuery, releaseQuery, recordingQuery)
         }
     }
 

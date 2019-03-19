@@ -11,11 +11,4 @@ class CDStubMapper {
         cdstub
     }
 
-    fun mapToList(responseList: List<CDStubResponse>): List<CDStub> {
-        val cdstubs = ArrayList<CDStub>()
-        for (response in responseList) {
-            cdstubs.add(mapTo(response))
-        }
-        return cdstubs
-    }
 }

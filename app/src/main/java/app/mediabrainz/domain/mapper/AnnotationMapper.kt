@@ -11,11 +11,4 @@ class AnnotationMapper {
         annotation
     }
 
-    fun mapToList(responseList: List<AnnotationResponse>): List<Annotation> {
-        val annotations = ArrayList<Annotation>()
-        for (response in responseList) {
-            annotations.add(mapTo(response))
-        }
-        return annotations
-    }
 }

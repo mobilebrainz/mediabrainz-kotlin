@@ -14,14 +14,14 @@ import app.mediabrainz.domain.datasource.NetworkState.Status.ERROR
 import app.mediabrainz.domain.datasource.NetworkState.Status.LOADING
 import app.mediabrainz.ui.R
 import app.mediabrainz.ui.adapter.ArtistSearchAdapter
-import app.mediabrainz.ui.viewmodel.ArtistSearchVM
+import app.mediabrainz.ui.viewmodel.PagedArtistSearchViewModel
 
 
 class SearchFragment : BaseFragment() {
 
     private var isLoading: Boolean = false
     private lateinit var adapter: ArtistSearchAdapter
-    private lateinit var viewModel: ArtistSearchVM
+    private lateinit var viewModel: PagedArtistSearchViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
@@ -37,7 +37,7 @@ class SearchFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this).get(ArtistSearchVM::class.java)
+        viewModel = ViewModelProviders.of(this).get(PagedArtistSearchViewModel::class.java)
         viewModel.search("Black")
 
         adapter = ArtistSearchAdapter()
@@ -45,7 +45,7 @@ class SearchFragment : BaseFragment() {
 
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.isNestedScrollingEnabled = true
-        recyclerView.setItemViewCacheSize(100)
+        //recyclerView.setItemViewCacheSize(10)
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
 

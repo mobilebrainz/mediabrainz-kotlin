@@ -1,37 +1,38 @@
 package app.mediabrainz.domain.repository
 
-import androidx.core.view.OneShotPreDrawListener.add
-import app.mediabrainz.api.response.ArtistSearchResponse
+import androidx.lifecycle.MutableLiveData
 import app.mediabrainz.api.ApiRequestProvider
-import app.mediabrainz.api.response.ReleaseGroupSearchResponse
-import app.mediabrainz.api.searchrequest.ReleaseGroupSearchField
-import app.mediabrainz.domain.mapper.ArtistMapper
+import app.mediabrainz.api.response.ReleaseGroupResponse
+import app.mediabrainz.api.searchrequest.ReleaseGroupSearchField.ARTIST
+import app.mediabrainz.api.searchrequest.ReleaseGroupSearchField.RELEASE_GROUP
+import app.mediabrainz.domain.mapper.PageMapper
 import app.mediabrainz.domain.mapper.ReleaseGroupMapper
-import app.mediabrainz.domain.model.Artist
 import app.mediabrainz.domain.model.ReleaseGroup
 import app.mediabrainz.domain.parenthesesString
 
 
-class ReleaseGroupSearchRepository : BaseApiRepository<ReleaseGroupSearchResponse, List<ReleaseGroup>>() {
+class ReleaseGroupSearchRepository : BaseApiRepository() {
 
-    fun search(rg: String, limit: Int, offset: Int) {
-        mutableLiveData.value = Resource.loading()
-        recursiveSearch("", rg, limit,  offset)
+    fun search(mutableLiveData: MutableLiveData<Resource<List<ReleaseGroup>>>, rg: String) {
+        search(mutableLiveData, "", rg)
     }
 
-    fun search(artist: String, rg: String, limit: Int, offset: Int) {
-        mutableLiveData.value = Resource.loading()
-        recursiveSearch(artist, rg, limit,  offset)
-    }
-
-    private fun recursiveSearch(artist: String, rg: String, limit: Int, offset: Int) {
-        val request = ApiRequestProvider.createReleaseGroupSearchRequest()
-            .add(ReleaseGroupSearchField.ARTIST, parenthesesString(artist))
-            .add(ReleaseGroupSearchField.RELEASE_GROUP, parenthesesString(rg))
-            .search(limit, offset)
-        call(request,
-            { recursiveSearch(artist, rg, limit, offset) },
-            { ReleaseGroupMapper().mapToList(releaseGroups) })
+    fun search(
+        mutableLiveData: MutableLiveData<Resource<List<ReleaseGroup>>>,
+        artist: String, rg: String
+    ) {
+        val limit = 100
+        call(mutableLiveData,
+            {
+                ApiRequestProvider.createReleaseGroupSearchRequest()
+                    .add(ARTIST, parenthesesString(artist))
+                    .add(RELEASE_GROUP, parenthesesString(rg))
+                    .search(limit, 0)
+            },
+            {
+                PageMapper<ReleaseGroupResponse, ReleaseGroup> { ReleaseGroupMapper().mapTo(it) }.mapToList(getItems())
+            }
+        )
     }
 
 }

@@ -6,25 +6,35 @@ import retrofit2.HttpException
 import retrofit2.Response
 
 
-abstract class BaseApiRepository<IN, OUT> {
+abstract class BaseApiRepository {
 
     private val extraTimeout = 250L
-
-    val mutableLiveData: MutableLiveData<Resource<OUT>> = MutableLiveData()
-
     private val job = Job()
     private val scope = CoroutineScope(Dispatchers.IO + job)
     //private val scope = CoroutineScope(Dispatchers.Default + job)
 
-    protected fun call(
-        deferred: Deferred<Response<IN>>,
-        action503: () -> Unit,
+    protected fun <IN, OUT> call(
+        mutableLiveData: MutableLiveData<Resource<OUT>>,
+        deferred: () -> Deferred<Response<IN>>,
+        map: IN.() -> OUT
+    ) {
+        mutableLiveData.value = Resource.loading()
+        launch(mutableLiveData, deferred, map)
+    }
+
+    fun cancelJob() {
+        job.cancel()
+    }
+
+    private fun <IN, OUT> launch(
+        mutableLiveData: MutableLiveData<Resource<OUT>>,
+        deferred: () -> Deferred<Response<IN>>,
         map: IN.() -> OUT
     ) {
         scope.launch {
             try {
                 var httpError = false
-                val response = deferred.await()
+                val response = deferred.invoke().await()
                 when {
                     response.code() == 200 -> {
                         val body = response.body()
@@ -38,7 +48,7 @@ abstract class BaseApiRepository<IN, OUT> {
                         val retryAfter = response.headers().get("retry-after")
                         if (retryAfter != null && retryAfter != "") {
                             delay(retryAfter.toLong() * 1000 + extraTimeout)
-                            action503.invoke()
+                            launch(mutableLiveData, deferred, map)
                         } else {
                             httpError = true
                         }
@@ -56,10 +66,6 @@ abstract class BaseApiRepository<IN, OUT> {
                 mutableLiveData.postValue(Resource.error("Application Error!"))
             }
         }
-    }
-
-    fun cancelJob() {
-        job.cancel()
     }
 
 }

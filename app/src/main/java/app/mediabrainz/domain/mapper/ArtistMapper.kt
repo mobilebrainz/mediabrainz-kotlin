@@ -11,11 +11,4 @@ class ArtistMapper {
         artist
     }
 
-    fun mapToList(responseList: List<ArtistResponse>): List<Artist> {
-        val artists = ArrayList<Artist>()
-        for (response in responseList) {
-            artists.add(mapTo(response))
-        }
-        return artists
-    }
 }

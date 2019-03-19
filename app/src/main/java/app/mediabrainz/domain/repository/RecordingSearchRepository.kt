@@ -1,44 +1,46 @@
 package app.mediabrainz.domain.repository
 
+import androidx.lifecycle.MutableLiveData
 import app.mediabrainz.api.ApiRequestProvider
-import app.mediabrainz.api.response.RecordingSearchResponse
-import app.mediabrainz.api.search.LuceneOperator
-import app.mediabrainz.api.search.LuceneOperator.*
+import app.mediabrainz.api.response.RecordingResponse
 import app.mediabrainz.api.searchrequest.RecordingSearchField.*
+import app.mediabrainz.domain.mapper.PageMapper
 import app.mediabrainz.domain.mapper.RecordingMapper
 import app.mediabrainz.domain.model.Recording
 import app.mediabrainz.domain.parenthesesString
 
 
-class RecordingSearchRepository : BaseApiRepository<RecordingSearchResponse, List<Recording>>() {
+class RecordingSearchRepository : BaseApiRepository() {
 
-    fun search(recording: String, limit: Int, offset: Int) {
-        mutableLiveData.value = Resource.loading()
-        recursiveSearch("", "", recording, limit, offset)
+    fun search(mutableLiveData: MutableLiveData<Resource<List<Recording>>>, recording: String) {
+        search(mutableLiveData,"", "", recording)
     }
 
-    fun search(artist: String, release: String, recording: String, limit: Int, offset: Int) {
-        mutableLiveData.value = Resource.loading()
-        recursiveSearch(artist, release, recording, limit, offset)
-    }
-
-    private fun recursiveSearch(artist: String, release: String, recording: String, limit: Int, offset: Int) {
-        val deferred = (ApiRequestProvider.createRecordingSearchRequest() +
-                (ARTIST to parenthesesString(artist)) +
-                (RELEASE to parenthesesString(release)) +
-                (RECORDING to parenthesesString(recording)))
-            .search(limit, offset)
+    fun search(
+        mutableLiveData: MutableLiveData<Resource<List<Recording>>>,
+        artist: String, release: String, recording: String
+    ) {
+        val limit = 100
+        val deferred = {
+            (ApiRequestProvider.createRecordingSearchRequest() +
+                    (ARTIST to parenthesesString(artist)) +
+                    (RELEASE to parenthesesString(release)) +
+                    (RECORDING to parenthesesString(recording)))
+                .search(limit, 0)
+        }
 
         /*
-        val deferred = ApiRequestProvider.createRecordingSearchRequest()
+        val deferred = {ApiRequestProvider.createRecordingSearchRequest()
             .add(ARTIST, parenthesesString(artist))
             .add(RELEASE, parenthesesString(release))
             .add(RECORDING, parenthesesString(recording))
-            .search(limit, offset)
+            .search(limit, 0)}
         */
-        call(deferred,
-            { recursiveSearch(artist, release, recording, limit, offset) },
-            { RecordingMapper().mapToList(recordings) })
+        call(mutableLiveData, deferred,
+            {
+                PageMapper<RecordingResponse, Recording> { RecordingMapper().mapTo(it) }.mapToList(getItems())
+            }
+        )
     }
 
 }

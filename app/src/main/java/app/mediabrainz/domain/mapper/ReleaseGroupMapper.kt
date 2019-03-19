@@ -11,11 +11,4 @@ class ReleaseGroupMapper {
         rg
     }
 
-    fun mapToList(responseList: List<ReleaseGroupResponse>): List<ReleaseGroup> {
-        val releaseGroups = ArrayList<ReleaseGroup>()
-        for (response in responseList) {
-            releaseGroups.add(mapTo(response))
-        }
-        return releaseGroups
-    }
 }

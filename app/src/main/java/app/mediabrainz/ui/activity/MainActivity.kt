@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import app.mediabrainz.domain.repository.Resource
 import app.mediabrainz.domain.repository.Resource.Status.*
 import app.mediabrainz.ui.R
 import app.mediabrainz.ui.viewmodel.*
@@ -16,9 +15,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        /*
-        val vm = ViewModelProviders.of(this).get(ArtistSearchViewModel::class.java)
-        vm.artistsResource.observe(this, Observer {
+
+        val vm = ViewModelProviders.of(this).get(ReleaseGroupSearchViewModel::class.java)
+        vm.releaseGroupsResource.observe(this, Observer {
             when (it.status) {
                 LOADING -> Log.i("", "")
                 SUCCESS -> {
@@ -28,7 +27,7 @@ class MainActivity : AppCompatActivity() {
                 ERROR -> Log.i("", "")
             }
         })
-        vm.searchArtist("Black Sabbath", 25, 0)
-        */
+        vm.searchReleaseGroup("iron")
+
     }
 }

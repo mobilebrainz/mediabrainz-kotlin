@@ -1,25 +1,27 @@
 package app.mediabrainz.domain.repository
 
+import androidx.lifecycle.MutableLiveData
 import app.mediabrainz.api.ApiRequestProvider
-import app.mediabrainz.api.response.AreaSearchResponse
+import app.mediabrainz.api.response.AreaResponse
 import app.mediabrainz.domain.mapper.AreaMapper
+import app.mediabrainz.domain.mapper.PageMapper
 import app.mediabrainz.domain.model.Area
 import app.mediabrainz.domain.parenthesesString
 
 
-class AreaSearchRepository : BaseApiRepository<AreaSearchResponse, List<Area>>() {
+class AreaSearchRepository : BaseApiRepository() {
 
-    fun search(query: String, limit: Int, offset: Int) {
-        mutableLiveData.value = Resource.loading()
-        recursiveSearch(query, limit, offset)
-    }
-
-    private fun recursiveSearch(query: String, limit: Int, offset: Int) {
-        val request = ApiRequestProvider.createAreaSearchRequest()
-            .search(parenthesesString(query), limit, offset)
-        call(request,
-            { recursiveSearch(query, limit, offset) },
-            { AreaMapper().mapToList(areas) })
+    fun search(mutableLiveData: MutableLiveData<Resource<List<Area>>>, query: String) {
+        val limit = 100
+        call(mutableLiveData,
+            {
+                ApiRequestProvider.createAreaSearchRequest()
+                    .search(parenthesesString(query), limit, 0)
+            },
+            {
+                PageMapper<AreaResponse, Area> { AreaMapper().mapTo(it) }.mapToList(getItems())
+            }
+        )
     }
 
 }

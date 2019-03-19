@@ -1,25 +1,27 @@
 package app.mediabrainz.domain.repository
 
+import androidx.lifecycle.MutableLiveData
 import app.mediabrainz.api.ApiRequestProvider
-import app.mediabrainz.api.response.ArtistSearchResponse
+import app.mediabrainz.api.response.ArtistResponse
 import app.mediabrainz.domain.mapper.ArtistMapper
+import app.mediabrainz.domain.mapper.PageMapper
 import app.mediabrainz.domain.model.Artist
 import app.mediabrainz.domain.parenthesesString
 
 
-class ArtistSearchRepository : BaseApiRepository<ArtistSearchResponse, List<Artist>>() {
+class ArtistSearchRepository : BaseApiRepository() {
 
-    fun search(artist: String, limit: Int, offset: Int) {
-        mutableLiveData.value = Resource.loading()
-        recursiveSearch(artist, limit, offset)
-    }
-
-    private fun recursiveSearch(artist: String, limit: Int, offset: Int) {
-        val request = ApiRequestProvider.createArtistSearchRequest()
-            .search(parenthesesString(artist), limit, offset)
-        call(request,
-            { recursiveSearch(artist, limit, offset) },
-            { ArtistMapper().mapToList(getItems()) })
+    fun search(mutableLiveData: MutableLiveData<Resource<List<Artist>>>, query: String) {
+        val limit = 100
+        call(mutableLiveData,
+            {
+                ApiRequestProvider.createArtistSearchRequest()
+                    .search(parenthesesString(query), limit, 0)
+            },
+            {
+                PageMapper<ArtistResponse, Artist> { ArtistMapper().mapTo(it) }.mapToList(getItems())
+            }
+        )
     }
 
 }

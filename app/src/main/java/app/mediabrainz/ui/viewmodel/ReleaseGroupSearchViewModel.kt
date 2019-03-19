@@ -1,39 +1,36 @@
 package app.mediabrainz.ui.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import app.mediabrainz.domain.model.ReleaseGroup
 import app.mediabrainz.domain.repository.ReleaseGroupSearchRepository
+import app.mediabrainz.domain.repository.Resource
 
 
 class ReleaseGroupSearchViewModel : ViewModel() {
 
     private val rgSearchRepository = ReleaseGroupSearchRepository()
-    val releaseGroupsResource = rgSearchRepository.mutableLiveData
+    val releaseGroupsResource: MutableLiveData<Resource<List<ReleaseGroup>>> = MutableLiveData()
 
     private var artistQuery: String = ""
     private var rgQuery: String = ""
-    private var limit: Int = 0
-    private var offset: Int = 0
 
-    fun searchReleaseGroup(rg: String, limit: Int, offset: Int) {
-        searchReleaseGroup("", rg, limit, offset)
+    fun searchReleaseGroup(rg: String) {
+        searchReleaseGroup("", rg)
     }
 
-    fun searchReleaseGroup(artist: String, rg: String, limit: Int, offset: Int) {
-        if (releaseGroupsResource.value == null
-            || artistQuery != artist || rgQuery != rg || this.offset != offset
-        ) {
+    fun searchReleaseGroup(artist: String, rg: String) {
+        if (releaseGroupsResource.value == null || artistQuery != artist || rgQuery != rg) {
             this.artistQuery = artist
             this.rgQuery = rg
-            this.limit = limit
-            this.offset = offset
             searchReleaseGroup()
         }
     }
 
     // retry when error
     fun searchReleaseGroup() {
-        if (rgQuery != "" && limit > 0) {
-            rgSearchRepository.search(artistQuery, rgQuery, limit, offset)
+        if (rgQuery != "") {
+            rgSearchRepository.search(releaseGroupsResource, artistQuery, rgQuery)
         }
     }
 
