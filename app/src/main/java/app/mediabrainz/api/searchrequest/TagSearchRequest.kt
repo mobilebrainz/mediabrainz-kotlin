@@ -7,10 +7,15 @@ import app.mediabrainz.api.retrofit.SearchRequestService
 import app.mediabrainz.api.search.BaseSearchRequest
 import app.mediabrainz.api.search.SearchFieldInterface
 
-
+/**
+ * Require only digest autorization.
+ *  new TagSearchService().search("rock")
+ *  new TagSearchService().search("rock", 1, 10)
+ */
 class TagSearchRequest :
     BaseSearchRequest<TagSearchResponse, TagSearchField>() {
 
+    //todo: make digest autorization!!!
     override fun search() = WebService
         .createJsonRetrofitService(SearchRequestService::class.java, Config.WEB_SERVICE)
         .searchTag(buildParams())

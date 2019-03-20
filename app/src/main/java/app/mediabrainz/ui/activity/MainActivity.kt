@@ -7,7 +7,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import app.mediabrainz.domain.repository.Resource.Status.*
 import app.mediabrainz.ui.R
-import app.mediabrainz.ui.viewmodel.SeriesSearchViewModel
+import app.mediabrainz.ui.viewmodel.UrlSearchViewModel
+import app.mediabrainz.ui.viewmodel.WorkSearchViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,8 +17,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        val vm = ViewModelProviders.of(this).get(SeriesSearchViewModel::class.java)
-        vm.seriesResource.observe(this, Observer {
+        val vm = ViewModelProviders.of(this).get(WorkSearchViewModel::class.java)
+        vm.workResource.observe(this, Observer {
             when (it.status) {
                 LOADING -> Log.i("", "")
                 SUCCESS -> {
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
                 ERROR -> Log.i("", "")
             }
         })
-        vm.searchSeries("black")
+        vm.searchWork("black")
 
     }
 }
