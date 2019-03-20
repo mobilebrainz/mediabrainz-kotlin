@@ -74,7 +74,7 @@ data class ReleaseEventResponse(
     @field:Json(name = "area") val area: AreaResponse?
 )
 
-enum class Status(val status: String) {
+enum class ReleaseStatus(val status: String) {
     OFFICIAL("official"),
     PROMOTIONAL("promotional"),
     BOOTLEG("bootleg"),
@@ -84,7 +84,7 @@ enum class Status(val status: String) {
 }
 
 // TODO: Check all types. (is "normal" type?)
-enum class DataQuality(val quality: String) {
+enum class ReleaseDataQuality(val quality: String) {
     HIGH_QUALITY("High quality"),
     DEFAULT_QUALITY("Default quality"),
     LOW_QUALITY("Low quality");

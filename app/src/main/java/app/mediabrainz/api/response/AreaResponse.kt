@@ -26,6 +26,8 @@ data class AreaResponse(
     @field:Json(name = "tags") val tags: List<TagResponse>?,
     //inc=user-tags
     @field:Json(name = "user-tags") val userTags: List<TagResponse>?,
+    //in search
+    @field:Json(name = "relation-list") val relationList: List<RelationList>?,
     //inc=...-rels
     @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface

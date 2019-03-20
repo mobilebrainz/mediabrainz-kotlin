@@ -19,6 +19,7 @@ object Config {
     const val RELEASE_QUERY = WEB_SERVICE_PREFIX + "release"
     const val RELEASE_GROUP_QUERY = WEB_SERVICE_PREFIX + "release-group"
     const val TAG_QUERY = WEB_SERVICE_PREFIX + "tag"
+    const val url_QUERY = WEB_SERVICE_PREFIX + "url"
     const val WORK_QUERY = WEB_SERVICE_PREFIX + "work"
     const val EVENT_QUERY = WEB_SERVICE_PREFIX + "event"
     const val ISRC_QUERY = WEB_SERVICE_PREFIX + "isrc"

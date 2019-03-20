@@ -13,6 +13,7 @@ import app.mediabrainz.api.core.Config.RELEASE_GROUP_QUERY
 import app.mediabrainz.api.core.Config.RELEASE_QUERY
 import app.mediabrainz.api.core.Config.SERIES_QUERY
 import app.mediabrainz.api.core.Config.TAG_QUERY
+import app.mediabrainz.api.core.Config.URL_QUERY
 import app.mediabrainz.api.core.Config.WORK_QUERY
 import app.mediabrainz.api.response.*
 import kotlinx.coroutines.Deferred
@@ -64,5 +65,8 @@ interface SearchRequestService {
 
     @GET(WORK_QUERY)
     fun searchWork(@QueryMap params: Map<String, String>): Deferred<Response<WorkSearchResponse>>
+
+    @GET(URL_QUERY)
+    fun searchUrl(@QueryMap params: Map<String, String>): Deferred<Response<UrlSearchResponse>>
 
 }

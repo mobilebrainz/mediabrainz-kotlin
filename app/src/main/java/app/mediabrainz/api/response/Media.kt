@@ -17,7 +17,7 @@ data class Media(
 )
 
 // TODO: add formats
-enum class FormatType(val format: String) {
+enum class MediaFormatType(val format: String) {
     CD("CD"),
     DIGITAL_MEDIA("Digital Media"),
     VINYL("Vinyl");

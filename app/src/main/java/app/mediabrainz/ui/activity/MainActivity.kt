@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import app.mediabrainz.domain.repository.Resource.Status.*
 import app.mediabrainz.ui.R
-import app.mediabrainz.ui.viewmodel.*
+import app.mediabrainz.ui.viewmodel.SeriesSearchViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,8 +16,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        val vm = ViewModelProviders.of(this).get(ReleaseGroupSearchViewModel::class.java)
-        vm.releaseGroupsResource.observe(this, Observer {
+        val vm = ViewModelProviders.of(this).get(SeriesSearchViewModel::class.java)
+        vm.seriesResource.observe(this, Observer {
             when (it.status) {
                 LOADING -> Log.i("", "")
                 SUCCESS -> {
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
                 ERROR -> Log.i("", "")
             }
         })
-        vm.searchReleaseGroup("iron")
+        vm.searchSeries("black")
 
     }
 }
