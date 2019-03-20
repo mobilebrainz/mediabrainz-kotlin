@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
+        /*
         val vm = ViewModelProviders.of(this).get(WorkSearchViewModel::class.java)
         vm.workResource.observe(this, Observer {
             when (it.status) {
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
         vm.searchWork("black")
+        */
 
     }
 }
