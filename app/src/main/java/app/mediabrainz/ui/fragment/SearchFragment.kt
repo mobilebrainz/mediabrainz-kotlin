@@ -13,15 +13,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import app.mediabrainz.domain.datasource.core.NetworkState.Status.ERROR
 import app.mediabrainz.domain.datasource.core.NetworkState.Status.LOADING
 import app.mediabrainz.ui.R
-import app.mediabrainz.ui.adapter.ArtistSearchAdapter
-import app.mediabrainz.ui.viewmodel.datasource.PagedArtistSearchViewModel
+import app.mediabrainz.ui.adapter.ItemSearchAdapter
+import app.mediabrainz.ui.viewmodel.datasource.*
 
 
 class SearchFragment : BaseFragment() {
 
     private var isLoading: Boolean = false
-    private lateinit var adapter: ArtistSearchAdapter
-    private lateinit var viewModel: PagedArtistSearchViewModel
+    private lateinit var adapter: ItemSearchAdapter
+    private lateinit var viewModel: PagedWorkSearchViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
@@ -37,10 +37,10 @@ class SearchFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this).get(PagedArtistSearchViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(PagedWorkSearchViewModel::class.java)
         viewModel.search("Black")
 
-        adapter = ArtistSearchAdapter()
+        adapter = ItemSearchAdapter()
         viewModel.pagedItems.observe(this, Observer { adapter.submitList(it) })
 
         recyclerView.layoutManager = LinearLayoutManager(context)

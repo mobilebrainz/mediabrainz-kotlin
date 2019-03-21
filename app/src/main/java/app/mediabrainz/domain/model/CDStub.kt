@@ -1,5 +1,5 @@
 package app.mediabrainz.domain.model
 
-class CDStub(val id: String, val name: String): Entity() {
+class CDStub(val mbid: String, val name: String): Entity() {
 
 }
