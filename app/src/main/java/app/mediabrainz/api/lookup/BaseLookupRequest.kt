@@ -4,14 +4,13 @@ import app.mediabrainz.api.core.Config.FORMAT_JSON
 import app.mediabrainz.api.core.getStringFromList
 import app.mediabrainz.api.lookup.LookupParamType.FORMAT
 import app.mediabrainz.api.lookup.LookupParamType.INC
-import java.util.*
 
 
 abstract class BaseLookupRequest<R, P>(val mbid: String) : LookupRequestInterface<R, P>
         where R : LookupResponseInterface, P : Enum<P>, P : LookupIncTypeInterface {
 
-    val incs: MutableList<LookupIncTypeInterface> = mutableListOf()
-    val params: MutableMap<LookupParamType, String> = mutableMapOf(
+    private val incs: MutableList<LookupIncTypeInterface> = mutableListOf()
+    private val params: MutableMap<LookupParamType, String> = mutableMapOf(
         FORMAT to FORMAT_JSON
     )
 
