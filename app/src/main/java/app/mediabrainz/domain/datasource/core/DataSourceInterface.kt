@@ -1,4 +1,4 @@
-package app.mediabrainz.domain.datasource
+package app.mediabrainz.domain.datasource.core
 
 import androidx.lifecycle.MutableLiveData
 

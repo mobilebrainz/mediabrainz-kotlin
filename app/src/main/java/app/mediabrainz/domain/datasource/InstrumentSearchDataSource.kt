@@ -1,11 +1,10 @@
 package app.mediabrainz.domain.datasource
 
-import androidx.lifecycle.MutableLiveData
-import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
 import app.mediabrainz.api.ApiRequestProvider
 import app.mediabrainz.api.response.InstrumentResponse
 import app.mediabrainz.api.response.InstrumentSearchResponse
+import app.mediabrainz.domain.datasource.core.DataSourceFactory
 import app.mediabrainz.domain.mapper.InstrumentMapper
 import app.mediabrainz.domain.model.Instrument
 import app.mediabrainz.domain.parenthesesString
@@ -19,12 +18,10 @@ class InstrumentSearchDataSource(val query: String) :
 
     override fun map() = InstrumentMapper()::mapTo
 
-    class Factory(val query: String) : DataSource.Factory<Int, Instrument>() {
-        val dataSourceLiveData = MutableLiveData<DataSourceInterface>()
-
+    class Factory(val query: String) : DataSourceFactory<Instrument>() {
         override fun create(): PageKeyedDataSource<Int, Instrument> {
             val dataSource = InstrumentSearchDataSource(query)
-            dataSourceLiveData.postValue(dataSource)
+            setDataSource(dataSource)
             return dataSource
         }
     }

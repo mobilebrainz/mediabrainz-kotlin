@@ -1,11 +1,10 @@
 package app.mediabrainz.domain.datasource
 
-import androidx.lifecycle.MutableLiveData
-import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
 import app.mediabrainz.api.ApiRequestProvider
 import app.mediabrainz.api.response.AnnotationResponse
 import app.mediabrainz.api.response.AnnotationSearchResponse
+import app.mediabrainz.domain.datasource.core.DataSourceFactory
 import app.mediabrainz.domain.mapper.AnnotationMapper
 import app.mediabrainz.domain.model.Annotation
 import app.mediabrainz.domain.parenthesesString
@@ -19,12 +18,10 @@ class AnnotationSearchDataSource(val query: String) :
 
     override fun map() = AnnotationMapper()::mapTo
 
-    class Factory(val query: String) : DataSource.Factory<Int, Annotation>() {
-        val dataSourceLiveData = MutableLiveData<DataSourceInterface>()
-
+    class Factory(val query: String) : DataSourceFactory<Annotation>() {
         override fun create(): PageKeyedDataSource<Int, Annotation> {
             val dataSource = AnnotationSearchDataSource(query)
-            dataSourceLiveData.postValue(dataSource)
+            setDataSource(dataSource)
             return dataSource
         }
     }

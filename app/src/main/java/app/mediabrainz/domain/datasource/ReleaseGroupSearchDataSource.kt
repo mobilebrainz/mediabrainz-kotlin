@@ -1,13 +1,12 @@
 package app.mediabrainz.domain.datasource
 
-import androidx.lifecycle.MutableLiveData
-import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
 import app.mediabrainz.api.ApiRequestProvider
 import app.mediabrainz.api.response.ReleaseGroupResponse
 import app.mediabrainz.api.response.ReleaseGroupSearchResponse
-import app.mediabrainz.api.searchrequest.ReleaseGroupSearchField
-import app.mediabrainz.api.searchrequest.ReleaseGroupSearchField.*
+import app.mediabrainz.api.searchrequest.ReleaseGroupSearchField.ARTIST
+import app.mediabrainz.api.searchrequest.ReleaseGroupSearchField.RELEASE_GROUP
+import app.mediabrainz.domain.datasource.core.DataSourceFactory
 import app.mediabrainz.domain.mapper.ReleaseGroupMapper
 import app.mediabrainz.domain.model.ReleaseGroup
 import app.mediabrainz.domain.parenthesesString
@@ -23,12 +22,10 @@ class ReleaseGroupSearchDataSource(val artist: String, val rg: String) :
 
     override fun map() = ReleaseGroupMapper()::mapTo
 
-    class Factory(val artist: String, val rg: String) : DataSource.Factory<Int, ReleaseGroup>() {
-        val dataSourceLiveData = MutableLiveData<DataSourceInterface>()
-
+    class Factory(val artist: String, val rg: String) : DataSourceFactory<ReleaseGroup>() {
         override fun create(): PageKeyedDataSource<Int, ReleaseGroup> {
             val dataSource = ReleaseGroupSearchDataSource(artist, rg)
-            dataSourceLiveData.postValue(dataSource)
+            setDataSource(dataSource)
             return dataSource
         }
     }

@@ -1,11 +1,10 @@
 package app.mediabrainz.domain.datasource
 
-import androidx.lifecycle.MutableLiveData
-import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
 import app.mediabrainz.api.ApiRequestProvider
 import app.mediabrainz.api.response.LabelResponse
 import app.mediabrainz.api.response.LabelSearchResponse
+import app.mediabrainz.domain.datasource.core.DataSourceFactory
 import app.mediabrainz.domain.mapper.LabelMapper
 import app.mediabrainz.domain.model.Label
 import app.mediabrainz.domain.parenthesesString
@@ -19,12 +18,10 @@ class LabelSearchDataSource(val query: String) :
 
     override fun map() = LabelMapper()::mapTo
 
-    class Factory(val query: String) : DataSource.Factory<Int, Label>() {
-        val dataSourceLiveData = MutableLiveData<DataSourceInterface>()
-
+    class Factory(val query: String) : DataSourceFactory<Label>() {
         override fun create(): PageKeyedDataSource<Int, Label> {
             val dataSource = LabelSearchDataSource(query)
-            dataSourceLiveData.postValue(dataSource)
+            setDataSource(dataSource)
             return dataSource
         }
     }

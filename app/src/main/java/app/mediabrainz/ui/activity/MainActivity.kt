@@ -1,14 +1,8 @@
 package app.mediabrainz.ui.activity
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import app.mediabrainz.domain.repository.Resource.Status.*
 import app.mediabrainz.ui.R
-import app.mediabrainz.ui.viewmodel.UrlSearchViewModel
-import app.mediabrainz.ui.viewmodel.WorkSearchViewModel
 
 class MainActivity : AppCompatActivity() {
 

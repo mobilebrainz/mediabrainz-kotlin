@@ -4,6 +4,8 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import app.mediabrainz.api.response.BaseSearchResponse
+import app.mediabrainz.domain.datasource.core.DataSourceInterface
+import app.mediabrainz.domain.datasource.core.NetworkState
 import app.mediabrainz.domain.mapper.PageMapper
 import app.mediabrainz.ui.R
 import kotlinx.coroutines.*

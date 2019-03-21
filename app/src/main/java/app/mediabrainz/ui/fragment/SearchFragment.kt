@@ -10,11 +10,11 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import app.mediabrainz.domain.datasource.NetworkState.Status.ERROR
-import app.mediabrainz.domain.datasource.NetworkState.Status.LOADING
+import app.mediabrainz.domain.datasource.core.NetworkState.Status.ERROR
+import app.mediabrainz.domain.datasource.core.NetworkState.Status.LOADING
 import app.mediabrainz.ui.R
 import app.mediabrainz.ui.adapter.ArtistSearchAdapter
-import app.mediabrainz.ui.viewmodel.PagedArtistSearchViewModel
+import app.mediabrainz.ui.viewmodel.datasource.PagedArtistSearchViewModel
 
 
 class SearchFragment : BaseFragment() {

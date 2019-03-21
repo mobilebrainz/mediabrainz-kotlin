@@ -1,11 +1,10 @@
 package app.mediabrainz.domain.datasource
 
-import androidx.lifecycle.MutableLiveData
-import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
 import app.mediabrainz.api.ApiRequestProvider
 import app.mediabrainz.api.response.PlaceResponse
 import app.mediabrainz.api.response.PlaceSearchResponse
+import app.mediabrainz.domain.datasource.core.DataSourceFactory
 import app.mediabrainz.domain.mapper.PlaceMapper
 import app.mediabrainz.domain.model.Place
 import app.mediabrainz.domain.parenthesesString
@@ -19,12 +18,10 @@ class PlaceSearchDataSource(val query: String) :
 
     override fun map() = PlaceMapper()::mapTo
 
-    class Factory(val query: String) : DataSource.Factory<Int, Place>() {
-        val dataSourceLiveData = MutableLiveData<DataSourceInterface>()
-
+    class Factory(val query: String) : DataSourceFactory<Place>() {
         override fun create(): PageKeyedDataSource<Int, Place> {
             val dataSource = PlaceSearchDataSource(query)
-            dataSourceLiveData.postValue(dataSource)
+            setDataSource(dataSource)
             return dataSource
         }
     }

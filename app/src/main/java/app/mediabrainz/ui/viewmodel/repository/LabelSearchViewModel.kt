@@ -1,4 +1,4 @@
-package app.mediabrainz.ui.viewmodel
+package app.mediabrainz.ui.viewmodel.repository
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
