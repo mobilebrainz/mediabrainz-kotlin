@@ -1,6 +1,6 @@
 package app.mediabrainz.api.response
 
-import app.mediabrainz.api.lookup.LookupResponseInterface
+import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
 import com.squareup.moshi.Json
 
 
@@ -14,15 +14,25 @@ data class PlaceResponse(
     @field:Json(name = "area") val area: AreaResponse?,
     @field:Json(name = "life-span") val lifeSpan: LifeSpanResponse?,
     @field:Json(name = "disambiguation") val disambiguation: String?,
-    //inc=aliases
+    /**
+     * inc=aliases
+     */
     @field:Json(name = "aliases") val aliases: List<AliasResponse>?,
-    //inc=annotation
+    /**
+     * inc=annotation
+     */
     @field:Json(name = "annotation") val annotation: String?,
-    //inc=tags
+    /**
+     * inc=tags
+     */
     @field:Json(name = "tags") val tags: List<TagResponse>?,
-    //inc=user-tags
+    /**
+     * inc=user-tags
+     */
     @field:Json(name = "user-tags") val userTags: List<TagResponse>?,
-    //inc=...-rels
+    /**
+     * inc=...-rels
+     */
     @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 

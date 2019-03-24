@@ -1,6 +1,6 @@
 package app.mediabrainz.api.response
 
-import app.mediabrainz.api.lookup.LookupResponseInterface
+import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
 import com.squareup.moshi.Json
 
 
@@ -10,6 +10,8 @@ data class DiscResponse(
     @field:Json(name = "sectors") val sectors: Int?,
     @field:Json(name = "offsets") val offsets: List<Int>?,
     @field:Json(name = "releases") val releases : List<ReleaseResponse>?,
-    //inc=...-rels
+    /**
+     * inc=...-rels
+     */
     @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface

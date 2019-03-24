@@ -1,6 +1,6 @@
 package app.mediabrainz.api.response
 
-import app.mediabrainz.api.lookup.LookupResponseInterface
+import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
 import com.squareup.moshi.Json
 
 /**
@@ -25,29 +25,53 @@ data class ReleaseResponse(
     @field:Json(name = "text-representation") val textRepresentation: TextRepresentationResponse?,
     @field:Json(name = "release-events") val releaseEvents: List<ReleaseEventResponse>?,
     @field:Json(name = "quality") val quality: String?,
-    //inc=aliases
+    /**
+     * inc=aliases
+     */
     @field:Json(name = "aliases") val aliases: List<AliasResponse>?,
-    //inc=annotation
+    /**
+     * inc=annotation
+     */
     @field:Json(name = "annotation") val annotation: String?,
-    //inc=tags
+    /**
+     * inc=tags
+     */
     @field:Json(name = "tags") val tags: List<TagResponse>?,
-    //inc=user-tags
+    /**
+     * inc=user-tags
+     */
     @field:Json(name = "user-tags") val userTags: List<TagResponse>?,
-    //inc=genres
+    /**
+     * inc=genres
+     */
     @field:Json(name = "genres") val genres: List<TagResponse>?,
-    //inc=user-genres
+    /**
+     * inc=user-genres
+     */
     @field:Json(name = "user-genres") val userGenres: List<TagResponse>?,
-    //inc=artists || inc=artist-credits
+    /**
+     * inc=artists || inc=artist-credits
+     */
     @field:Json(name = "artist-credit") val artistCredits: List<ArtistCreditResponse>?,
-    //inc=collections
+    /**
+     * inc=collections
+     */
     @field:Json(name = "collections") val collections: List<CollectionResponse>?,
-    //inc=labels
+    /**
+     * inc=labels
+     */
     @field:Json(name = "label-info") val labelInfo: List<LabelInfoResponse>?,
-    //inc=release-groups
+    /**
+     * inc=release-groups
+     */
     @field:Json(name = "release-group") val releaseGroup: ReleaseGroupResponse?,
-    //inc=media, inc=recordings equal inc=media with track infos
+    /**
+     * inc=media, inc=recordings equal inc=media with track infos
+     */
     @field:Json(name = "media") val media: List<Media>?,
-    //inc=...-rels
+    /**
+     * inc=...-rels
+     */
     @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 

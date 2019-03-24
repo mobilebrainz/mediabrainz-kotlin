@@ -12,7 +12,9 @@ data class Media(
     @field:Json(name = "track-count") val trackCount: Int?,
     @field:Json(name = "track-offset") val trackOffset: Int?,
     @field:Json(name = "tracks") val tracks: List<TrackResponse>?,
-    //inc=discs
+    /**
+     * inc=discs
+     */
     @field:Json(name = "discs") val discs: List<DiscResponse>?
 )
 

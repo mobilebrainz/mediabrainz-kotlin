@@ -1,6 +1,6 @@
 package app.mediabrainz.api.response
 
-import app.mediabrainz.api.lookup.LookupResponseInterface
+import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
 import com.squareup.moshi.Json
 
 /**
@@ -18,17 +18,29 @@ data class AreaResponse(
     @field:Json(name = "iso-3166-1-codes") val iso1: List<String>?,
     @field:Json(name = "iso-3166-2-codes") val iso2: List<String>?,
     @field:Json(name = "iso-3166-3-codes") val iso3: List<String>?,
-    //inc=aliases
+    /**
+     * inc=aliases
+     */
     @field:Json(name = "aliases") val aliases: List<AliasResponse>?,
-    //inc=annotation
+    /**
+     * inc=annotation
+     */
     @field:Json(name = "annotation") val annotation: String?,
-    //inc=tags
+    /**
+     * inc=tags
+     */
     @field:Json(name = "tags") val tags: List<TagResponse>?,
-    //inc=user-tags
+    /**
+     * inc=user-tags
+     */
     @field:Json(name = "user-tags") val userTags: List<TagResponse>?,
-    //in search
+    /**
+     * from search requst
+     */
     @field:Json(name = "relation-list") val relationList: List<RelationList>?,
-    //inc=...-rels
+    /**
+     * inc=...-rels
+     */
     @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 

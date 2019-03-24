@@ -1,6 +1,6 @@
 package app.mediabrainz.api.response
 
-import app.mediabrainz.api.lookup.LookupResponseInterface
+import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
 import com.squareup.moshi.Json
 
 /**
@@ -23,27 +23,49 @@ data class RecordingResponse(
      */
     @field:Json(name = "isrcs") val isrcs: List<String>?, // from lookup inc=isrcs
     //@Json(name = "isrcs") val isrcs: List<ISRCResponse> = ArrayList(), // from search query=isrc - ERROR!
-    //inc=aliases
+    /**
+     * inc=aliases
+     */
     @field:Json(name = "aliases") val aliases: List<AliasResponse>?,
-    //inc=annotation
+    /**
+     * inc=annotation
+     */
     @field:Json(name = "annotation") val annotation: String?,
-    //inc=ratings
+    /**
+     * inc=ratings
+     */
     @field:Json(name = "rating") val rating: RatingResponse?,
-    //inc=user-ratings
+    /**
+     * inc=user-ratings
+     */
     @field:Json(name = "user-rating") val userRating: RatingResponse?,
-    //inc=tags
+    /**
+     * inc=tags
+     */
     @field:Json(name = "tags") val tags: List<TagResponse>?,
-    //inc=user-tags
+    /**
+     * inc=user-tags
+     */
     @field:Json(name = "user-tags") val userTags: List<TagResponse>?,
-    //inc=genres
+    /**
+     * inc=genres
+     */
     @field:Json(name = "genres") val genres: List<TagResponse>?,
-    //inc=user-genres
+    /**
+     * inc=user-genres
+     */
     @field:Json(name = "user-genres") val userGenres: List<TagResponse>?,
-    //inc=artists || inc=artist-credits
+    /**
+     * inc=artists || inc=artist-credits
+     */
     @field:Json(name = "artist-credit") val artistCredits: List<ArtistCreditResponse>?,
-    //inc=releases
+    /**
+     * inc=releases
+     */
     @field:Json(name = "releases") val releases: List<ReleaseResponse>?,
-    //inc=...-rels
+    /**
+     * inc=...-rels
+     */
     @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 

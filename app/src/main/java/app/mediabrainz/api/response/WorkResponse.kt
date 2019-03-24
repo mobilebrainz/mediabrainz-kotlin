@@ -1,6 +1,6 @@
 package app.mediabrainz.api.response
 
-import app.mediabrainz.api.lookup.LookupResponseInterface
+import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
 import com.squareup.moshi.Json
 
 
@@ -15,19 +15,33 @@ data class WorkResponse(
     @field:Json(name = "type-id") val typeId: String?,
     @field:Json(name = "iswcs") val iswcs: List<String>?,
     @field:Json(name = "attributes") val attributes: List<AttributeResponse>?,
-    //inc=aliases
+    /**
+     * inc=aliases
+     */
     @field:Json(name = "aliases") val aliases: List<AliasResponse>?,
-    //inc=annotation
+    /**
+     * inc=annotation
+     */
     @field:Json(name = "annotation") val annotation: String?,
-    //inc=ratings
+    /**
+     * inc=ratings
+     */
     @field:Json(name = "rating") val rating: RatingResponse?,
-    //inc=user-ratings
+    /**
+     * inc=user-ratings
+     */
     @field:Json(name = "user-rating") val userRating: RatingResponse?,
-    //inc=tags
+    /**
+     * inc=tags
+     */
     @field:Json(name = "tags") val tags: List<TagResponse>?,
-    //inc=user-tags
+    /**
+     * inc=user-tags
+     */
     @field:Json(name = "user-tags") val userTags: List<TagResponse>?,
-    //inc=...-rels
+    /**
+     * inc=...-rels
+     */
     @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 

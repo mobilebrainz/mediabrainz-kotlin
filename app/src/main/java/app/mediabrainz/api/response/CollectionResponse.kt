@@ -1,6 +1,6 @@
 package app.mediabrainz.api.response
 
-import app.mediabrainz.api.lookup.LookupResponseInterface
+import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
 import com.squareup.moshi.Json
 
 /**
@@ -25,7 +25,9 @@ data class CollectionResponse(
     @field:Json(name = "release-group-count") val releaseGroupCount: Int?,
     @field:Json(name = "series-count") val seriesCount: Int?,
     @field:Json(name = "work-count") val workCount: Int?,
-    //inc=...-rels
+    /**
+     * inc=...-rels
+     */
     @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 

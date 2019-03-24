@@ -1,16 +1,20 @@
-package app.mediabrainz.api.lookup
+package app.mediabrainz.api.lookupbrowse
 
 import app.mediabrainz.api.core.Config.FORMAT_JSON
 import app.mediabrainz.api.core.getStringFromList
-import app.mediabrainz.api.lookup.LookupParamType.FORMAT
-import app.mediabrainz.api.lookup.LookupParamType.INC
+import app.mediabrainz.api.lookupbrowse.BrowseParamType.FORMAT
+import app.mediabrainz.api.lookupbrowse.BrowseParamType.INC
+import kotlinx.coroutines.Deferred
+import retrofit2.Response
 
 
-abstract class BaseLookupRequest<R, P>(val mbid: String) : LookupRequestInterface<R, P>
-        where R : LookupResponseInterface, P : Enum<P>, P : LookupIncTypeInterface {
+abstract class BaseBrowseRequest<R, P1, P2>(val entityType: P2, val mbid: String) : BrowseRequestInterface<R, P1>
+        where R : BrowseResponseInterface,
+              P1 : Enum<P1>, P1 : BrowseIncTypeInterface,
+              P2 : Enum<P2>, P2 : BrowseEntityTypeInterface {
 
-    private val incs: MutableList<LookupIncTypeInterface> = mutableListOf()
-    private val params: MutableMap<LookupParamType, String> = mutableMapOf(
+    private val incs: MutableList<BrowseIncTypeInterface> = mutableListOf()
+    private val params: MutableMap<BrowseParamType, String> = mutableMapOf(
         FORMAT to FORMAT_JSON
     )
 
@@ -22,12 +26,13 @@ abstract class BaseLookupRequest<R, P>(val mbid: String) : LookupRequestInterfac
     }
     */
 
-    protected fun addParam(param: LookupParamType, value: String): LookupRequestInterface<R, P> {
+    protected fun addParam(param: BrowseParamType, value: String): BrowseRequestInterface<R, P1> {
         params[param] = value
         return this
     }
 
-    override fun addIncs(vararg incTypes: P): LookupRequestInterface<R, P> {
+
+    override fun addIncs(vararg incTypes: P1): BrowseRequestInterface<R, P1> {
         incs.addAll(incTypes.asList())
         /*
         if (Config.accessToken == null) {
@@ -43,9 +48,15 @@ abstract class BaseLookupRequest<R, P>(val mbid: String) : LookupRequestInterfac
         return this
     }
 
-    override fun addRels(vararg relTypes: RelsType): LookupRequestInterface<R, P> {
+    override fun addRels(vararg relTypes: RelsType): BrowseRequestInterface<R, P1> {
         incs.addAll(relTypes.asList())
         return this
+    }
+
+    override fun browse(limit: Int, offset: Int): Deferred<Response<R>> {
+        params[BrowseParamType.LIMIT] = Integer.toString(limit)
+        params[BrowseParamType.OFFSET] = Integer.toString(offset)
+        return browse()
     }
 
     protected fun buildParams(): Map<String, String> {
