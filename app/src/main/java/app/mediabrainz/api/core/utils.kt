@@ -14,3 +14,18 @@ fun getStringFromList(list: List<Any>?, separator: String): String {
     }
     return builder.toString()
 }
+
+fun getStringFromArray(array: Array<out Any>?, separator: String): String {
+    val builder = StringBuilder("")
+    if (array != null) {
+        for (obj in array) {
+            if (obj != "") {
+                if (builder.isNotEmpty()) {
+                    builder.append(separator)
+                }
+                builder.append(obj.toString())
+            }
+        }
+    }
+    return builder.toString()
+}

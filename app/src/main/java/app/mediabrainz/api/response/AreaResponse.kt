@@ -1,5 +1,6 @@
 package app.mediabrainz.api.response
 
+import app.mediabrainz.api.lookupbrowse.BrowseResponseInterface
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
 import com.squareup.moshi.Json
 
@@ -55,7 +56,7 @@ data class AreaBrowseResponse(
     @field:Json(name = "area-count") val count: Int,
     @field:Json(name = "area-offset") val offset: Int,
     @field:Json(name = "areas") val areas: List<AreaResponse>
-)
+) : BrowseResponseInterface
 
 enum class AreaType(val type: String) {
     COUNTRY("country"),

@@ -1,8 +1,15 @@
 package app.mediabrainz.ui.activity
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import app.mediabrainz.domain.repository.Resource.Status.*
 import app.mediabrainz.ui.R
+import app.mediabrainz.ui.viewmodel.lookupRepository.DiscLookupViewModel
+import app.mediabrainz.ui.viewmodel.searchRepository.ArtistSearchViewModel
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,9 +18,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        /*
-        val vm = ViewModelProviders.of(this).get(WorkSearchViewModel::class.java)
-        vm.workResource.observe(this, Observer {
+        val vm = ViewModelProviders.of(this).get(ArtistSearchViewModel::class.java)
+        vm.result.observe(this, Observer {
             when (it.status) {
                 LOADING -> Log.i("", "")
                 SUCCESS -> {
@@ -23,8 +29,8 @@ class MainActivity : AppCompatActivity() {
                 ERROR -> Log.i("", "")
             }
         })
-        vm.searchWork("black")
-        */
+        vm.search("scorpions")
+
 
     }
 }

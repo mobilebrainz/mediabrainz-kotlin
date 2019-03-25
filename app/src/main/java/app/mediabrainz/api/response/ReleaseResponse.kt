@@ -1,5 +1,6 @@
 package app.mediabrainz.api.response
 
+import app.mediabrainz.api.lookupbrowse.BrowseResponseInterface
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
 import com.squareup.moshi.Json
 
@@ -86,7 +87,7 @@ data class ReleaseBrowseResponse(
     @field:Json(name = "release-count") val count: Int,
     @field:Json(name = "release-offset") val offset: Int,
     @field:Json(name = "releases") val releases: List<ReleaseResponse>
-)
+) : BrowseResponseInterface
 
 data class TextRepresentationResponse(
     @field:Json(name = "language") val language: String?,

@@ -1,5 +1,6 @@
 package app.mediabrainz.api.response
 
+import app.mediabrainz.api.lookupbrowse.BrowseResponseInterface
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
 import com.squareup.moshi.Json
 
@@ -55,7 +56,7 @@ data class EventBrowseResponse(
     @field:Json(name = "event-count") val count: Int,
     @field:Json(name = "event-offset") val offset: Int,
     @field:Json(name = "events") val events: List<EventResponse>
-)
+) : BrowseResponseInterface
 
 enum class EventType(val type: String) {
     CONCERT("Concert"),

@@ -1,5 +1,6 @@
 package app.mediabrainz.api.response
 
+import app.mediabrainz.api.lookupbrowse.BrowseResponseInterface
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
 import com.squareup.moshi.Json
 
@@ -56,7 +57,7 @@ data class WorkBrowseResponse(
     @field:Json(name = "work-count") val count: Int,
     @field:Json(name = "work-offset") val offset: Int,
     @field:Json(name = "works") val works: List<WorkResponse>
-)
+) : BrowseResponseInterface
 
 data class AttributeResponse(
     @field:Json(name = "type") val type: String?,

@@ -1,5 +1,6 @@
 package app.mediabrainz.api.response
 
+import app.mediabrainz.api.lookupbrowse.BrowseResponseInterface
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
 import com.squareup.moshi.Json
 
@@ -72,7 +73,7 @@ data class ReleaseGroupBrowseResponse(
     @field:Json(name = "release-group-count") val count: Int,
     @field:Json(name = "release-group-offset") val offset: Int,
     @field:Json(name = "release-groups") val releaseGroups: List<ReleaseGroupResponse>
-)
+) : BrowseResponseInterface
 
 interface ReleaseGroupType
 

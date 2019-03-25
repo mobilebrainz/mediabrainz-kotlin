@@ -1,5 +1,6 @@
 package app.mediabrainz.api.response
 
+import app.mediabrainz.api.lookupbrowse.BrowseResponseInterface
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
 import com.squareup.moshi.Json
 
@@ -47,7 +48,7 @@ data class PlaceBrowseResponse(
     @field:Json(name = "place-count") val count: Int,
     @field:Json(name = "place-offset") val offset: Int,
     @field:Json(name = "places") val places: List<PlaceResponse>
-)
+) : BrowseResponseInterface
 
 data class CoordinateResponse(
     @field:Json(name = "latitude") val latitude: Double?,

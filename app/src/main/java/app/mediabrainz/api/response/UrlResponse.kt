@@ -1,5 +1,6 @@
 package app.mediabrainz.api.response
 
+import app.mediabrainz.api.lookupbrowse.BrowseResponseInterface
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
 import com.squareup.moshi.Json
 
@@ -17,7 +18,7 @@ data class UrlResponse(
      * inc=...-rels
      */
     @field:Json(name = "relations") val relations: List<RelationResponse>?
-) : LookupResponseInterface
+) : LookupResponseInterface, BrowseResponseInterface
 
 class UrlSearchResponse : BaseSearchResponse<UrlResponse>() {
     @field:Json(name = "urls")

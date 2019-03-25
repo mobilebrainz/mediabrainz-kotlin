@@ -1,5 +1,6 @@
 package app.mediabrainz.api.response
 
+import app.mediabrainz.api.lookupbrowse.BrowseResponseInterface
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
 import com.squareup.moshi.Json
 
@@ -87,7 +88,7 @@ data class ArtistBrowseResponse(
     @field:Json(name = "artist-count") val count: Int,
     @field:Json(name = "artist-offset") val offset: Int,
     @field:Json(name = "artists") val artists: List<ArtistResponse>
-)
+) : BrowseResponseInterface
 
 data class ArtistCreditResponse(
     @field:Json(name = "artist") val artist: ArtistResponse,

@@ -52,8 +52,8 @@ interface BrowseRequestService {
     @GET(SERIES_QUERY)
     fun browseSeries(@QueryMap params: Map<String, String>): Deferred<Response<SeriesBrowseResponse>>
 
-    //@GET(URL_QUERY)
-    //fun browseUrl(@QueryMap params: Map<String, String>): Deferred<Response<UrlResponse>>
+    @GET(URL_QUERY)
+    fun browseUrl(@QueryMap params: Map<String, String>): Deferred<Response<UrlResponse>>
 
     @GET(WORK_QUERY)
     fun browseWork(@QueryMap params: Map<String, String>): Deferred<Response<WorkBrowseResponse>>

@@ -1,5 +1,6 @@
 package app.mediabrainz.api.response
 
+import app.mediabrainz.api.lookupbrowse.BrowseResponseInterface
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
 import com.squareup.moshi.Json
 
@@ -25,7 +26,7 @@ data class LabelResponse(
     /**
      * inc=releases
      */
-    @field:Json(name = "releases") val releases : List<ReleaseResponse>?,
+    @field:Json(name = "releases") val releases: List<ReleaseResponse>?,
     /**
      * inc=annotation
      */
@@ -33,23 +34,23 @@ data class LabelResponse(
     /**
      * inc=ratings
      */
-    @field:Json(name = "rating") val rating : RatingResponse?,
+    @field:Json(name = "rating") val rating: RatingResponse?,
     /**
      * inc=user-ratings
      */
-    @field:Json(name = "user-rating") val userRating : RatingResponse?,
+    @field:Json(name = "user-rating") val userRating: RatingResponse?,
     /**
      * inc=tags
      */
-    @field:Json(name = "tags") val tags : List<TagResponse>?,
+    @field:Json(name = "tags") val tags: List<TagResponse>?,
     /**
      * inc=user-tags
      */
-    @field:Json(name = "user-tags") val userTags : List<TagResponse>?,
+    @field:Json(name = "user-tags") val userTags: List<TagResponse>?,
     /**
      * inc=...-rels
      */
-    @field:Json(name = "relations") val relations : List<RelationResponse>?
+    @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 
 class LabelSearchResponse : BaseSearchResponse<LabelResponse>() {
@@ -63,7 +64,7 @@ data class LabelBrowseResponse(
     @field:Json(name = "label-count") val count: Int,
     @field:Json(name = "label-offset") val offset: Int,
     @field:Json(name = "labels") val labels: List<LabelResponse>
-)
+) : BrowseResponseInterface
 
 data class LabelInfoResponse(
     @field:Json(name = "catalog-number") val catalogNumber: String?,
