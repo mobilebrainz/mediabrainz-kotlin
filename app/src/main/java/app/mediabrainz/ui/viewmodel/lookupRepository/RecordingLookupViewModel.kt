@@ -5,10 +5,4 @@ import app.mediabrainz.domain.repository.lookupRepository.RecordingLookupReposit
 
 
 class RecordingLookupViewModel(val repo: RecordingLookupRepository = RecordingLookupRepository()) :
-    BaseLookupViewModel<Recording>(repo) {
-
-    override fun lookup() {
-        repo.lookup(result, mbid)
-    }
-
-}
+    BaseLookupViewModel<Recording>(repo)

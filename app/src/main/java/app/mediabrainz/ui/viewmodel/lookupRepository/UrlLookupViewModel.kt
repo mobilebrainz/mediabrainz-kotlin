@@ -5,10 +5,4 @@ import app.mediabrainz.domain.repository.lookupRepository.UrlLookupRepository
 
 
 class UrlLookupViewModel(val repo: UrlLookupRepository = UrlLookupRepository()) :
-    BaseLookupViewModel<Url>(repo) {
-
-    override fun lookup() {
-        repo.lookup(result, mbid)
-    }
-
-}
+    BaseLookupViewModel<Url>(repo)

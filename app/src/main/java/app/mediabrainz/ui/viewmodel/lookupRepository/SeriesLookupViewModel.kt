@@ -5,10 +5,4 @@ import app.mediabrainz.domain.repository.lookupRepository.SeriesLookupRepository
 
 
 class SeriesLookupViewModel(val repo: SeriesLookupRepository = SeriesLookupRepository()) :
-    BaseLookupViewModel<Series>(repo) {
-
-    override fun lookup() {
-        repo.lookup(result, mbid)
-    }
-
-}
+    BaseLookupViewModel<Series>(repo)

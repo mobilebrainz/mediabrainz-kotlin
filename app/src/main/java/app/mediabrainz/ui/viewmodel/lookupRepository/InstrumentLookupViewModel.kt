@@ -5,10 +5,4 @@ import app.mediabrainz.domain.repository.lookupRepository.InstrumentLookupReposi
 
 
 class InstrumentLookupViewModel(val repo: InstrumentLookupRepository = InstrumentLookupRepository()) :
-    BaseLookupViewModel<Instrument>(repo) {
-
-    override fun lookup() {
-        repo.lookup(result, mbid)
-    }
-
-}
+    BaseLookupViewModel<Instrument>(repo)

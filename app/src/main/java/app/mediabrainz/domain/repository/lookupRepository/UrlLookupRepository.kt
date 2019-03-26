@@ -8,9 +8,9 @@ import app.mediabrainz.domain.repository.BaseApiRepository
 import app.mediabrainz.domain.repository.Resource
 
 
-class UrlLookupRepository : BaseApiRepository() {
+class UrlLookupRepository : BaseLookupRepository<Url>() {
 
-    fun lookup(mutableLiveData: MutableLiveData<Resource<Url>>, mbid: String) {
+    override fun lookup(mutableLiveData: MutableLiveData<Resource<Url>>, mbid: String) {
         if (mbid.isNotBlank()) {
             call(mutableLiveData,
                 { ApiRequestProvider.createUrlLookupRequest(mbid).lookup() },

@@ -5,10 +5,5 @@ import app.mediabrainz.domain.repository.lookupRepository.ISWCLookupRepository
 
 
 class ISWCLookupViewModel(val repo: ISWCLookupRepository = ISWCLookupRepository()) :
-    BaseLookupViewModel<ISWC>(repo) {
+    BaseLookupViewModel<ISWC>(repo)
 
-    override fun lookup() {
-        repo.lookup(result, mbid)
-    }
-
-}

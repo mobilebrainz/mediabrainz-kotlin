@@ -8,9 +8,9 @@ import app.mediabrainz.domain.repository.BaseApiRepository
 import app.mediabrainz.domain.repository.Resource
 
 
-class InstrumentLookupRepository : BaseApiRepository() {
+class InstrumentLookupRepository : BaseLookupRepository<Instrument>() {
 
-    fun lookup(mutableLiveData: MutableLiveData<Resource<Instrument>>, mbid: String) {
+    override fun lookup(mutableLiveData: MutableLiveData<Resource<Instrument>>, mbid: String) {
         if (mbid.isNotBlank()) {
             call(mutableLiveData,
                 { ApiRequestProvider.createInstrumentLookupRequest(mbid).lookup() },

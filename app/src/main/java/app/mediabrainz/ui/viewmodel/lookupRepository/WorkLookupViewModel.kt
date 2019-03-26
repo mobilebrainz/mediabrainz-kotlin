@@ -5,10 +5,4 @@ import app.mediabrainz.domain.repository.lookupRepository.WorkLookupRepository
 
 
 class WorkLookupViewModel(val repo: WorkLookupRepository = WorkLookupRepository()) :
-    BaseLookupViewModel<Work>(repo) {
-
-    override fun lookup() {
-        repo.lookup(result, mbid)
-    }
-
-}
+    BaseLookupViewModel<Work>(repo)

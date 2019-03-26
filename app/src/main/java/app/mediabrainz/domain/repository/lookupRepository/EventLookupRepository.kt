@@ -8,9 +8,9 @@ import app.mediabrainz.domain.repository.BaseApiRepository
 import app.mediabrainz.domain.repository.Resource
 
 
-class EventLookupRepository : BaseApiRepository() {
+class EventLookupRepository : BaseLookupRepository<Event>() {
 
-    fun lookup(mutableLiveData: MutableLiveData<Resource<Event>>, mbid: String) {
+    override fun lookup(mutableLiveData: MutableLiveData<Resource<Event>>, mbid: String) {
         if (mbid.isNotBlank()) {
             call(mutableLiveData,
                 { ApiRequestProvider.createEventLookupRequest(mbid).lookup() },

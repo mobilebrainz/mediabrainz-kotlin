@@ -5,10 +5,4 @@ import app.mediabrainz.domain.repository.lookupRepository.EventLookupRepository
 
 
 class EventLookupViewModel(val repo: EventLookupRepository = EventLookupRepository()) :
-    BaseLookupViewModel<Event>(repo) {
-
-    override fun lookup() {
-        repo.lookup(result, mbid)
-    }
-
-}
+    BaseLookupViewModel<Event>(repo)

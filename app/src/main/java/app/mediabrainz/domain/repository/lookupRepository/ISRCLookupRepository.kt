@@ -8,9 +8,9 @@ import app.mediabrainz.domain.repository.BaseApiRepository
 import app.mediabrainz.domain.repository.Resource
 
 
-class ISRCLookupRepository : BaseApiRepository() {
+class ISRCLookupRepository : BaseLookupRepository<ISRC>() {
 
-    fun lookup(mutableLiveData: MutableLiveData<Resource<ISRC>>, mbid: String) {
+    override fun lookup(mutableLiveData: MutableLiveData<Resource<ISRC>>, mbid: String) {
         if (mbid.isNotBlank()) {
             call(mutableLiveData,
                 { ApiRequestProvider.createISRCLookupRequest(mbid).lookup() },

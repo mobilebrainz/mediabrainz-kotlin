@@ -5,10 +5,4 @@ import app.mediabrainz.domain.repository.lookupRepository.DiscidLookupRepository
 
 
 class DiscLookupViewModel(val repo: DiscidLookupRepository = DiscidLookupRepository()) :
-    BaseLookupViewModel<Disc>(repo) {
-
-    override fun lookup() {
-        repo.lookup(result, mbid)
-    }
-
-}
+    BaseLookupViewModel<Disc>(repo)

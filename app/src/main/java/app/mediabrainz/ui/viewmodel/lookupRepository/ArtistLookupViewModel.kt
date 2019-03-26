@@ -5,10 +5,4 @@ import app.mediabrainz.domain.repository.lookupRepository.ArtistLookupRepository
 
 
 class ArtistLookupViewModel(val repo: ArtistLookupRepository = ArtistLookupRepository()) :
-    BaseLookupViewModel<Artist>(repo) {
-
-    override fun lookup() {
-        repo.lookup(result, mbid)
-    }
-
-}
+    BaseLookupViewModel<Artist>(repo)

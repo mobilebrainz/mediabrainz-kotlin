@@ -8,9 +8,9 @@ import app.mediabrainz.domain.repository.BaseApiRepository
 import app.mediabrainz.domain.repository.Resource
 
 
-class DiscidLookupRepository : BaseApiRepository() {
+class DiscidLookupRepository : BaseLookupRepository<Disc>() {
 
-    fun lookup(mutableLiveData: MutableLiveData<Resource<Disc>>, mbid: String) {
+    override fun lookup(mutableLiveData: MutableLiveData<Resource<Disc>>, mbid: String) {
         if (mbid.isNotBlank()) {
             call(mutableLiveData,
                 { ApiRequestProvider.createDiscidLookupRequest(mbid).lookup() },

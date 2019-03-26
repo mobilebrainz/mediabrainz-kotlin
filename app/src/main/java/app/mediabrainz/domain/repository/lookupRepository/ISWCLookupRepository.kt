@@ -8,9 +8,9 @@ import app.mediabrainz.domain.repository.BaseApiRepository
 import app.mediabrainz.domain.repository.Resource
 
 
-class ISWCLookupRepository : BaseApiRepository() {
+class ISWCLookupRepository : BaseLookupRepository<ISWC>() {
 
-    fun lookup(mutableLiveData: MutableLiveData<Resource<ISWC>>, mbid: String) {
+    override fun lookup(mutableLiveData: MutableLiveData<Resource<ISWC>>, mbid: String) {
         if (mbid.isNotBlank()) {
             call(mutableLiveData,
                 { ApiRequestProvider.createISWCLookupRequest(mbid).lookup() },

@@ -5,10 +5,4 @@ import app.mediabrainz.domain.repository.lookupRepository.ReleaseGroupLookupRepo
 
 
 class ReleaseGroupLookupViewModel(val repo: ReleaseGroupLookupRepository = ReleaseGroupLookupRepository()) :
-    BaseLookupViewModel<ReleaseGroup>(repo) {
-
-    override fun lookup() {
-        repo.lookup(result, mbid)
-    }
-
-}
+    BaseLookupViewModel<ReleaseGroup>(repo)

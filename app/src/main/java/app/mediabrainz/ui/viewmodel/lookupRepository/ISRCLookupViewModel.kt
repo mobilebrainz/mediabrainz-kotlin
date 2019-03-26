@@ -5,10 +5,4 @@ import app.mediabrainz.domain.repository.lookupRepository.ISRCLookupRepository
 
 
 class ISRCLookupViewModel(val repo: ISRCLookupRepository = ISRCLookupRepository()) :
-    BaseLookupViewModel<ISRC>(repo) {
-
-    override fun lookup() {
-        repo.lookup(result, mbid)
-    }
-
-}
+    BaseLookupViewModel<ISRC>(repo)
