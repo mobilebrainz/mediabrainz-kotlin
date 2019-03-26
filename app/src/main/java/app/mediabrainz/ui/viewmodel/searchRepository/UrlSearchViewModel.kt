@@ -5,10 +5,4 @@ import app.mediabrainz.domain.repository.searchRepository.UrlSearchRepository
 
 
 class UrlSearchViewModel(val repo: UrlSearchRepository = UrlSearchRepository()) :
-    BaseSearchViewModel<Url>(repo) {
-
-    override fun search() {
-        repo.search(result, query)
-    }
-
-}
+    BaseSearchViewModel<Url>(repo)

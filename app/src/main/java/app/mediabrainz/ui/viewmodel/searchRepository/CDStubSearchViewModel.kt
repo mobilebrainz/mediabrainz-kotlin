@@ -5,10 +5,4 @@ import app.mediabrainz.domain.repository.searchRepository.CDStubSearchRepository
 
 
 class CDStubSearchViewModel(val repo: CDStubSearchRepository = CDStubSearchRepository()) :
-    BaseSearchViewModel<CDStub>(repo) {
-
-    override fun search() {
-        repo.search(result, query)
-    }
-
-}
+    BaseSearchViewModel<CDStub>(repo)

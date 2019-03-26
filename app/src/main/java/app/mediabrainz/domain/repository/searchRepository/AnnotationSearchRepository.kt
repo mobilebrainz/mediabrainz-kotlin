@@ -11,9 +11,9 @@ import app.mediabrainz.domain.repository.BaseApiRepository
 import app.mediabrainz.domain.repository.Resource
 
 
-class AnnotationSearchRepository : BaseApiRepository() {
+class AnnotationSearchRepository : BaseSearchRepository<Annotation>() {
 
-    fun search(mutableLiveData: MutableLiveData<Resource<List<Annotation>>>, query: String) {
+    override fun search(mutableLiveData: MutableLiveData<Resource<List<Annotation>>>, query: String) {
         val limit = 100
         call(mutableLiveData,
             {

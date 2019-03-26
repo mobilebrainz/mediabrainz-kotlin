@@ -11,9 +11,9 @@ import app.mediabrainz.domain.repository.BaseApiRepository
 import app.mediabrainz.domain.repository.Resource
 
 
-class CDStubSearchRepository : BaseApiRepository() {
+class CDStubSearchRepository : BaseSearchRepository<CDStub>() {
 
-    fun search(mutableLiveData: MutableLiveData<Resource<List<CDStub>>>, query: String) {
+    override fun search(mutableLiveData: MutableLiveData<Resource<List<CDStub>>>, query: String) {
         if (query.isNotBlank()) {
             val limit = 100
             call(mutableLiveData,

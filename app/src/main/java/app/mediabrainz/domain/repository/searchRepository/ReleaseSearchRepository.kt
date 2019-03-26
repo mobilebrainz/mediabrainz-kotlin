@@ -13,9 +13,9 @@ import app.mediabrainz.domain.repository.BaseApiRepository
 import app.mediabrainz.domain.repository.Resource
 
 
-class ReleaseSearchRepository : BaseApiRepository() {
+class ReleaseSearchRepository : BaseSearchRepository<Release>() {
 
-    fun search(mutableLiveData: MutableLiveData<Resource<List<Release>>>, query: String) {
+    override fun search(mutableLiveData: MutableLiveData<Resource<List<Release>>>, query: String) {
         search(mutableLiveData, "", query)
     }
 

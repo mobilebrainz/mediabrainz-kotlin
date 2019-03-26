@@ -8,14 +8,13 @@ import app.mediabrainz.domain.mapper.PageMapper
 import app.mediabrainz.domain.mapper.RecordingMapper
 import app.mediabrainz.domain.model.Recording
 import app.mediabrainz.domain.parenthesesString
-import app.mediabrainz.domain.repository.BaseApiRepository
 import app.mediabrainz.domain.repository.Resource
 
 
-class RecordingSearchRepository : BaseApiRepository() {
+class RecordingSearchRepository : BaseSearchRepository<Recording>() {
 
-    fun search(mutableLiveData: MutableLiveData<Resource<List<Recording>>>, recording: String) {
-        search(mutableLiveData,"", "", recording)
+    override fun search(mutableLiveData: MutableLiveData<Resource<List<Recording>>>, query: String) {
+        search(mutableLiveData,"", "", query)
     }
 
     fun search(

@@ -5,9 +5,4 @@ import app.mediabrainz.domain.repository.searchRepository.InstrumentSearchReposi
 
 
 class InstrumentSearchViewModel(val repo: InstrumentSearchRepository = InstrumentSearchRepository()) :
-    BaseSearchViewModel<Instrument>(repo) {
-
-    override fun search() {
-        repo.search(result, query)
-    }
-}
+    BaseSearchViewModel<Instrument>(repo)

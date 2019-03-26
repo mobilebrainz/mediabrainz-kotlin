@@ -11,9 +11,9 @@ import app.mediabrainz.domain.repository.BaseApiRepository
 import app.mediabrainz.domain.repository.Resource
 
 
-class ArtistSearchRepository : BaseApiRepository() {
+class ArtistSearchRepository : BaseSearchRepository<Artist>() {
 
-    fun search(mutableLiveData: MutableLiveData<Resource<List<Artist>>>, query: String) {
+    override fun search(mutableLiveData: MutableLiveData<Resource<List<Artist>>>, query: String) {
         if (query.isNotBlank()) {
             val limit = 100
             call(mutableLiveData,
