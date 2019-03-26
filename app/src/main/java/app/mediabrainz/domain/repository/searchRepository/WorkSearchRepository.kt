@@ -14,16 +14,18 @@ import app.mediabrainz.domain.repository.Resource
 class WorkSearchRepository : BaseApiRepository() {
 
     fun search(mutableLiveData: MutableLiveData<Resource<List<Work>>>, query: String) {
-        val limit = 100
-        call(mutableLiveData,
-            {
-                ApiRequestProvider.createWorkSearchRequest()
-                    .search(parenthesesString(query), limit, 0)
-            },
-            {
-                PageMapper<WorkResponse, Work> { WorkMapper().mapTo(it) }.mapToList(getItems())
-            }
-        )
+        if (query.isNotBlank()) {
+            val limit = 100
+            call(mutableLiveData,
+                {
+                    ApiRequestProvider.createWorkSearchRequest()
+                        .search(parenthesesString(query), limit, 0)
+                },
+                {
+                    PageMapper<WorkResponse, Work> { WorkMapper().mapTo(it) }.mapToList(getItems())
+                }
+            )
+        }
     }
 
 }

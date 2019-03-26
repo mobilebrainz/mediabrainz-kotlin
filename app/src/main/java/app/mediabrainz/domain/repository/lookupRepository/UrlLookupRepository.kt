@@ -11,9 +11,11 @@ import app.mediabrainz.domain.repository.Resource
 class UrlLookupRepository : BaseApiRepository() {
 
     fun lookup(mutableLiveData: MutableLiveData<Resource<Url>>, mbid: String) {
-        call(mutableLiveData,
-            { ApiRequestProvider.createUrlLookupRequest(mbid).lookup() },
-            { UrlMapper().mapTo(this) })
+        if (mbid.isNotBlank()) {
+            call(mutableLiveData,
+                { ApiRequestProvider.createUrlLookupRequest(mbid).lookup() },
+                { UrlMapper().mapTo(this) })
+        }
     }
 
 }

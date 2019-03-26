@@ -4,20 +4,11 @@ import app.mediabrainz.domain.model.Url
 import app.mediabrainz.domain.repository.lookupRepository.UrlLookupRepository
 
 
-class UrlLookupViewModel : BaseLookupViewModel<Url>() {
+class UrlLookupViewModel(val repo: UrlLookupRepository = UrlLookupRepository()) :
+    BaseLookupViewModel<Url>(repo) {
 
-    private val repository = UrlLookupRepository()
-
-    // retry when error
     override fun lookup() {
-        if (mbid != "") {
-            repository.lookup(result, mbid)
-        }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        repository.cancelJob()
+        repo.lookup(result, mbid)
     }
 
 }

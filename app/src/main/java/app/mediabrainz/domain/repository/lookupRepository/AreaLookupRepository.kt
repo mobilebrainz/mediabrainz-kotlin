@@ -11,9 +11,11 @@ import app.mediabrainz.domain.repository.Resource
 class AreaLookupRepository : BaseApiRepository() {
 
     fun lookup(mutableLiveData: MutableLiveData<Resource<Area>>, mbid: String) {
-        call(mutableLiveData,
-            { ApiRequestProvider.createAreaLookupRequest(mbid).lookup() },
-            { AreaMapper().mapTo(this) })
+        if (mbid.isNotBlank()) {
+            call(mutableLiveData,
+                { ApiRequestProvider.createAreaLookupRequest(mbid).lookup() },
+                { AreaMapper().mapTo(this) })
+        }
     }
 
 }

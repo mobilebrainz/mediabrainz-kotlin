@@ -11,9 +11,11 @@ import app.mediabrainz.domain.repository.Resource
 class DiscidLookupRepository : BaseApiRepository() {
 
     fun lookup(mutableLiveData: MutableLiveData<Resource<Disc>>, mbid: String) {
-        call(mutableLiveData,
-            { ApiRequestProvider.createDiscidLookupRequest(mbid).lookup() },
-            { DiscMapper().mapTo(this) })
+        if (mbid.isNotBlank()) {
+            call(mutableLiveData,
+                { ApiRequestProvider.createDiscidLookupRequest(mbid).lookup() },
+                { DiscMapper().mapTo(this) })
+        }
     }
 
 }

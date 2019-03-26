@@ -14,16 +14,18 @@ import app.mediabrainz.domain.repository.Resource
 class PlaceSearchRepository : BaseApiRepository() {
 
     fun search(mutableLiveData: MutableLiveData<Resource<List<Place>>>, query: String) {
-        val limit = 100
-        call(mutableLiveData,
-            {
-                ApiRequestProvider.createPlaceSearchRequest()
-                    .search(parenthesesString(query), limit, 0)
-            },
-            {
-                PageMapper<PlaceResponse, Place> { PlaceMapper().mapTo(it) }.mapToList(getItems())
-            }
-        )
+        if (query.isNotBlank()) {
+            val limit = 100
+            call(mutableLiveData,
+                {
+                    ApiRequestProvider.createPlaceSearchRequest()
+                        .search(parenthesesString(query), limit, 0)
+                },
+                {
+                    PageMapper<PlaceResponse, Place> { PlaceMapper().mapTo(it) }.mapToList(getItems())
+                }
+            )
+        }
     }
 
 }

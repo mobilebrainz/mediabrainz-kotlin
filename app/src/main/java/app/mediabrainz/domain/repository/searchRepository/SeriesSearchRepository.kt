@@ -14,16 +14,18 @@ import app.mediabrainz.domain.repository.Resource
 class SeriesSearchRepository : BaseApiRepository() {
 
     fun search(mutableLiveData: MutableLiveData<Resource<List<Series>>>, query: String) {
-        val limit = 100
-        call(mutableLiveData,
-            {
-                ApiRequestProvider.createSeriesSearchRequest()
-                    .search(parenthesesString(query), limit, 0)
-            },
-            {
-                PageMapper<SeriesResponse, Series> { SeriesMapper().mapTo(it) }.mapToList(getItems())
-            }
-        )
+        if (query.isNotBlank()) {
+            val limit = 100
+            call(mutableLiveData,
+                {
+                    ApiRequestProvider.createSeriesSearchRequest()
+                        .search(parenthesesString(query), limit, 0)
+                },
+                {
+                    PageMapper<SeriesResponse, Series> { SeriesMapper().mapTo(it) }.mapToList(getItems())
+                }
+            )
+        }
     }
 
 }

@@ -4,20 +4,11 @@ import app.mediabrainz.domain.model.ISWC
 import app.mediabrainz.domain.repository.lookupRepository.ISWCLookupRepository
 
 
-class ISWCLookupViewModel : BaseLookupViewModel<ISWC>() {
+class ISWCLookupViewModel(val repo: ISWCLookupRepository = ISWCLookupRepository()) :
+    BaseLookupViewModel<ISWC>(repo) {
 
-    private val repository = ISWCLookupRepository()
-
-    // retry when error
     override fun lookup() {
-        if (mbid != "") {
-            repository.lookup(result, mbid)
-        }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        repository.cancelJob()
+        repo.lookup(result, mbid)
     }
 
 }

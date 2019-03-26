@@ -1,42 +1,29 @@
 package app.mediabrainz.ui.viewmodel.searchRepository
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import app.mediabrainz.domain.model.ReleaseGroup
 import app.mediabrainz.domain.repository.searchRepository.ReleaseGroupSearchRepository
-import app.mediabrainz.domain.repository.Resource
 
 
-class ReleaseGroupSearchViewModel : ViewModel() {
-
-    private val repository = ReleaseGroupSearchRepository()
-    val result: MutableLiveData<Resource<List<ReleaseGroup>>> = MutableLiveData()
+class ReleaseGroupSearchViewModel(val repo: ReleaseGroupSearchRepository = ReleaseGroupSearchRepository()) :
+    BaseSearchViewModel<ReleaseGroup>(repo) {
 
     private var artistQuery: String = ""
-    private var rgQuery: String = ""
 
-    fun search(rg: String) {
-        search("", rg)
+    override fun search(query: String) {
+        artistQuery = ""
+        super.search(query)
     }
 
-    fun search(artist: String, rg: String) {
-        if (result.value == null || artistQuery != artist || rgQuery != rg) {
+    fun search(artist: String, query: String) {
+        if (result.value == null || this.artistQuery != artist || this.query != query) {
             this.artistQuery = artist
-            this.rgQuery = rg
+            this.query = query
             search()
         }
     }
 
-    // retry when error
-    fun search() {
-        if (rgQuery != "") {
-            repository.search(result, artistQuery, rgQuery)
-        }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        repository.cancelJob()
+    override fun search() {
+        repo.search(result, artistQuery, query)
     }
 
 }

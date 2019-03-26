@@ -4,20 +4,11 @@ import app.mediabrainz.domain.model.Recording
 import app.mediabrainz.domain.repository.lookupRepository.RecordingLookupRepository
 
 
-class RecordingLookupViewModel : BaseLookupViewModel<Recording>() {
+class RecordingLookupViewModel(val repo: RecordingLookupRepository = RecordingLookupRepository()) :
+    BaseLookupViewModel<Recording>(repo) {
 
-    private val repository = RecordingLookupRepository()
-
-    // retry when error
     override fun lookup() {
-        if (mbid != "") {
-            repository.lookup(result, mbid)
-        }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        repository.cancelJob()
+        repo.lookup(result, mbid)
     }
 
 }

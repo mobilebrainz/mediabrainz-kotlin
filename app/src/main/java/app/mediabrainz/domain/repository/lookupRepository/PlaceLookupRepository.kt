@@ -11,9 +11,11 @@ import app.mediabrainz.domain.repository.Resource
 class PlaceLookupRepository : BaseApiRepository() {
 
     fun lookup(mutableLiveData: MutableLiveData<Resource<Place>>, mbid: String) {
-        call(mutableLiveData,
-            { ApiRequestProvider.createPlaceLookupRequest(mbid).lookup() },
-            { PlaceMapper().mapTo(this) })
+        if (mbid.isNotBlank()) {
+            call(mutableLiveData,
+                { ApiRequestProvider.createPlaceLookupRequest(mbid).lookup() },
+                { PlaceMapper().mapTo(this) })
+        }
     }
 
 }

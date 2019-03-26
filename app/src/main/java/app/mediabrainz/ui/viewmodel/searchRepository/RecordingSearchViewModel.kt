@@ -1,46 +1,34 @@
 package app.mediabrainz.ui.viewmodel.searchRepository
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import app.mediabrainz.domain.model.Recording
 import app.mediabrainz.domain.repository.searchRepository.RecordingSearchRepository
-import app.mediabrainz.domain.repository.Resource
 
 
-class RecordingSearchViewModel : ViewModel() {
-
-    private val repository = RecordingSearchRepository()
-    val result: MutableLiveData<Resource<List<Recording>>> = MutableLiveData()
+class RecordingSearchViewModel(val repo: RecordingSearchRepository = RecordingSearchRepository()) :
+    BaseSearchViewModel<Recording>(repo) {
 
     private var artistQuery: String = ""
     private var releaseQuery: String = ""
-    private var recordingQuery: String = ""
 
-    fun search(recording: String) {
-        search("", "", recording)
+    override fun search(query: String) {
+        artistQuery = ""
+        releaseQuery = ""
+        super.search(query)
     }
 
     fun search(artist: String, release: String, recording: String) {
-        if (result.value == null
-            || artistQuery != artist || releaseQuery != release || recordingQuery != recording
+        if (result.value == null ||
+            artistQuery != artist || releaseQuery != release || query != recording
         ) {
             this.artistQuery = artist
             this.releaseQuery = release
-            this.recordingQuery = recording
+            this.query = recording
             search()
         }
     }
 
-    // retry when error
-    fun search() {
-        if (recordingQuery != "") {
-            repository.search(result, artistQuery, releaseQuery, recordingQuery)
-        }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        repository.cancelJob()
+    override fun search() {
+        repo.search(result, artistQuery, releaseQuery, query)
     }
 
 }

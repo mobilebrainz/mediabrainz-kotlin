@@ -14,16 +14,18 @@ import app.mediabrainz.domain.repository.Resource
 class AreaSearchRepository : BaseApiRepository() {
 
     fun search(mutableLiveData: MutableLiveData<Resource<List<Area>>>, query: String) {
-        val limit = 100
-        call(mutableLiveData,
-            {
-                ApiRequestProvider.createAreaSearchRequest()
-                    .search(parenthesesString(query), limit, 0)
-            },
-            {
-                PageMapper<AreaResponse, Area> { AreaMapper().mapTo(it) }.mapToList(getItems())
-            }
-        )
+        if (query.isNotBlank()) {
+            val limit = 100
+            call(mutableLiveData,
+                {
+                    ApiRequestProvider.createAreaSearchRequest()
+                        .search(parenthesesString(query), limit, 0)
+                },
+                {
+                    PageMapper<AreaResponse, Area> { AreaMapper().mapTo(it) }.mapToList(getItems())
+                }
+            )
+        }
     }
 
 }

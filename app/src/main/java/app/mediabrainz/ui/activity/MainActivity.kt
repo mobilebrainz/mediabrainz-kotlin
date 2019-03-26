@@ -7,8 +7,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import app.mediabrainz.domain.repository.Resource.Status.*
 import app.mediabrainz.ui.R
-import app.mediabrainz.ui.viewmodel.lookupRepository.DiscLookupViewModel
-import app.mediabrainz.ui.viewmodel.searchRepository.ArtistSearchViewModel
+import app.mediabrainz.ui.viewmodel.searchRepository.LabelSearchViewModel
+import app.mediabrainz.ui.viewmodel.searchRepository.RecordingSearchViewModel
 
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        val vm = ViewModelProviders.of(this).get(ArtistSearchViewModel::class.java)
+        val vm = ViewModelProviders.of(this).get(LabelSearchViewModel::class.java)
         vm.result.observe(this, Observer {
             when (it.status) {
                 LOADING -> Log.i("", "")
@@ -29,8 +29,7 @@ class MainActivity : AppCompatActivity() {
                 ERROR -> Log.i("", "")
             }
         })
-        vm.search("scorpions")
-
+        vm.search("black")
 
     }
 }

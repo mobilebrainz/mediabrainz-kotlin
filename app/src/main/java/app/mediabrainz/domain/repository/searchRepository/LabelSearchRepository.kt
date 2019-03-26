@@ -14,16 +14,18 @@ import app.mediabrainz.domain.repository.Resource
 class LabelSearchRepository : BaseApiRepository() {
 
     fun search(mutableLiveData: MutableLiveData<Resource<List<Label>>>, query: String) {
-        val limit = 100
-        call(mutableLiveData,
-            {
-                ApiRequestProvider.createLabelSearchRequest()
-                    .search(parenthesesString(query), limit, 0)
-            },
-            {
-                PageMapper<LabelResponse, Label> { LabelMapper().mapTo(it) }.mapToList(getItems())
-            }
-        )
+        if (query.isNotBlank()) {
+            val limit = 100
+            call(mutableLiveData,
+                {
+                    ApiRequestProvider.createLabelSearchRequest()
+                        .search(parenthesesString(query), limit, 0)
+                },
+                {
+                    PageMapper<LabelResponse, Label> { LabelMapper().mapTo(it) }.mapToList(getItems())
+                }
+            )
+        }
     }
 
 }

@@ -4,20 +4,11 @@ import app.mediabrainz.domain.model.Disc
 import app.mediabrainz.domain.repository.lookupRepository.DiscidLookupRepository
 
 
-class DiscLookupViewModel : BaseLookupViewModel<Disc>() {
+class DiscLookupViewModel(val repo: DiscidLookupRepository = DiscidLookupRepository()) :
+    BaseLookupViewModel<Disc>(repo) {
 
-    private val repository = DiscidLookupRepository()
-
-    // retry when error
     override fun lookup() {
-        if (mbid != "") {
-            repository.lookup(result, mbid)
-        }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        repository.cancelJob()
+        repo.lookup(result, mbid)
     }
 
 }

@@ -11,9 +11,11 @@ import app.mediabrainz.domain.repository.Resource
 class EventLookupRepository : BaseApiRepository() {
 
     fun lookup(mutableLiveData: MutableLiveData<Resource<Event>>, mbid: String) {
-        call(mutableLiveData,
-            { ApiRequestProvider.createEventLookupRequest(mbid).lookup() },
-            { EventMapper().mapTo(this) })
+        if (mbid.isNotBlank()) {
+            call(mutableLiveData,
+                { ApiRequestProvider.createEventLookupRequest(mbid).lookup() },
+                { EventMapper().mapTo(this) })
+        }
     }
 
 }

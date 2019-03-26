@@ -14,16 +14,18 @@ import app.mediabrainz.domain.repository.Resource
 class ArtistSearchRepository : BaseApiRepository() {
 
     fun search(mutableLiveData: MutableLiveData<Resource<List<Artist>>>, query: String) {
-        val limit = 100
-        call(mutableLiveData,
-            {
-                ApiRequestProvider.createArtistSearchRequest()
-                    .search(parenthesesString(query), limit, 0)
-            },
-            {
-                PageMapper<ArtistResponse, Artist> { ArtistMapper().mapTo(it) }.mapToList(getItems())
-            }
-        )
+        if (query.isNotBlank()) {
+            val limit = 100
+            call(mutableLiveData,
+                {
+                    ApiRequestProvider.createArtistSearchRequest()
+                        .search(parenthesesString(query), limit, 0)
+                },
+                {
+                    PageMapper<ArtistResponse, Artist> { ArtistMapper().mapTo(it) }.mapToList(getItems())
+                }
+            )
+        }
     }
 
 }

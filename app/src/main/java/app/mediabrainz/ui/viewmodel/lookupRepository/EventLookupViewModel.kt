@@ -4,20 +4,11 @@ import app.mediabrainz.domain.model.Event
 import app.mediabrainz.domain.repository.lookupRepository.EventLookupRepository
 
 
-class EventLookupViewModel : BaseLookupViewModel<Event>() {
+class EventLookupViewModel(val repo: EventLookupRepository = EventLookupRepository()) :
+    BaseLookupViewModel<Event>(repo) {
 
-    private val repository = EventLookupRepository()
-
-    // retry when error
     override fun lookup() {
-        if (mbid != "") {
-            repository.lookup(result, mbid)
-        }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        repository.cancelJob()
+        repo.lookup(result, mbid)
     }
 
 }

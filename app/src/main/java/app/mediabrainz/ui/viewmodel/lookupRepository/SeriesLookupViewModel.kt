@@ -4,20 +4,11 @@ import app.mediabrainz.domain.model.Series
 import app.mediabrainz.domain.repository.lookupRepository.SeriesLookupRepository
 
 
-class SeriesLookupViewModel : BaseLookupViewModel<Series>() {
+class SeriesLookupViewModel(val repo: SeriesLookupRepository = SeriesLookupRepository()) :
+    BaseLookupViewModel<Series>(repo) {
 
-    private val repository = SeriesLookupRepository()
-
-    // retry when error
     override fun lookup() {
-        if (mbid != "") {
-            repository.lookup(result, mbid)
-        }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        repository.cancelJob()
+        repo.lookup(result, mbid)
     }
 
 }

@@ -4,20 +4,11 @@ import app.mediabrainz.domain.model.Artist
 import app.mediabrainz.domain.repository.lookupRepository.ArtistLookupRepository
 
 
-class ArtistLookupViewModel : BaseLookupViewModel<Artist>() {
+class ArtistLookupViewModel(val repo: ArtistLookupRepository = ArtistLookupRepository()) :
+    BaseLookupViewModel<Artist>(repo) {
 
-    private val repository = ArtistLookupRepository()
-
-    // retry when error
     override fun lookup() {
-        if (mbid != "") {
-            repository.lookup(result, mbid)
-        }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        repository.cancelJob()
+        repo.lookup(result, mbid)
     }
 
 }

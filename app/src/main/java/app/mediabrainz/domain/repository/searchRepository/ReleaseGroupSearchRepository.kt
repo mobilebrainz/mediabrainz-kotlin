@@ -15,26 +15,28 @@ import app.mediabrainz.domain.repository.Resource
 
 class ReleaseGroupSearchRepository : BaseApiRepository() {
 
-    fun search(mutableLiveData: MutableLiveData<Resource<List<ReleaseGroup>>>, rg: String) {
-        search(mutableLiveData, "", rg)
+    fun search(mutableLiveData: MutableLiveData<Resource<List<ReleaseGroup>>>, query: String) {
+        search(mutableLiveData, "", query)
     }
 
     fun search(
         mutableLiveData: MutableLiveData<Resource<List<ReleaseGroup>>>,
-        artist: String, rg: String
+        artist: String, query: String
     ) {
-        val limit = 100
-        call(mutableLiveData,
-            {
-                ApiRequestProvider.createReleaseGroupSearchRequest()
-                    .add(ARTIST, parenthesesString(artist))
-                    .add(RELEASE_GROUP, parenthesesString(rg))
-                    .search(limit, 0)
-            },
-            {
-                PageMapper<ReleaseGroupResponse, ReleaseGroup> { ReleaseGroupMapper().mapTo(it) }.mapToList(getItems())
-            }
-        )
+        if (query.isNotBlank()) {
+            val limit = 100
+            call(mutableLiveData,
+                {
+                    ApiRequestProvider.createReleaseGroupSearchRequest()
+                        .add(ARTIST, parenthesesString(artist))
+                        .add(RELEASE_GROUP, parenthesesString(query))
+                        .search(limit, 0)
+                },
+                {
+                    PageMapper<ReleaseGroupResponse, ReleaseGroup> { ReleaseGroupMapper().mapTo(it) }.mapToList(getItems())
+                }
+            )
+        }
     }
 
 }

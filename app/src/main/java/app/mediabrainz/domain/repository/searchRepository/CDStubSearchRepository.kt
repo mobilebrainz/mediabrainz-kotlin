@@ -14,16 +14,18 @@ import app.mediabrainz.domain.repository.Resource
 class CDStubSearchRepository : BaseApiRepository() {
 
     fun search(mutableLiveData: MutableLiveData<Resource<List<CDStub>>>, query: String) {
-        val limit = 100
-        call(mutableLiveData,
-            {
-                ApiRequestProvider.createCDStubSearchRequest()
-                    .search(parenthesesString(query), limit, 0)
-            },
-            {
-                PageMapper<CDStubResponse, CDStub> { CDStubMapper().mapTo(it) }.mapToList(getItems())
-            }
-        )
+        if (query.isNotBlank()) {
+            val limit = 100
+            call(mutableLiveData,
+                {
+                    ApiRequestProvider.createCDStubSearchRequest()
+                        .search(parenthesesString(query), limit, 0)
+                },
+                {
+                    PageMapper<CDStubResponse, CDStub> { CDStubMapper().mapTo(it) }.mapToList(getItems())
+                }
+            )
+        }
     }
 
 }

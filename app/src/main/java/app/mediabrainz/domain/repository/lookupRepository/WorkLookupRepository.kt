@@ -11,9 +11,11 @@ import app.mediabrainz.domain.repository.Resource
 class WorkLookupRepository : BaseApiRepository() {
 
     fun lookup(mutableLiveData: MutableLiveData<Resource<Work>>, mbid: String) {
-        call(mutableLiveData,
-            { ApiRequestProvider.createWorkLookupRequest(mbid).lookup() },
-            { WorkMapper().mapTo(this) })
+        if (mbid.isNotBlank()) {
+            call(mutableLiveData,
+                { ApiRequestProvider.createWorkLookupRequest(mbid).lookup() },
+                { WorkMapper().mapTo(this) })
+        }
     }
 
 }

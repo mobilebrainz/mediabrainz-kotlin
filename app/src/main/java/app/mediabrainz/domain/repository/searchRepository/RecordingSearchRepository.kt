@@ -22,27 +22,29 @@ class RecordingSearchRepository : BaseApiRepository() {
         mutableLiveData: MutableLiveData<Resource<List<Recording>>>,
         artist: String, release: String, recording: String
     ) {
-        val limit = 100
-        val deferred = {
-            (ApiRequestProvider.createRecordingSearchRequest() +
-                    (ARTIST to parenthesesString(artist)) +
-                    (RELEASE to parenthesesString(release)) +
-                    (RECORDING to parenthesesString(recording)))
-                .search(limit, 0)
-        }
-
-        /*
-        val deferred = {ApiRequestProvider.createRecordingSearchRequest()
-            .add(ARTIST, parenthesesString(artist))
-            .add(RELEASE, parenthesesString(release))
-            .add(RECORDING, parenthesesString(recording))
-            .search(limit, 0)}
-        */
-        call(mutableLiveData, deferred,
-            {
-                PageMapper<RecordingResponse, Recording> { RecordingMapper().mapTo(it) }.mapToList(getItems())
+        if (recording.isNotBlank()) {
+            val limit = 100
+            val deferred = {
+                (ApiRequestProvider.createRecordingSearchRequest() +
+                        (ARTIST to parenthesesString(artist)) +
+                        (RELEASE to parenthesesString(release)) +
+                        (RECORDING to parenthesesString(recording)))
+                    .search(limit, 0)
             }
-        )
+
+            /*
+            val deferred = {ApiRequestProvider.createRecordingSearchRequest()
+                .add(ARTIST, parenthesesString(artist))
+                .add(RELEASE, parenthesesString(release))
+                .add(RECORDING, parenthesesString(recording))
+                .search(limit, 0)}
+            */
+            call(mutableLiveData, deferred,
+                {
+                    PageMapper<RecordingResponse, Recording> { RecordingMapper().mapTo(it) }.mapToList(getItems())
+                }
+            )
+        }
     }
 
 }
