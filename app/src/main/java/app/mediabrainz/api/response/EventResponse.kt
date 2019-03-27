@@ -2,6 +2,7 @@ package app.mediabrainz.api.response
 
 import app.mediabrainz.api.lookupbrowse.BrowseResponseInterface
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
+import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
 
 
@@ -45,18 +46,21 @@ data class EventResponse(
     @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 
-class EventSearchResponse : BaseSearchResponse<EventResponse>() {
+class EventSearchResponse : BaseItemsResponse<EventResponse>(), SearchResponseInterface {
     @field:Json(name = "events")
-    val events: List<EventResponse> = ArrayList()
-
-    override fun getItems() = events
+    override var items: List<EventResponse> = ArrayList()
 }
 
-data class EventBrowseResponse(
-    @field:Json(name = "event-count") val count: Int,
-    @field:Json(name = "event-offset") val offset: Int,
-    @field:Json(name = "events") val events: List<EventResponse>
-) : BrowseResponseInterface
+class EventBrowseResponse : BaseItemsResponse<EventResponse>(), BrowseResponseInterface {
+    @field:Json(name = "event-count")
+    override var count: Int = 0
+
+    @field:Json(name = "event-offset")
+    override var offset: Int = 0
+
+    @field:Json(name = "events")
+    override var items: List<EventResponse> = ArrayList()
+}
 
 enum class EventType(val type: String) {
     CONCERT("Concert"),

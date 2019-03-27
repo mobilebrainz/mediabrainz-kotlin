@@ -2,6 +2,7 @@ package app.mediabrainz.api.response
 
 import app.mediabrainz.api.lookupbrowse.BrowseResponseInterface
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
+import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
 
 
@@ -62,18 +63,21 @@ data class ReleaseGroupResponse(
     @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 
-class ReleaseGroupSearchResponse : BaseSearchResponse<ReleaseGroupResponse>() {
+class ReleaseGroupSearchResponse : BaseItemsResponse<ReleaseGroupResponse>(), SearchResponseInterface {
     @field:Json(name = "release-groups")
-    val releaseGroups: List<ReleaseGroupResponse> = ArrayList()
-
-    override fun getItems() = releaseGroups
+    override var items: List<ReleaseGroupResponse> = ArrayList()
 }
 
-data class ReleaseGroupBrowseResponse(
-    @field:Json(name = "release-group-count") val count: Int,
-    @field:Json(name = "release-group-offset") val offset: Int,
-    @field:Json(name = "release-groups") val releaseGroups: List<ReleaseGroupResponse>
-) : BrowseResponseInterface
+class ReleaseGroupBrowseResponse : BaseItemsResponse<ReleaseGroupResponse>(), BrowseResponseInterface {
+    @field:Json(name = "release-group-count")
+    override var count: Int = 0
+
+    @field:Json(name = "release-group-offset")
+    override var offset: Int = 0
+
+    @field:Json(name = "release-groups")
+    override var items: List<ReleaseGroupResponse> = ArrayList()
+}
 
 interface ReleaseGroupType
 

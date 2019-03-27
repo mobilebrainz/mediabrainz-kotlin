@@ -60,7 +60,7 @@ abstract class BaseBrowseRequest<R, P1, P2>(val entityType: P2, val mbid: String
     }
 
     protected fun buildParams(): Map<String, String> {
-        val map = mutableMapOf<String, String>()
+        val map = mutableMapOf(entityType.toString() to mbid)
         for ((key, value) in params) {
             map[key.toString()] = value
         }

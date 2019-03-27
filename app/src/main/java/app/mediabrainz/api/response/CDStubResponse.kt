@@ -1,5 +1,6 @@
 package app.mediabrainz.api.response
 
+import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
 
 
@@ -16,9 +17,7 @@ data class CDStubResponse(
     @field:Json(name = "comment") val comment: String?
 )
 
-class CDStubSearchResponse : BaseSearchResponse<CDStubResponse>() {
+class CDStubSearchResponse : BaseItemsResponse<CDStubResponse>(), SearchResponseInterface {
     @field:Json(name = "cdstubs")
-    val cdstubs: List<CDStubResponse> = ArrayList()
-
-    override fun getItems() = cdstubs
+    override var items: List<CDStubResponse> = ArrayList()
 }

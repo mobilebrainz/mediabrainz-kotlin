@@ -22,7 +22,7 @@ class UrlSearchRepository : BaseSearchRepository<Url>() {
                         .search(parenthesesString(query), limit, 0)
                 },
                 {
-                    PageMapper<UrlResponse, Url> { UrlMapper().mapTo(it) }.mapToList(getItems())
+                    PageMapper<UrlResponse, Url> { UrlMapper().mapTo(it) }.mapToList(items)
                 }
             )
         }

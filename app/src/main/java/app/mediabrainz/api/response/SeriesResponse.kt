@@ -2,6 +2,7 @@ package app.mediabrainz.api.response
 
 import app.mediabrainz.api.lookupbrowse.BrowseResponseInterface
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
+import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
 
 data class SeriesResponse(
@@ -33,18 +34,21 @@ data class SeriesResponse(
     @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 
-class SeriesSearchResponse : BaseSearchResponse<SeriesResponse>() {
+class SeriesSearchResponse : BaseItemsResponse<SeriesResponse>(), SearchResponseInterface {
     @field:Json(name = "series")
-    val series: List<SeriesResponse> = ArrayList()
-
-    override fun getItems() = series
+    override var items: List<SeriesResponse> = ArrayList()
 }
 
-data class SeriesBrowseResponse(
-    @field:Json(name = "series-count") val count: Int,
-    @field:Json(name = "series-offset") val offset: Int,
-    @field:Json(name = "series") val series: List<SeriesResponse>
-) : BrowseResponseInterface
+class SeriesBrowseResponse : BaseItemsResponse<SeriesResponse>(), BrowseResponseInterface {
+    @field:Json(name = "series-count")
+    override var count: Int = 0
+
+    @field:Json(name = "series-offset")
+    override var offset: Int = 0
+
+    @field:Json(name = "series")
+    override var items: List<SeriesResponse> = ArrayList()
+}
 
 enum class SeriesType(val type: String) {
     RELEASE_GROUP("Release group"),

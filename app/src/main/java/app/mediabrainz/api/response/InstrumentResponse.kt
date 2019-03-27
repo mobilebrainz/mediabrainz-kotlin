@@ -1,6 +1,7 @@
 package app.mediabrainz.api.response
 
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
+import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
 
 
@@ -34,11 +35,9 @@ data class InstrumentResponse(
     @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 
-class InstrumentSearchResponse : BaseSearchResponse<InstrumentResponse>() {
+class InstrumentSearchResponse : BaseItemsResponse<InstrumentResponse>(), SearchResponseInterface {
     @field:Json(name = "instruments")
-    val instruments: List<InstrumentResponse> = ArrayList()
-
-    override fun getItems() = instruments
+    override var items: List<InstrumentResponse> = ArrayList()
 }
 
 enum class InstrumentType(val type: String) {

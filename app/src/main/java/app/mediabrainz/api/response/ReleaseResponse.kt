@@ -2,6 +2,7 @@ package app.mediabrainz.api.response
 
 import app.mediabrainz.api.lookupbrowse.BrowseResponseInterface
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
+import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
 
 /**
@@ -76,18 +77,21 @@ data class ReleaseResponse(
     @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 
-class ReleaseSearchResponse : BaseSearchResponse<ReleaseResponse>() {
+class ReleaseSearchResponse : BaseItemsResponse<ReleaseResponse>(), SearchResponseInterface {
     @field:Json(name = "releases")
-    val releases: List<ReleaseResponse> = ArrayList()
-
-    override fun getItems() = releases
+    override var items: List<ReleaseResponse> = ArrayList()
 }
 
-data class ReleaseBrowseResponse(
-    @field:Json(name = "release-count") val count: Int,
-    @field:Json(name = "release-offset") val offset: Int,
-    @field:Json(name = "releases") val releases: List<ReleaseResponse>
-) : BrowseResponseInterface
+class ReleaseBrowseResponse : BaseItemsResponse<ReleaseResponse>(), BrowseResponseInterface {
+    @field:Json(name = "release-count")
+    override var count: Int = 0
+
+    @field:Json(name = "release-offset")
+    override var offset: Int = 0
+
+    @field:Json(name = "releases")
+    override var items: List<ReleaseResponse> = ArrayList()
+}
 
 data class TextRepresentationResponse(
     @field:Json(name = "language") val language: String?,

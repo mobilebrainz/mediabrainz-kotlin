@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         tools:context=".activity.MainActivity">
 
-    <fragment android:name="app.mediabrainz.ui.fragment.SearchFragment"
+    <fragment android:name="app.mediabrainz.ui.fragment.BrowseTestFragment"
               android:id="@+id/fragment"
               android:layout_width="match_parent"
               android:layout_height="match_parent" />

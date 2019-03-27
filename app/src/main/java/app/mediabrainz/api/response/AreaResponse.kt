@@ -2,6 +2,7 @@ package app.mediabrainz.api.response
 
 import app.mediabrainz.api.lookupbrowse.BrowseResponseInterface
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
+import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
 
 /**
@@ -45,18 +46,21 @@ data class AreaResponse(
     @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 
-class AreaSearchResponse : BaseSearchResponse<AreaResponse>() {
+class AreaSearchResponse : BaseItemsResponse<AreaResponse>(), SearchResponseInterface {
     @field:Json(name = "areas")
-    val areas: List<AreaResponse> = ArrayList()
-
-    override fun getItems() = areas
+    override var items: List<AreaResponse> = ArrayList()
 }
 
-data class AreaBrowseResponse(
-    @field:Json(name = "area-count") val count: Int,
-    @field:Json(name = "area-offset") val offset: Int,
-    @field:Json(name = "areas") val areas: List<AreaResponse>
-) : BrowseResponseInterface
+class AreaBrowseResponse : BaseItemsResponse<AreaResponse>(), BrowseResponseInterface {
+    @field:Json(name = "area-count")
+    override var count: Int = 0
+
+    @field:Json(name = "area-offset")
+    override var offset: Int = 0
+
+    @field:Json(name = "areas")
+    override var items: List<AreaResponse> = ArrayList()
+}
 
 enum class AreaType(val type: String) {
     COUNTRY("country"),

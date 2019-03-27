@@ -33,7 +33,7 @@ class ReleaseGroupSearchRepository : BaseSearchRepository<ReleaseGroup>() {
                         .search(limit, 0)
                 },
                 {
-                    PageMapper<ReleaseGroupResponse, ReleaseGroup> { ReleaseGroupMapper().mapTo(it) }.mapToList(getItems())
+                    PageMapper<ReleaseGroupResponse, ReleaseGroup> { ReleaseGroupMapper().mapTo(it) }.mapToList(items)
                 }
             )
         }

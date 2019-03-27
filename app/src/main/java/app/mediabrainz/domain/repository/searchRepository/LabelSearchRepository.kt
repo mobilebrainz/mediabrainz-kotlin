@@ -22,7 +22,7 @@ class LabelSearchRepository : BaseSearchRepository<Label>() {
                         .search(parenthesesString(query), limit, 0)
                 },
                 {
-                    PageMapper<LabelResponse, Label> { LabelMapper().mapTo(it) }.mapToList(getItems())
+                    PageMapper<LabelResponse, Label> { LabelMapper().mapTo(it) }.mapToList(items)
                 }
             )
         }

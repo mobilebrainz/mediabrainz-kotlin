@@ -32,11 +32,16 @@ data class CollectionResponse(
     @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 
-data class CollectionBrowseResponse(
-    @field:Json(name = "collection-count") val count: Int,
-    @field:Json(name = "collection-offset") val offset: Int,
-    @field:Json(name = "collections") val collections: List<CollectionResponse>
-) : BrowseResponseInterface
+class CollectionBrowseResponse : BaseItemsResponse<CollectionResponse>(), BrowseResponseInterface {
+    @field:Json(name = "collection-count")
+    override var count: Int = 0
+
+    @field:Json(name = "collection-offset")
+    override var offset: Int = 0
+
+    @field:Json(name = "collections")
+    override var items: List<CollectionResponse> = ArrayList()
+}
 
 enum class CollectionType(val type: String) {
     AREA("Area"),

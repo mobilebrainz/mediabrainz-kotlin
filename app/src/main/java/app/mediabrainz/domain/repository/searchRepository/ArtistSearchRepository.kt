@@ -22,7 +22,7 @@ class ArtistSearchRepository : BaseSearchRepository<Artist>() {
                         .search(parenthesesString(query), limit, 0)
                 },
                 {
-                    PageMapper<ArtistResponse, Artist> { ArtistMapper().mapTo(it) }.mapToList(getItems())
+                    PageMapper<ArtistResponse, Artist> { ArtistMapper().mapTo(it) }.mapToList(items)
                 }
             )
         }

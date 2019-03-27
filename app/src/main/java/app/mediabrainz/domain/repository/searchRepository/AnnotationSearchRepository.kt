@@ -21,7 +21,7 @@ class AnnotationSearchRepository : BaseSearchRepository<Annotation>() {
                     .search(parenthesesString(query), limit, 0)
             },
             {
-                PageMapper<AnnotationResponse, Annotation> { AnnotationMapper().mapTo(it) }.mapToList(getItems())
+                PageMapper<AnnotationResponse, Annotation> { AnnotationMapper().mapTo(it) }.mapToList(items)
             }
         )
     }

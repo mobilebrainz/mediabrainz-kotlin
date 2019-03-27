@@ -22,7 +22,7 @@ class PlaceSearchRepository : BaseSearchRepository<Place>() {
                         .search(parenthesesString(query), limit, 0)
                 },
                 {
-                    PageMapper<PlaceResponse, Place> { PlaceMapper().mapTo(it) }.mapToList(getItems())
+                    PageMapper<PlaceResponse, Place> { PlaceMapper().mapTo(it) }.mapToList(items)
                 }
             )
         }

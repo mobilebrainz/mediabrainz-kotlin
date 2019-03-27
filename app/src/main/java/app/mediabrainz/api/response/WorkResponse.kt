@@ -2,6 +2,7 @@ package app.mediabrainz.api.response
 
 import app.mediabrainz.api.lookupbrowse.BrowseResponseInterface
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
+import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
 
 
@@ -46,18 +47,21 @@ data class WorkResponse(
     @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 
-class WorkSearchResponse : BaseSearchResponse<WorkResponse>() {
+class WorkSearchResponse : BaseItemsResponse<WorkResponse>(), SearchResponseInterface {
     @field:Json(name = "works")
-    val works: List<WorkResponse> = ArrayList()
-
-    override fun getItems() = works
+    override var items: List<WorkResponse> = ArrayList()
 }
 
-data class WorkBrowseResponse(
-    @field:Json(name = "work-count") val count: Int,
-    @field:Json(name = "work-offset") val offset: Int,
-    @field:Json(name = "works") val works: List<WorkResponse>
-) : BrowseResponseInterface
+class WorkBrowseResponse : BaseItemsResponse<WorkResponse>(), BrowseResponseInterface {
+    @field:Json(name = "work-count")
+    override var count: Int = 0
+
+    @field:Json(name = "work-offset")
+    override var offset: Int = 0
+
+    @field:Json(name = "works")
+    override var items: List<WorkResponse> = ArrayList()
+}
 
 data class AttributeResponse(
     @field:Json(name = "type") val type: String?,

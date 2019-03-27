@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        /*
         val vm = ViewModelProviders.of(this).get(PlaceSearchViewModel::class.java)
         vm.result.observe(this, Observer {
             when (it.status) {
@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
         vm.search("black")
+        */
 
     }
 }

@@ -2,6 +2,7 @@ package app.mediabrainz.api.response
 
 import app.mediabrainz.api.lookupbrowse.BrowseResponseInterface
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
+import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
 
 /**
@@ -77,18 +78,21 @@ data class ArtistResponse(
     @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 
-class ArtistSearchResponse : BaseSearchResponse<ArtistResponse>() {
+class ArtistSearchResponse : BaseItemsResponse<ArtistResponse>(), SearchResponseInterface {
     @field:Json(name = "artists")
-    var artists: List<ArtistResponse> = ArrayList()
-
-    override fun getItems() = artists
+    override var items: List<ArtistResponse> = ArrayList()
 }
 
-data class ArtistBrowseResponse(
-    @field:Json(name = "artist-count") val count: Int,
-    @field:Json(name = "artist-offset") val offset: Int,
-    @field:Json(name = "artists") val artists: List<ArtistResponse>
-) : BrowseResponseInterface
+class ArtistBrowseResponse : BaseItemsResponse<ArtistResponse>(), BrowseResponseInterface {
+    @field:Json(name = "artist-count")
+    override var count: Int = 0
+
+    @field:Json(name = "artist-offset")
+    override var offset: Int = 0
+
+    @field:Json(name = "artists")
+    override var items: List<ArtistResponse> = ArrayList()
+}
 
 data class ArtistCreditResponse(
     @field:Json(name = "artist") val artist: ArtistResponse,

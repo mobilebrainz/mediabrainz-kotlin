@@ -22,7 +22,7 @@ class AreaSearchRepository : BaseSearchRepository<Area>() {
                         .search(parenthesesString(query), limit, 0)
                 },
                 {
-                    PageMapper<AreaResponse, Area> { AreaMapper().mapTo(it) }.mapToList(getItems())
+                    PageMapper<AreaResponse, Area> { AreaMapper().mapTo(it) }.mapToList(items)
                 }
             )
         }

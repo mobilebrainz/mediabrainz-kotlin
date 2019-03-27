@@ -22,7 +22,7 @@ class TagSearchRepository : BaseSearchRepository<Tag>() {
                         .search(parenthesesString(query), limit, 0)
                 },
                 {
-                    PageMapper<TagResponse, Tag> { TagMapper().mapTo(it) }.mapToList(getItems())
+                    PageMapper<TagResponse, Tag> { TagMapper().mapTo(it) }.mapToList(items)
                 }
             )
         }

@@ -7,16 +7,15 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import app.mediabrainz.domain.model.*
-import app.mediabrainz.domain.model.Annotation
 import app.mediabrainz.ui.R
-import kotlinx.android.synthetic.main.artist_search_adapter_row.view.*
+import kotlinx.android.synthetic.main.test_adapter_row.view.*
 
 
 class ItemSearchAdapter :
-    PagedListAdapter<Work, ItemSearchAdapter.SearchViewHolder>(DiffUtilCallBack()) {
+    PagedListAdapter<Artist, ItemSearchAdapter.SearchViewHolder>(DiffUtilCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.artist_search_adapter_row, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.test_adapter_row, parent, false)
         return SearchViewHolder(view)
     }
 
@@ -28,19 +27,19 @@ class ItemSearchAdapter :
 
         val nameView = itemView.nameView
 
-        fun bindTo(item: Work) {
+        fun bindTo(item: Artist) {
             with(item) {
                 nameView.text = name
             }
         }
     }
 
-    class DiffUtilCallBack : DiffUtil.ItemCallback<Work>() {
-        override fun areItemsTheSame(oldItem: Work, newItem: Work): Boolean {
+    class DiffUtilCallBack : DiffUtil.ItemCallback<Artist>() {
+        override fun areItemsTheSame(oldItem: Artist, newItem: Artist): Boolean {
             return oldItem.mbid == newItem.mbid
         }
 
-        override fun areContentsTheSame(oldItem: Work, newItem: Work): Boolean {
+        override fun areContentsTheSame(oldItem: Artist, newItem: Artist): Boolean {
             return oldItem.name == newItem.name
             //&& oldItem.score == newItem.score
             //&& oldItem.commentCount == newItem.commentCount

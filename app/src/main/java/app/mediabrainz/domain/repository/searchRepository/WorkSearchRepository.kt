@@ -22,7 +22,7 @@ class WorkSearchRepository : BaseSearchRepository<Work>() {
                         .search(parenthesesString(query), limit, 0)
                 },
                 {
-                    PageMapper<WorkResponse, Work> { WorkMapper().mapTo(it) }.mapToList(getItems())
+                    PageMapper<WorkResponse, Work> { WorkMapper().mapTo(it) }.mapToList(items)
                 }
             )
         }

@@ -22,7 +22,7 @@ class InstrumentSearchRepository : BaseSearchRepository<Instrument>() {
                         .search(parenthesesString(query), limit, 0)
                 },
                 {
-                    PageMapper<InstrumentResponse, Instrument> { InstrumentMapper().mapTo(it) }.mapToList(getItems())
+                    PageMapper<InstrumentResponse, Instrument> { InstrumentMapper().mapTo(it) }.mapToList(items)
                 }
             )
         }

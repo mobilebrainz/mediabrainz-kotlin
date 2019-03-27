@@ -2,6 +2,7 @@ package app.mediabrainz.api.response
 
 import app.mediabrainz.api.lookupbrowse.BrowseResponseInterface
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
+import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
 
 
@@ -37,18 +38,21 @@ data class PlaceResponse(
     @field:Json(name = "relations") val relations: List<RelationResponse>?
 ) : LookupResponseInterface
 
-class PlaceSearchResponse : BaseSearchResponse<PlaceResponse>() {
+class PlaceSearchResponse : BaseItemsResponse<PlaceResponse>(), SearchResponseInterface {
     @field:Json(name = "places")
-    val places: List<PlaceResponse> = ArrayList()
-
-    override fun getItems() = places
+    override var items: List<PlaceResponse> = ArrayList()
 }
 
-data class PlaceBrowseResponse(
-    @field:Json(name = "place-count") val count: Int,
-    @field:Json(name = "place-offset") val offset: Int,
-    @field:Json(name = "places") val places: List<PlaceResponse>
-) : BrowseResponseInterface
+class PlaceBrowseResponse : BaseItemsResponse<PlaceResponse>(), BrowseResponseInterface {
+    @field:Json(name = "place-count")
+    override var count: Int = 0
+
+    @field:Json(name = "place-offset")
+    override var offset: Int = 0
+
+    @field:Json(name = "places")
+    override var items: List<PlaceResponse> = ArrayList()
+}
 
 data class CoordinateResponse(
     @field:Json(name = "latitude") val latitude: Double?,

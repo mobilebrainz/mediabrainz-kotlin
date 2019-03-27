@@ -22,7 +22,7 @@ class SeriesSearchRepository : BaseSearchRepository<Series>() {
                         .search(parenthesesString(query), limit, 0)
                 },
                 {
-                    PageMapper<SeriesResponse, Series> { SeriesMapper().mapTo(it) }.mapToList(getItems())
+                    PageMapper<SeriesResponse, Series> { SeriesMapper().mapTo(it) }.mapToList(items)
                 }
             )
         }

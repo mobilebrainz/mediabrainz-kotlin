@@ -22,7 +22,7 @@ class EventSearchRepository : BaseSearchRepository<Event>() {
                         .search(parenthesesString(query), limit, 0)
                 },
                 {
-                    PageMapper<EventResponse, Event> { EventMapper().mapTo(it) }.mapToList(getItems())
+                    PageMapper<EventResponse, Event> { EventMapper().mapTo(it) }.mapToList(items)
                 }
             )
         }
