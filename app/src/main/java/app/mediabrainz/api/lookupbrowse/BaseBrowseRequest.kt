@@ -8,7 +8,8 @@ import kotlinx.coroutines.Deferred
 import retrofit2.Response
 
 
-abstract class BaseBrowseRequest<R, P1, P2>(val entityType: P2, val mbid: String) : BrowseRequestInterface<R, P1>
+abstract class BaseBrowseRequest<R, P1, P2>(val entityType: P2, val mbid: String) :
+    BrowseRequestInterface<R, P1>
         where R : BrowseResponseInterface,
               P1 : Enum<P1>, P1 : BrowseIncTypeInterface,
               P2 : Enum<P2>, P2 : BrowseEntityTypeInterface {
@@ -30,7 +31,6 @@ abstract class BaseBrowseRequest<R, P1, P2>(val entityType: P2, val mbid: String
         params[param] = value
         return this
     }
-
 
     override fun addIncs(vararg incTypes: P1): BrowseRequestInterface<R, P1> {
         incs.addAll(incTypes.asList())

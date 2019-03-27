@@ -17,9 +17,15 @@ object IncType {
     const val TAGS_INC = "tags"
     const val GENRES_INC = "genres"
     const val USER_COLLECTIONS_INC = "user-collections"
-    const val USER_RATINGS_INC = "user-ratings"   //require authorization
-    const val USER_TAGS_INC = "user-tags"         //require authorization
-    const val USER_GENRES_INC = "user-genres"     //require authorization
+    const val USER_RATINGS_INC = "user-ratings"
+    const val USER_TAGS_INC = "user-tags"
+    const val USER_GENRES_INC = "user-genres"
     const val VARIOUS_ARTISTS_INC = "various-artists"
     const val WORKS_INC = "works"
+
+    val AUTHORIZATED_INCS = arrayOf(
+        USER_RATINGS_INC,
+        USER_TAGS_INC,
+        USER_GENRES_INC
+    )
 }
