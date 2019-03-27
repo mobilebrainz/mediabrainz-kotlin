@@ -7,6 +7,8 @@ import app.mediabrainz.api.searchrequest.*
 
 object ApiRequestProvider {
 
+    var accessToken: String = ""
+
     fun createAnnotationSearchRequest() = AnnotationSearchRequest()
     fun createAreaSearchRequest() = AreaSearchRequest()
     fun createArtistSearchRequest() = ArtistSearchRequest()
