@@ -24,24 +24,13 @@ abstract class BaseBrowseRequest<R, P1, P2>(val entityType: P2, val mbid: String
         return this
     }
 
-    protected fun addParam(param: BrowseParamType, value: String): BrowseRequestInterface<R, P1> {
+    fun addParam(param: BrowseParamType, value: String): BrowseRequestInterface<R, P1> {
         params[param] = value
         return this
     }
 
     override fun addIncs(vararg incTypes: P1): BrowseRequestInterface<R, P1> {
         incs.addAll(incTypes.asList())
-        /*
-        if (Config.accessToken == null) {
-            for (incType in incTypes) {
-                for (authType in AUTHORIZATED_INCS) {
-                    if (incType.toString() == authType) {
-                        digestAuth = true
-                    }
-                }
-            }
-        }
-        */
         return this
     }
 
@@ -61,10 +50,22 @@ abstract class BaseBrowseRequest<R, P1, P2>(val entityType: P2, val mbid: String
         for ((key, value) in params) {
             map[key.toString()] = value
         }
-        val inc = getStringFromList(incs, "+")
+        /*
+        // set digeat auth
+        if (!params.containsKey(BrowseParamType.ACCESS_TOKEN)) {
+            for (inc in incs) {
+                for (authIncs in AUTHORIZATED_INCS) {
+                    if (inc.toString() == authIncs) {
+                        digestAuth = true
+                    }
+                }
+            }
+        }
+        */
+        val incStr = getStringFromList(incs, "+")
         incs.clear()
-        if (inc != "") {
-            map[INC.param] = inc
+        if (incStr != "") {
+            map[INC.param] = incStr
         }
         return map
     }

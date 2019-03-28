@@ -11,7 +11,7 @@ abstract class BaseLookupRequest<R, P>(val mbid: String) : LookupRequestInterfac
 
     private val incs: MutableList<LookupIncTypeInterface> = mutableListOf()
 
-    protected val params: MutableMap<LookupParamType, String> = mutableMapOf(
+    private val params: MutableMap<LookupParamType, String> = mutableMapOf(
         FORMAT to FORMAT_JSON
     )
 
@@ -20,24 +20,13 @@ abstract class BaseLookupRequest<R, P>(val mbid: String) : LookupRequestInterfac
         return this
     }
 
-    protected fun addParam(param: LookupParamType, value: String): LookupRequestInterface<R, P> {
+    fun addParam(param: LookupParamType, value: String): LookupRequestInterface<R, P> {
         params[param] = value
         return this
     }
 
     override fun addIncs(vararg incTypes: P): LookupRequestInterface<R, P> {
         incs.addAll(incTypes.asList())
-        /*
-        if (Config.accessToken == null) {
-            for (incType in incTypes) {
-                for (authType in AUTHORIZATED_INCS) {
-                    if (incType.toString() == authType) {
-                        digestAuth = true
-                    }
-                }
-            }
-        }
-        */
         return this
     }
 
@@ -51,10 +40,22 @@ abstract class BaseLookupRequest<R, P>(val mbid: String) : LookupRequestInterfac
         for ((key, value) in params) {
             map[key.toString()] = value
         }
-        val inc = getStringFromList(incs, "+")
+        /*
+        // set digeat auth
+        if (!params.containsKey(BrowseParamType.ACCESS_TOKEN)) {
+            for (inc in incs) {
+                for (authIncs in AUTHORIZATED_INCS) {
+                    if (inc.toString() == authIncs) {
+                        digestAuth = true
+                    }
+                }
+            }
+        }
+        */
+        val incStr = getStringFromList(incs, "+")
         incs.clear()
-        if (inc != "") {
-            map[INC.param] = inc
+        if (incStr != "") {
+            map[INC.param] = incStr
         }
         return map
     }
