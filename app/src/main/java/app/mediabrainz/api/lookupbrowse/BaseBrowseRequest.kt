@@ -1,7 +1,5 @@
 package app.mediabrainz.api.lookupbrowse
 
-import app.mediabrainz.api.ApiRequestProvider
-import app.mediabrainz.api.ApiRequestProvider.accessToken
 import app.mediabrainz.api.core.Config.FORMAT_JSON
 import app.mediabrainz.api.core.getStringFromList
 import app.mediabrainz.api.lookupbrowse.BrowseParamType.FORMAT
@@ -21,10 +19,9 @@ abstract class BaseBrowseRequest<R, P1, P2>(val entityType: P2, val mbid: String
         FORMAT to FORMAT_JSON
     )
 
-    init {
-        if (ApiRequestProvider.accessToken.isNotBlank()) {
-            params[BrowseParamType.ACCESS_TOKEN] = accessToken
-        }
+    fun addAccessToken(accessToken: String): BrowseRequestInterface<R, P1> {
+        params[BrowseParamType.ACCESS_TOKEN] = accessToken
+        return this
     }
 
     protected fun addParam(param: BrowseParamType, value: String): BrowseRequestInterface<R, P1> {
