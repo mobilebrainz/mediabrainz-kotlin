@@ -19,7 +19,6 @@ object Config {
     const val RELEASE_QUERY = WEB_SERVICE_PREFIX + "release"
     const val RELEASE_GROUP_QUERY = WEB_SERVICE_PREFIX + "release-group"
     const val TAG_QUERY = WEB_SERVICE_PREFIX + "tag"
-    const val url_QUERY = WEB_SERVICE_PREFIX + "url"
     const val WORK_QUERY = WEB_SERVICE_PREFIX + "work"
     const val EVENT_QUERY = WEB_SERVICE_PREFIX + "event"
     const val ISRC_QUERY = WEB_SERVICE_PREFIX + "isrc"
@@ -27,5 +26,12 @@ object Config {
     const val SERIES_QUERY = WEB_SERVICE_PREFIX + "series"
     const val URL_QUERY = WEB_SERVICE_PREFIX + "url"
     const val DISCID_QUERY = WEB_SERVICE_PREFIX + "discid"
+
+    const val OAUTH_WEB_SERVICE = "https://musicbrainz.org"
+    const val OAUTH_TEST_WEB_SERVICE = "https://test.musicbrainz.org"
+    const val OAUTH_AUTHORIZE_QUERY  = "/oauth2/authorize"
+    const val OAUTH_TOKEN_QUERY = "/oauth2/token"
+    const val OAUTH_USER_INFO_QUERY = "/oauth2/userinfo"
+    const val OAUTH_TOKEN_INFO_QUERY = "/oauth2/tokeninfo"
 
 }

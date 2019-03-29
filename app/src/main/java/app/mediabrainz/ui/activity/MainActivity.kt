@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProviders
 import app.mediabrainz.domain.repository.Resource.Status.*
 import app.mediabrainz.ui.R
 import app.mediabrainz.ui.viewmodel.searchRepository.PlaceSearchViewModel
-import app.mediabrainz.ui.viewmodel.searchRepository.RecordingSearchViewModel
 
 
 class MainActivity : AppCompatActivity() {
@@ -17,20 +16,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        /*
         val vm = ViewModelProviders.of(this).get(PlaceSearchViewModel::class.java)
         vm.result.observe(this, Observer {
-            when (it.status) {
-                LOADING -> Log.i("", "")
-                SUCCESS -> {
-                    val data = it.data
-                    Log.i("", "")
+            it?.apply {
+                when (status) {
+                    LOADING -> Log.i("", "")
+                    SUCCESS -> {
+                        data?.apply {
+                            Log.i("", "")
+                        }
+                    }
+                    ERROR -> Log.i("", "")
                 }
-                ERROR -> Log.i("", "")
             }
         })
         vm.search("black")
-        */
 
     }
 }

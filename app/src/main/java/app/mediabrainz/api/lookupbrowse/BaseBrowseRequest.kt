@@ -63,10 +63,10 @@ abstract class BaseBrowseRequest<R, P1, P2>(val entityType: P2, val mbid: String
         }
         */
         val incStr = getStringFromList(incs, "+")
-        incs.clear()
-        if (incStr != "") {
+        if (incStr.isNotBlank()) {
             map[INC.param] = incStr
         }
+        incs.clear()
         return map
     }
 

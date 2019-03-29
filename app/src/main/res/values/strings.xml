@@ -6,4 +6,9 @@
     <string name="app_error">"Application Error!"</string>
     <string name="retry">Retry</string>
 
+    <string name="login">Log In</string>
+    <string name="login_prompt">To Login, connect your MusicBrainz account with our app. You will
+        be prompted to login in MusicBrainz website. Follow the instructions and return to complete
+        authentication.</string>
+
 </resources>

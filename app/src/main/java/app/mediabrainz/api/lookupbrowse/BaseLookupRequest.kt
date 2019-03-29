@@ -53,10 +53,10 @@ abstract class BaseLookupRequest<R, P>(val mbid: String) : LookupRequestInterfac
         }
         */
         val incStr = getStringFromList(incs, "+")
-        incs.clear()
-        if (incStr != "") {
+        if (incStr.isNotBlank()) {
             map[INC.param] = incStr
         }
+        incs.clear()
         return map
     }
 

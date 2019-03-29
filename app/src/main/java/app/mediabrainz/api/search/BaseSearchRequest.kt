@@ -33,7 +33,7 @@ abstract class BaseSearchRequest<R, P> : SearchRequestInterface<R, P>
 
 
     override fun add(query: String): SearchRequestInterface<R, P> {
-        if (query != "") {
+        if (query.isNotBlank()) {
             expression.add(query)
         }
         return this
@@ -45,7 +45,7 @@ abstract class BaseSearchRequest<R, P> : SearchRequestInterface<R, P>
     }
 
     override fun add(searchField: P, value: String): SearchRequestInterface<R, P> {
-        if (value != "") {
+        if (value.isNotBlank()) {
             expression.add(searchField, value)
         }
         return this
@@ -57,7 +57,7 @@ abstract class BaseSearchRequest<R, P> : SearchRequestInterface<R, P>
             map[key.toString()] = value
         }
         val query = expression.build()
-        if (query != "") {
+        if (query.isNotBlank()) {
             map[QUERY.param] = query
         }
         return map
