@@ -11,8 +11,8 @@ class PagedRecordingBrowseViewModel : BaseDataSourceViewModel<Recording>() {
     private val initialLoadSize = 25
     private val loadSize = 25
 
-    fun browse(entityType: RecordingBrowseEntityType, mbid: String) {
-        val factory = RecordingBrowseDataSource.Factory(entityType, mbid)
+    fun browse(entityType: RecordingBrowseEntityType, mbid: String, authorized: Boolean = false) {
+        val factory = RecordingBrowseDataSource.Factory(entityType, mbid, authorized)
         val config = buildPagedListConfig(loadSize, initialLoadSize)
         initPagedItems(config, factory)
     }

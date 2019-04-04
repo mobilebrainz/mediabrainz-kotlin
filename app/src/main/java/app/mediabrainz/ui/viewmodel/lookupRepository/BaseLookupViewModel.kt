@@ -11,15 +11,29 @@ abstract class BaseLookupViewModel<T>(val repository: BaseLookupRepository<T>) :
     val result: MutableLiveData<Resource<T>> = MutableLiveData()
 
     protected var mbid: String = ""
+    protected var oauth = false
 
     open fun lookup() {
         repository.lookup(result, mbid)
     }
 
+    open fun authLookup() {
+        repository.authLookup(result, mbid)
+    }
+
     open fun lookup(mbid: String) {
-        if (result.value == null || this.mbid != mbid) {
+        if (result.value == null || this.mbid != mbid || oauth) {
             this.mbid = mbid
+            oauth = false
             lookup()
+        }
+    }
+
+    open fun authLookup(mbid: String) {
+        if (result.value == null || this.mbid != mbid || !oauth) {
+            this.mbid = mbid
+            oauth = true
+            authLookup()
         }
     }
 

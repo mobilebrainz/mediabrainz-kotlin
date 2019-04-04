@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.test_adapter_row.view.*
 
 
 class ItemBrowseAdapter :
-    PagedListAdapter<Event, ItemBrowseAdapter.SearchViewHolder>(DiffUtilCallBack()) {
+    PagedListAdapter<ReleaseGroup, ItemBrowseAdapter.SearchViewHolder>(DiffUtilCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.test_adapter_row, parent, false)
@@ -27,19 +27,19 @@ class ItemBrowseAdapter :
 
         val nameView = itemView.nameView
 
-        fun bindTo(item: Event) {
+        fun bindTo(item: ReleaseGroup) {
             with(item) {
                 nameView.text = name
             }
         }
     }
 
-    class DiffUtilCallBack : DiffUtil.ItemCallback<Event>() {
-        override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {
+    class DiffUtilCallBack : DiffUtil.ItemCallback<ReleaseGroup>() {
+        override fun areItemsTheSame(oldItem: ReleaseGroup, newItem: ReleaseGroup): Boolean {
             return oldItem.mbid == newItem.mbid
         }
 
-        override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
+        override fun areContentsTheSame(oldItem: ReleaseGroup, newItem: ReleaseGroup): Boolean {
             return oldItem.name == newItem.name
             //&& oldItem.score == newItem.score
             //&& oldItem.commentCount == newItem.commentCount

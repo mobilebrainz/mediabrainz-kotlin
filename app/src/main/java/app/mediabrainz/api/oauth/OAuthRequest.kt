@@ -8,7 +8,7 @@ import app.mediabrainz.api.retrofit.OAuthRequestService
 class OAuthRequest {
 
     private fun getRetrofitService() =
-        WebService.createJsonRetrofitService(OAuthRequestService::class.java, Config.OAUTH_TEST_WEB_SERVICE)
+        WebService.createJsonRetrofitService(OAuthRequestService::class.java, Config.TEST_WEB_SERVICE)
 
     fun requestToken(
         code: String, clientId: String, clientSecret: String,

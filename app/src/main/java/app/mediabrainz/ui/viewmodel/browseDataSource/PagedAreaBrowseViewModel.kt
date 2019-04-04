@@ -11,8 +11,8 @@ class PagedAreaBrowseViewModel : BaseDataSourceViewModel<Area>() {
     private val initialLoadSize = 25
     private val loadSize = 25
 
-    fun browse(entityType: AreaBrowseEntityType, mbid: String) {
-        val factory = AreaBrowseDataSource.Factory(entityType, mbid)
+    fun browse(entityType: AreaBrowseEntityType, mbid: String, authorized: Boolean = false) {
+        val factory = AreaBrowseDataSource.Factory(entityType, mbid, authorized)
         val config = buildPagedListConfig(loadSize, initialLoadSize)
         initPagedItems(config, factory)
     }

@@ -32,7 +32,7 @@ enum class AreaBrowseIncType(val inc: String) : BrowseIncTypeInterface {
     ALIASES(ALIASES_INC),
     ANNOTATION(ANNOTATION_INC),
     TAGS(TAGS_INC),
-    USER_TAGS(USER_TAGS_INC);
+    USER_TAGS(USER_TAGS_INC);   //require authorization
 
     override fun toString() = inc
 }

@@ -13,8 +13,6 @@ import app.mediabrainz.domain.model.UserInfo
 
 class OAuthRepository : BaseApiRepository() {
 
-    fun getAuthorizeUrl() = Config.OAUTH_TEST_WEB_SERVICE + Config.OAUTH_AUTHORIZE_QUERY
-
     fun requestToken(
         mutableLiveData: MutableLiveData<Resource<AccessToken>>,
         code: String, clientId: String, clientSecret: String,

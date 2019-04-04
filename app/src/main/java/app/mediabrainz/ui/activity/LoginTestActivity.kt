@@ -7,12 +7,12 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import app.mediabrainz.domain.OAuthManager.OAUTH_REDIRECT_URI
+import app.mediabrainz.domain.OAuthManager.OAUTH_RESPONSE_TYPE
+import app.mediabrainz.domain.OAuthManager
 import app.mediabrainz.domain.repository.Resource.Status.*
-import app.mediabrainz.ui.OAuthPreferences
 import app.mediabrainz.ui.R
 import app.mediabrainz.ui.viewmodel.OAuthViewModel
-import app.mediabrainz.ui.viewmodel.OAuthViewModel.Companion.OAUTH_REDIRECT_URI
-import app.mediabrainz.ui.viewmodel.OAuthViewModel.Companion.OAUTH_RESPONSE_TYPE
 
 
 class LoginTestActivity : AppCompatActivity() {
@@ -30,7 +30,7 @@ class LoginTestActivity : AppCompatActivity() {
                     LOADING -> Log.i("", "")
                     SUCCESS -> {
                         data?.apply {
-                            OAuthPreferences.init(accessToken, refreshToken, expiresIn)
+                            OAuthManager.accessToken = this
                             Log.i("", "")
                         }
                     }

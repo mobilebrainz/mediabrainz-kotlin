@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import app.mediabrainz.api.browserequest.ArtistBrowseEntityType
 import app.mediabrainz.api.browserequest.EventBrowseEntityType
+import app.mediabrainz.api.browserequest.ReleaseGroupBrowseEntityType
 import app.mediabrainz.domain.datasource.core.NetworkState.Status.ERROR
 import app.mediabrainz.domain.datasource.core.NetworkState.Status.LOADING
 import app.mediabrainz.ui.R
@@ -19,6 +20,7 @@ import app.mediabrainz.ui.adapter.ItemBrowseAdapter
 import app.mediabrainz.ui.adapter.ItemSearchAdapter
 import app.mediabrainz.ui.viewmodel.browseDataSource.PagedArtistBrowseViewModel
 import app.mediabrainz.ui.viewmodel.browseDataSource.PagedEventBrowseViewModel
+import app.mediabrainz.ui.viewmodel.browseDataSource.PagedReleaseGroupBrowseViewModel
 import app.mediabrainz.ui.viewmodel.searchDataSource.*
 
 
@@ -26,7 +28,7 @@ class BrowseTestFragment : BaseFragment() {
 
     private var isLoading: Boolean = false
     private lateinit var adapter: ItemBrowseAdapter
-    private lateinit var viewModel: PagedEventBrowseViewModel
+    private lateinit var viewModel: PagedReleaseGroupBrowseViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
@@ -42,11 +44,11 @@ class BrowseTestFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val entityType = EventBrowseEntityType.AREA
-        val mbid = "85752fda-13c4-31a3-bee5-0e5cb1f51dad"
+        val entityType = ReleaseGroupBrowseEntityType.ARTIST
+        val mbid = "c5119d8a-ffee-48bc-99c3-f323bdf16d82"
 
-        viewModel = ViewModelProviders.of(this).get(PagedEventBrowseViewModel::class.java)
-        viewModel.browse(entityType, mbid)
+        viewModel = ViewModelProviders.of(this).get(PagedReleaseGroupBrowseViewModel::class.java)
+        viewModel.browse(entityType, mbid, true)
 
         adapter = ItemBrowseAdapter()
         viewModel.pagedItems.observe(this, Observer { adapter.submitList(it) })

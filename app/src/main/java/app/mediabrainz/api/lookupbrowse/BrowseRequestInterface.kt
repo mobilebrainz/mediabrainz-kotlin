@@ -10,6 +10,7 @@ interface BrowseRequestInterface<R, P>
     fun browse(): Deferred<Response<R>>
     fun browse(limit: Int, offset: Int): Deferred<Response<R>>
 
+    fun addAccessToken(accessToken: String): BrowseRequestInterface<R, P>
     fun addIncs(vararg incTypes: P): BrowseRequestInterface<R, P>
     fun addRels(vararg relTypes: RelsType): BrowseRequestInterface<R, P>
 

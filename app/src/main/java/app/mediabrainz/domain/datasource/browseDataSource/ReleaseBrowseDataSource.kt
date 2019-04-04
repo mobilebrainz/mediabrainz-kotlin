@@ -20,6 +20,8 @@ class ReleaseBrowseDataSource(val entityType: ReleaseBrowseEntityType, val mbid:
 
     override fun map() = ReleaseMapper()::mapTo
 
+    override fun isAuthorized() = false
+
     class Factory(val entityType: ReleaseBrowseEntityType, val mbid: String) :
         DataSourceFactory<Release>() {
 

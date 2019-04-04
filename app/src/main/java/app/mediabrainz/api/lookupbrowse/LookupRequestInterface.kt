@@ -7,6 +7,7 @@ import retrofit2.Response
 interface LookupRequestInterface<R, P>
         where R : LookupResponseInterface, P : Enum<P>, P : LookupIncTypeInterface {
 
+    fun addAccessToken(accessToken: String): LookupRequestInterface<R, P>
     fun addIncs(vararg incTypes: P): LookupRequestInterface<R, P>
     fun addRels(vararg relTypes: RelsType): LookupRequestInterface<R, P>
     fun lookup(): Deferred<Response<R>>

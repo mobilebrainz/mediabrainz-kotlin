@@ -14,8 +14,8 @@ class PagedEventBrowseViewModel : BaseDataSourceViewModel<Event>() {
     private val initialLoadSize = 25
     private val loadSize = 25
 
-    fun browse(entityType: EventBrowseEntityType, mbid: String) {
-        val factory = EventBrowseDataSource.Factory(entityType, mbid)
+    fun browse(entityType: EventBrowseEntityType, mbid: String, authorized: Boolean = false) {
+        val factory = EventBrowseDataSource.Factory(entityType, mbid, authorized)
         val config = buildPagedListConfig(loadSize, initialLoadSize)
         initPagedItems(config, factory)
     }

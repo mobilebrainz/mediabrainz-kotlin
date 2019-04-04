@@ -2,7 +2,9 @@ package app.mediabrainz.api.core
 
 
 object Config {
-    const val WEB_SERVICE = "https://musicbrainz.org"
+    //const val WEB_SERVICE = "https://musicbrainz.org"
+    const val WEB_SERVICE = "https://test.musicbrainz.org"
+    const val TEST_WEB_SERVICE = "https://test.musicbrainz.org"
     const val WEB_SERVICE_PREFIX = "/ws/2/"
     const val FORMAT_JSON = "json"
 
@@ -27,8 +29,6 @@ object Config {
     const val URL_QUERY = WEB_SERVICE_PREFIX + "url"
     const val DISCID_QUERY = WEB_SERVICE_PREFIX + "discid"
 
-    const val OAUTH_WEB_SERVICE = "https://musicbrainz.org"
-    const val OAUTH_TEST_WEB_SERVICE = "https://test.musicbrainz.org"
     const val OAUTH_AUTHORIZE_QUERY  = "/oauth2/authorize"
     const val OAUTH_TOKEN_QUERY = "/oauth2/token"
     const val OAUTH_USER_INFO_QUERY = "/oauth2/userinfo"

@@ -1,6 +1,7 @@
 package app.mediabrainz.domain.repository
 
 import androidx.lifecycle.MutableLiveData
+import app.mediabrainz.domain.OAuthManager
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import retrofit2.Response
@@ -8,31 +9,40 @@ import retrofit2.Response
 
 abstract class BaseApiRepository {
 
-    private val extraTimeout = 250L
-    private val job = Job()
-    private val scope = CoroutineScope(Dispatchers.IO + job)
+    protected val extraTimeout = 250L
+    protected val job = Job()
+    protected val scope = CoroutineScope(Dispatchers.IO + job)
     //private val scope = CoroutineScope(Dispatchers.Default + job)
+
+    open fun cancelJob() {
+        job.cancel()
+    }
 
     protected fun <IN, OUT> call(
         mutableLiveData: MutableLiveData<Resource<OUT>>,
         deferred: () -> Deferred<Response<IN>>,
-        map: IN.() -> OUT
+        map: IN.() -> OUT,
+        authorize: Boolean = false
     ) {
         mutableLiveData.value = Resource.loading()
-        launch(mutableLiveData, deferred, map)
-    }
-
-    fun cancelJob() {
-        job.cancel()
+        launch(mutableLiveData, deferred, map, authorize)
     }
 
     private fun <IN, OUT> launch(
         mutableLiveData: MutableLiveData<Resource<OUT>>,
         deferred: () -> Deferred<Response<IN>>,
-        map: IN.() -> OUT
+        map: IN.() -> OUT,
+        authorize: Boolean
     ) {
         scope.launch {
             try {
+                if (authorize) {
+                    OAuthManager.refreshToken()
+                    if (OAuthManager.isError) {
+                        mutableLiveData.postValue(Resource.error("Authorization Error!"))
+                        return@launch
+                    }
+                }
                 var httpError = false
                 val response = deferred.invoke().await()
                 when {
@@ -48,7 +58,7 @@ abstract class BaseApiRepository {
                         val retryAfter = response.headers().get("retry-after")
                         if (retryAfter != null && retryAfter != "") {
                             delay(retryAfter.toLong() * 1000 + extraTimeout)
-                            launch(mutableLiveData, deferred, map)
+                            launch(mutableLiveData, deferred, map, authorize)
                         } else {
                             httpError = true
                         }

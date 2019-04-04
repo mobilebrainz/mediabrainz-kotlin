@@ -1,9 +1,21 @@
 package app.mediabrainz.ui
 
 import android.content.Context
+import app.mediabrainz.domain.OAuthManager
+import app.mediabrainz.domain.model.AccessToken
 
 
-object OAuthPreferences {
+object OAuthPreferences : OAuthManager.OAuthStorageInterface {
+
+    override fun write(accessToken: AccessToken) {
+        setAccessToken(accessToken.token)
+        setRefreshToken(accessToken.refreshToken)
+        setExpiresIn(accessToken.expiresIn)
+    }
+
+    override fun read() =
+        if (isNotEmpty()) AccessToken(getAccessToken(), getExpiresIn(), getRefreshToken())
+        else null
 
     private const val OAUTH_PREFERENCES = "oauth_preferences"
     private const val OAUTH_ACCESS_TOKEN = "OAuthPreferences.OAUTH_ACCESS_TOKEN"
@@ -17,17 +29,15 @@ object OAuthPreferences {
         getOAuthPreferences().edit().clear().apply()
     }
 
-    fun init(accessToken: String, refreshToken: String, expiresIn: Long) {
-        setAccessToken(accessToken)
-        setRefreshToken(refreshToken)
-        setExpiresIn(expiresIn)
-    }
+    fun isNotEmpty() =
+        getAccessToken().isNotBlank() && getRefreshToken().isNotBlank()
 
     fun setAccessToken(accessToken: String) {
         getOAuthPreferences().edit()
             .putString(OAUTH_ACCESS_TOKEN, accessToken).apply()
     }
 
+    // todo: проверять ExpiresIn, если истёк - рефрешить и только потом отдавать свежий токен?
     fun getAccessToken() =
         getOAuthPreferences().getString(OAUTH_ACCESS_TOKEN, "")
 

@@ -19,8 +19,10 @@ abstract class BaseBrowseRequest<R, P1, P2>(val entityType: P2, val mbid: String
         FORMAT to FORMAT_JSON
     )
 
-    fun addAccessToken(accessToken: String): BrowseRequestInterface<R, P1> {
-        params[BrowseParamType.ACCESS_TOKEN] = accessToken
+    override fun addAccessToken(accessToken: String): BrowseRequestInterface<R, P1> {
+        if (accessToken.isNotBlank()) {
+            params[BrowseParamType.ACCESS_TOKEN] = accessToken
+        }
         return this
     }
 

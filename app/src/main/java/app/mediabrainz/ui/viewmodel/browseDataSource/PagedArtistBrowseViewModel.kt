@@ -12,8 +12,8 @@ class PagedArtistBrowseViewModel : BaseDataSourceViewModel<Artist>() {
     private val initialLoadSize = 25
     private val loadSize = 25
 
-    fun browse(entityType: ArtistBrowseEntityType, mbid: String) {
-        val factory = ArtistBrowseDataSource.Factory(entityType, mbid)
+    fun browse(entityType: ArtistBrowseEntityType, mbid: String, authorized: Boolean = false) {
+        val factory = ArtistBrowseDataSource.Factory(entityType, mbid, authorized)
         val config = buildPagedListConfig(loadSize, initialLoadSize)
         initPagedItems(config, factory)
     }

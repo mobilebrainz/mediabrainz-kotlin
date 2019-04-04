@@ -15,8 +15,10 @@ abstract class BaseLookupRequest<R, P>(val mbid: String) : LookupRequestInterfac
         FORMAT to FORMAT_JSON
     )
 
-    fun addAccessToken(accessToken: String): LookupRequestInterface<R, P> {
-        params[LookupParamType.ACCESS_TOKEN] = accessToken
+    override fun addAccessToken(accessToken: String): LookupRequestInterface<R, P> {
+        if (accessToken.isNotBlank()) {
+            params[LookupParamType.ACCESS_TOKEN] = accessToken
+        }
         return this
     }
 

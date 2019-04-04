@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import app.mediabrainz.api.response.BaseItemsResponse
+import app.mediabrainz.domain.OAuthManager
 import app.mediabrainz.domain.mapper.PageMapper
 import app.mediabrainz.ui.R
 import kotlinx.coroutines.*
@@ -31,6 +32,8 @@ abstract class BaseDataSource<IN, OUT, T : BaseItemsResponse<IN>> :
     protected abstract fun request(loadSize: Int, offset: Int): Deferred<Response<T>>
 
     protected abstract fun map(): (IN) -> OUT
+
+    open fun isAuthorized() = false
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, OUT>) {
         isInitialLoad = true
@@ -78,6 +81,13 @@ abstract class BaseDataSource<IN, OUT, T : BaseItemsResponse<IN>> :
     ) {
         scope.launch {
             try {
+                if (isAuthorized()) {
+                    OAuthManager.refreshToken()
+                    if (OAuthManager.isError) {
+                        postError(R.string.authorization_error)
+                        return@launch
+                    }
+                }
                 var httpError = true
                 val response = request(loadSize, offset).await()
                 when {

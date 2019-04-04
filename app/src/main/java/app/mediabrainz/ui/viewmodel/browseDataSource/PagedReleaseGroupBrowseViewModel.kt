@@ -11,8 +11,8 @@ class PagedReleaseGroupBrowseViewModel : BaseDataSourceViewModel<ReleaseGroup>()
     private val initialLoadSize = 25
     private val loadSize = 25
 
-    fun browse(entityType: ReleaseGroupBrowseEntityType, mbid: String) {
-        val factory = ReleaseGroupBrowseDataSource.Factory(entityType, mbid)
+    fun browse(entityType: ReleaseGroupBrowseEntityType, mbid: String, authorized: Boolean = false) {
+        val factory = ReleaseGroupBrowseDataSource.Factory(entityType, mbid, authorized)
         val config = buildPagedListConfig(loadSize, initialLoadSize)
         initPagedItems(config, factory)
     }

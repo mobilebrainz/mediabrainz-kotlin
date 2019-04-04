@@ -11,8 +11,8 @@ class PagedWorkBrowseViewModel : BaseDataSourceViewModel<Work>() {
     private val initialLoadSize = 25
     private val loadSize = 25
 
-    fun browse(entityType: WorkBrowseEntityType, mbid: String) {
-        val factory = WorkBrowseDataSource.Factory(entityType, mbid)
+    fun browse(entityType: WorkBrowseEntityType, mbid: String, authorized: Boolean = false) {
+        val factory = WorkBrowseDataSource.Factory(entityType, mbid, authorized)
         val config = buildPagedListConfig(loadSize, initialLoadSize)
         initPagedItems(config, factory)
     }
