@@ -11,9 +11,7 @@ import app.mediabrainz.api.search.SearchFieldInterface
 class WorkSearchRequest :
     BaseSearchRequest<WorkSearchResponse, WorkSearchField>() {
 
-    override fun search() = WebService
-        .createJsonRetrofitService(SearchRequestService::class.java, Config.WEB_SERVICE)
-        .searchWork(buildParams())
+    override fun search() = createJsonRetrofitService().searchWork(buildParams())
 }
 
 enum class WorkSearchField(val field: String) : SearchFieldInterface {

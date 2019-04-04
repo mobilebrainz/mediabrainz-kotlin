@@ -1,7 +1,5 @@
 package app.mediabrainz.api.lookuprequest
 
-import app.mediabrainz.api.core.Config
-import app.mediabrainz.api.core.WebService
 import app.mediabrainz.api.lookupbrowse.BaseLookupRequest
 import app.mediabrainz.api.lookupbrowse.IncType.ALIASES_INC
 import app.mediabrainz.api.lookupbrowse.IncType.ANNOTATION_INC
@@ -9,14 +7,11 @@ import app.mediabrainz.api.lookupbrowse.IncType.TAGS_INC
 import app.mediabrainz.api.lookupbrowse.IncType.USER_TAGS_INC
 import app.mediabrainz.api.lookupbrowse.LookupIncTypeInterface
 import app.mediabrainz.api.response.PlaceResponse
-import app.mediabrainz.api.retrofit.LookupRequestService
 
 
 class PlaceLookupRequest(mbid: String) : BaseLookupRequest<PlaceResponse, PlaceLookupIncType>(mbid) {
 
-    override fun lookup() = WebService
-        .createJsonRetrofitService(LookupRequestService::class.java, Config.WEB_SERVICE)
-        .lookupPlace(mbid, buildParams())
+    override fun lookup() = createJsonRetrofitService().lookupPlace(mbid, buildParams())
 }
 
 enum class PlaceLookupIncType(val inc: String) : LookupIncTypeInterface {

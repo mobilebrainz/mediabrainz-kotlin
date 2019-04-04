@@ -1,6 +1,9 @@
 package app.mediabrainz.api.search
 
+import app.mediabrainz.api.core.Config
 import app.mediabrainz.api.core.Config.FORMAT_JSON
+import app.mediabrainz.api.core.WebService
+import app.mediabrainz.api.retrofit.SearchRequestService
 import app.mediabrainz.api.search.SearchParamType.*
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
@@ -62,5 +65,8 @@ abstract class BaseSearchRequest<R, P> : SearchRequestInterface<R, P>
         }
         return map
     }
+
+    protected fun createJsonRetrofitService() = WebService
+        .createJsonRetrofitService(SearchRequestService::class.java, Config.WEB_SERVICE)
 
 }

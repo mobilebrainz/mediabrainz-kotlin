@@ -15,9 +15,7 @@ import app.mediabrainz.api.search.SearchFieldInterface
 class InstrumentSearchRequest :
     BaseSearchRequest<InstrumentSearchResponse, InstrumentSearchField>() {
 
-    override fun search() = WebService
-        .createJsonRetrofitService(SearchRequestService::class.java, Config.WEB_SERVICE)
-        .searchInstrument(buildParams())
+    override fun search() = createJsonRetrofitService().searchInstrument(buildParams())
 
 }
 

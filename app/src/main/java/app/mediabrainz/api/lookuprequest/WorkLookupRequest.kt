@@ -1,7 +1,5 @@
 package app.mediabrainz.api.lookuprequest
 
-import app.mediabrainz.api.core.Config
-import app.mediabrainz.api.core.WebService
 import app.mediabrainz.api.lookupbrowse.BaseLookupRequest
 import app.mediabrainz.api.lookupbrowse.IncType.ALIASES_INC
 import app.mediabrainz.api.lookupbrowse.IncType.ANNOTATION_INC
@@ -11,14 +9,11 @@ import app.mediabrainz.api.lookupbrowse.IncType.USER_RATINGS_INC
 import app.mediabrainz.api.lookupbrowse.IncType.USER_TAGS_INC
 import app.mediabrainz.api.lookupbrowse.LookupIncTypeInterface
 import app.mediabrainz.api.response.WorkResponse
-import app.mediabrainz.api.retrofit.LookupRequestService
 
 
 class WorkLookupRequest(mbid: String) : BaseLookupRequest<WorkResponse, WorkLookupIncType>(mbid) {
 
-    override fun lookup() = WebService
-        .createJsonRetrofitService(LookupRequestService::class.java, Config.WEB_SERVICE)
-        .lookupWork(mbid, buildParams())
+    override fun lookup() = createJsonRetrofitService().lookupWork(mbid, buildParams())
 }
 
 enum class WorkLookupIncType(val inc: String) : LookupIncTypeInterface {

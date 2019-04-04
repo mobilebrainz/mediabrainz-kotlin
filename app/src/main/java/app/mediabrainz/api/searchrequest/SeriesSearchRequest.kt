@@ -17,9 +17,7 @@ import app.mediabrainz.api.search.SearchFieldInterface
 class SeriesSearchRequest :
     BaseSearchRequest<SeriesSearchResponse, SeriesSearchField>() {
 
-    override fun search() = WebService
-        .createJsonRetrofitService(SearchRequestService::class.java, Config.WEB_SERVICE)
-        .searchSeries(buildParams())
+    override fun search() = createJsonRetrofitService().searchSeries(buildParams())
 
     fun addType(type: SeriesType): SeriesSearchRequest {
         add(SeriesSearchField.TYPE, type.type)

@@ -1,7 +1,5 @@
 package app.mediabrainz.api.lookuprequest
 
-import app.mediabrainz.api.core.Config
-import app.mediabrainz.api.core.WebService
 import app.mediabrainz.api.lookupbrowse.BaseLookupRequest
 import app.mediabrainz.api.lookupbrowse.IncType.ALIASES_INC
 import app.mediabrainz.api.lookupbrowse.IncType.ANNOTATION_INC
@@ -15,14 +13,11 @@ import app.mediabrainz.api.lookupbrowse.LookupParamType
 import app.mediabrainz.api.response.LabelResponse
 import app.mediabrainz.api.response.ReleaseGroupType
 import app.mediabrainz.api.response.ReleaseStatus
-import app.mediabrainz.api.retrofit.LookupRequestService
 
 
 class LabelLookupRequest(mbid: String) : BaseLookupRequest<LabelResponse, LabelLookupIncType>(mbid) {
 
-    override fun lookup() = WebService
-        .createJsonRetrofitService(LookupRequestService::class.java, Config.WEB_SERVICE)
-        .lookupLabel(mbid, buildParams())
+    override fun lookup() = createJsonRetrofitService().lookupLabel(mbid, buildParams())
 
     fun addReleaseGroupType(type: ReleaseGroupType): LabelLookupRequest {
         addParam(LookupParamType.TYPE, type.toString().toLowerCase())

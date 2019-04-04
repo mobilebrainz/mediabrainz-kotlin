@@ -1,6 +1,7 @@
 package app.mediabrainz.api
 
 import app.mediabrainz.api.browserequest.*
+import app.mediabrainz.api.coverartrequest.CoverArtRequest
 import app.mediabrainz.api.lookuprequest.*
 import app.mediabrainz.api.oauth.OAuthRequest
 import app.mediabrainz.api.searchrequest.*
@@ -78,5 +79,7 @@ object ApiRequestProvider {
 
     fun createUrlkBrowseRequest(entityType: UrlBrowseEntityType, mbid: String) =
         UrlBrowseRequest(entityType, mbid)
+
+    fun createCoverArtRequest(mbid: String) = CoverArtRequest(mbid)
 
 }

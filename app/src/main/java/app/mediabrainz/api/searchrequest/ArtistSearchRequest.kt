@@ -17,9 +17,7 @@ import app.mediabrainz.api.search.SearchFieldInterface
 class ArtistSearchRequest :
     BaseSearchRequest<ArtistSearchResponse, ArtistSearchField>() {
 
-    override fun search() = WebService
-        .createJsonRetrofitService(SearchRequestService::class.java, Config.WEB_SERVICE)
-        .searchArtist(buildParams())
+    override fun search() = createJsonRetrofitService().searchArtist(buildParams())
 
     fun addType(artistType: ArtistType): ArtistSearchRequest {
         add(ArtistSearchField.TYPE, artistType.type)

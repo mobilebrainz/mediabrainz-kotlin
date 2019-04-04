@@ -1,7 +1,5 @@
 package app.mediabrainz.api.browserequest
 
-import app.mediabrainz.api.core.Config
-import app.mediabrainz.api.core.WebService
 import app.mediabrainz.api.lookupbrowse.BaseBrowseRequest
 import app.mediabrainz.api.lookupbrowse.BrowseEntityTypeInterface
 import app.mediabrainz.api.lookupbrowse.BrowseIncTypeInterface
@@ -20,15 +18,12 @@ import app.mediabrainz.api.lookupbrowse.IncType.USER_GENRES_INC
 import app.mediabrainz.api.lookupbrowse.IncType.USER_RATINGS_INC
 import app.mediabrainz.api.lookupbrowse.IncType.USER_TAGS_INC
 import app.mediabrainz.api.response.ArtistBrowseResponse
-import app.mediabrainz.api.retrofit.BrowseRequestService
 
 
 class ArtistBrowseRequest(entityType: ArtistBrowseEntityType, mbid: String) :
     BaseBrowseRequest<ArtistBrowseResponse, ArtistBrowseIncType, ArtistBrowseEntityType>(entityType, mbid) {
 
-    override fun browse() = WebService
-        .createJsonRetrofitService(BrowseRequestService::class.java, Config.WEB_SERVICE)
-        .browseArtist(buildParams())
+    override fun browse() = createJsonRetrofitService().browseArtist(buildParams())
 }
 
 enum class ArtistBrowseEntityType(val type: String) : BrowseEntityTypeInterface {

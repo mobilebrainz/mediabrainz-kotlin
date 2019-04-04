@@ -15,9 +15,7 @@ import app.mediabrainz.api.search.SearchFieldInterface
 class CDStubSearchRequest :
     BaseSearchRequest<CDStubSearchResponse, CDStubSearchField>() {
 
-    override fun search() = WebService
-        .createJsonRetrofitService(SearchRequestService::class.java, Config.WEB_SERVICE)
-        .searchCDStub(buildParams())
+    override fun search() = createJsonRetrofitService().searchCDStub(buildParams())
 }
 
 enum class CDStubSearchField(val field: String) : SearchFieldInterface {

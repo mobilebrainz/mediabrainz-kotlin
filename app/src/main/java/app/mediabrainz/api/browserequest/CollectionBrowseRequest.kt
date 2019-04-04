@@ -1,7 +1,5 @@
 package app.mediabrainz.api.browserequest
 
-import app.mediabrainz.api.core.Config
-import app.mediabrainz.api.core.WebService
 import app.mediabrainz.api.lookupbrowse.BaseBrowseRequest
 import app.mediabrainz.api.lookupbrowse.BrowseEntityTypeInterface
 import app.mediabrainz.api.lookupbrowse.BrowseIncTypeInterface
@@ -17,15 +15,12 @@ import app.mediabrainz.api.lookupbrowse.EntityType.RELEASE_GROUP_ENTITY
 import app.mediabrainz.api.lookupbrowse.EntityType.WORK_ENTITY
 import app.mediabrainz.api.lookupbrowse.IncType.USER_COLLECTIONS_INC
 import app.mediabrainz.api.response.CollectionBrowseResponse
-import app.mediabrainz.api.retrofit.BrowseRequestService
 
 
 class CollectionBrowseRequest(entityType: CollectionBrowseEntityType, mbid: String) :
     BaseBrowseRequest<CollectionBrowseResponse, CollectionBrowseIncType, CollectionBrowseEntityType>(entityType, mbid) {
 
-    override fun browse() = WebService
-        .createJsonRetrofitService(BrowseRequestService::class.java, Config.WEB_SERVICE)
-        .browseCollection(buildParams())
+    override fun browse() = createJsonRetrofitService().browseCollection(buildParams())
 }
 
 enum class CollectionBrowseEntityType(val type: String) : BrowseEntityTypeInterface {

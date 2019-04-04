@@ -17,9 +17,7 @@ import app.mediabrainz.api.search.SearchFieldInterface
 class EventSearchRequest :
     BaseSearchRequest<EventSearchResponse, EventSearchField>() {
 
-    override fun search() = WebService
-        .createJsonRetrofitService(SearchRequestService::class.java, Config.WEB_SERVICE)
-        .searchEvent(buildParams())
+    override fun search() = createJsonRetrofitService().searchEvent(buildParams())
 
     fun addType(type: EventType): EventSearchRequest {
         add(EventSearchField.TYPE, type.toString())

@@ -16,9 +16,7 @@ import app.mediabrainz.api.search.SearchFieldInterface
 class RecordingSearchRequest :
     BaseSearchRequest<RecordingSearchResponse, RecordingSearchField>() {
 
-    override fun search() = WebService
-        .createJsonRetrofitService(SearchRequestService::class.java, Config.WEB_SERVICE)
-        .searchRecording(buildParams())
+    override fun search() = createJsonRetrofitService().searchRecording(buildParams())
 }
 
 enum class RecordingSearchField(val field: String) : SearchFieldInterface {

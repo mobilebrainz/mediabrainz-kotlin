@@ -1,12 +1,9 @@
 package app.mediabrainz.api.lookuprequest
 
-import app.mediabrainz.api.core.Config
-import app.mediabrainz.api.core.WebService
 import app.mediabrainz.api.lookupbrowse.BaseLookupRequest
 import app.mediabrainz.api.lookupbrowse.LookupParamType
 import app.mediabrainz.api.response.DiscResponse
 import app.mediabrainz.api.response.ReleaseGroupType
-import app.mediabrainz.api.retrofit.LookupRequestService
 
 /**
  *
@@ -25,9 +22,7 @@ import app.mediabrainz.api.retrofit.LookupRequestService
  */
 class DiscidLookupRequest(mbid: String) : BaseLookupRequest<DiscResponse, ReleaseLookupIncType>(mbid) {
 
-    override fun lookup() = WebService
-        .createJsonRetrofitService(LookupRequestService::class.java, Config.WEB_SERVICE)
-        .lookupDisc(mbid, buildParams())
+    override fun lookup() = createJsonRetrofitService().lookupDisc(mbid, buildParams())
 
     fun addReleaseGroupType(type: ReleaseGroupType): DiscidLookupRequest {
         addParam(LookupParamType.TYPE, type.toString().toLowerCase())

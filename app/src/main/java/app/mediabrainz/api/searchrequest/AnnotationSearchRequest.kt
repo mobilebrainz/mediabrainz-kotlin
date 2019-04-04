@@ -11,9 +11,7 @@ import app.mediabrainz.api.search.SearchFieldInterface
 class AnnotationSearchRequest :
     BaseSearchRequest<AnnotationSearchResponse, AnnotationSearchField>() {
 
-    override fun search() = WebService
-        .createJsonRetrofitService(SearchRequestService::class.java, Config.WEB_SERVICE)
-        .searchAnnotation(buildParams())
+    override fun search() = createJsonRetrofitService().searchAnnotation(buildParams())
 }
 
 enum class AnnotationSearchField(val field: String) : SearchFieldInterface {

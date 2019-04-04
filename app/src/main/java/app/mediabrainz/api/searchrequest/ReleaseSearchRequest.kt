@@ -21,9 +21,7 @@ import app.mediabrainz.api.searchrequest.ReleaseSearchField.STATUS
 class ReleaseSearchRequest :
     BaseSearchRequest<ReleaseSearchResponse, ReleaseSearchField>() {
 
-    override fun search() = WebService
-        .createJsonRetrofitService(SearchRequestService::class.java, Config.WEB_SERVICE)
-        .searchRelease(buildParams())
+    override fun search() = createJsonRetrofitService().searchRelease(buildParams())
 
     fun addStatus(status: ReleaseStatus): ReleaseSearchRequest {
         add(STATUS, status.status)

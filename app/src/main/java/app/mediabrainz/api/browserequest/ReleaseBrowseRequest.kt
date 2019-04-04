@@ -1,7 +1,5 @@
 package app.mediabrainz.api.browserequest
 
-import app.mediabrainz.api.core.Config
-import app.mediabrainz.api.core.WebService
 import app.mediabrainz.api.core.getStringFromArray
 import app.mediabrainz.api.lookupbrowse.BaseBrowseRequest
 import app.mediabrainz.api.lookupbrowse.BrowseEntityTypeInterface
@@ -26,15 +24,12 @@ import app.mediabrainz.api.lookupbrowse.IncType.RELEASE_GROUPS_INC
 import app.mediabrainz.api.response.ReleaseBrowseResponse
 import app.mediabrainz.api.response.ReleaseGroupType
 import app.mediabrainz.api.response.ReleaseStatus
-import app.mediabrainz.api.retrofit.BrowseRequestService
 
 
 class ReleaseBrowseRequest(entityType: ReleaseBrowseEntityType, mbid: String) :
     BaseBrowseRequest<ReleaseBrowseResponse, ReleaseBrowseIncType, ReleaseBrowseEntityType>(entityType, mbid) {
 
-    override fun browse() = WebService
-        .createJsonRetrofitService(BrowseRequestService::class.java, Config.WEB_SERVICE)
-        .browseRelease(buildParams())
+    override fun browse() = createJsonRetrofitService().browseRelease(buildParams())
 
     fun addReleaseGroupTypes(vararg types: ReleaseGroupType): ReleaseBrowseRequest {
         addParam(BrowseParamType.TYPE, getStringFromArray(types, "|").toLowerCase())

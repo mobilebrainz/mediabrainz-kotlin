@@ -18,9 +18,7 @@ import app.mediabrainz.api.search.SearchFieldInterface
 class LabelSearchRequest :
     BaseSearchRequest<LabelSearchResponse, LabelSearchField>() {
 
-    override fun search() = WebService
-        .createJsonRetrofitService(SearchRequestService::class.java, Config.WEB_SERVICE)
-        .searchLabel(buildParams())
+    override fun search() = createJsonRetrofitService().searchLabel(buildParams())
 
     fun addType(type: LabelType): LabelSearchRequest {
         add(LabelSearchField.TYPE, type.toString())

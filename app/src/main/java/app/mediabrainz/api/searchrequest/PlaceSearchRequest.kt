@@ -17,9 +17,7 @@ import app.mediabrainz.api.search.SearchFieldInterface
 class PlaceSearchRequest :
     BaseSearchRequest<PlaceSearchResponse, PlaceSearchField>() {
 
-    override fun search() = WebService
-        .createJsonRetrofitService(SearchRequestService::class.java, Config.WEB_SERVICE)
-        .searchPlace(buildParams())
+    override fun search() = createJsonRetrofitService().searchPlace(buildParams())
 
     fun addType(type: PlaceType): PlaceSearchRequest {
         add(PlaceSearchField.TYPE, type.type)

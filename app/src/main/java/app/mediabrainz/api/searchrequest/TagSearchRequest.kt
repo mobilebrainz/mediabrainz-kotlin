@@ -16,9 +16,7 @@ class TagSearchRequest :
     BaseSearchRequest<TagSearchResponse, TagSearchField>() {
 
     //todo: make digest autorization!!!
-    override fun search() = WebService
-        .createJsonRetrofitService(SearchRequestService::class.java, Config.WEB_SERVICE)
-        .searchTag(buildParams())
+    override fun search() = createJsonRetrofitService().searchTag(buildParams())
 }
 
 enum class TagSearchField(val field: String) : SearchFieldInterface {

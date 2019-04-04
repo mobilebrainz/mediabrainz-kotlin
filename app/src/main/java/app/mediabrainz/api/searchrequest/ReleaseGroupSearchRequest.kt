@@ -19,9 +19,7 @@ import app.mediabrainz.api.search.SearchFieldInterface
 class ReleaseGroupSearchRequest :
     BaseSearchRequest<ReleaseGroupSearchResponse, ReleaseGroupSearchField>() {
 
-    override fun search() = WebService
-        .createJsonRetrofitService(SearchRequestService::class.java, Config.WEB_SERVICE)
-        .searchReleaseGroup(buildParams())
+    override fun search() = createJsonRetrofitService().searchReleaseGroup(buildParams())
 
     fun addPrimaryType(type: ReleaseGroupPrimaryType): ReleaseGroupSearchRequest {
         add(ReleaseGroupSearchField.PRIMARY_TYPE, type.type)

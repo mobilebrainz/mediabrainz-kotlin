@@ -1,9 +1,12 @@
 package app.mediabrainz.api.lookupbrowse
 
+import app.mediabrainz.api.core.Config
 import app.mediabrainz.api.core.Config.FORMAT_JSON
+import app.mediabrainz.api.core.WebService
 import app.mediabrainz.api.core.getStringFromList
 import app.mediabrainz.api.lookupbrowse.BrowseParamType.FORMAT
 import app.mediabrainz.api.lookupbrowse.BrowseParamType.INC
+import app.mediabrainz.api.retrofit.BrowseRequestService
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 
@@ -71,5 +74,9 @@ abstract class BaseBrowseRequest<R, P1, P2>(val entityType: P2, val mbid: String
         incs.clear()
         return map
     }
+
+    protected fun createJsonRetrofitService() = WebService
+        .createJsonRetrofitService(BrowseRequestService::class.java, Config.WEB_SERVICE)
+
 
 }

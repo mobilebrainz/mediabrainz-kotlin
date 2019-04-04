@@ -1,9 +1,13 @@
 package app.mediabrainz.api.lookupbrowse
 
+import app.mediabrainz.api.core.Config
 import app.mediabrainz.api.core.Config.FORMAT_JSON
+import app.mediabrainz.api.core.WebService
 import app.mediabrainz.api.core.getStringFromList
 import app.mediabrainz.api.lookupbrowse.LookupParamType.FORMAT
 import app.mediabrainz.api.lookupbrowse.LookupParamType.INC
+import app.mediabrainz.api.retrofit.LookupRequestService
+import app.mediabrainz.api.retrofit.SearchRequestService
 
 
 abstract class BaseLookupRequest<R, P>(val mbid: String) : LookupRequestInterface<R, P>
@@ -61,5 +65,8 @@ abstract class BaseLookupRequest<R, P>(val mbid: String) : LookupRequestInterfac
         incs.clear()
         return map
     }
+
+    protected fun createJsonRetrofitService() = WebService
+        .createJsonRetrofitService(LookupRequestService::class.java, Config.WEB_SERVICE)
 
 }

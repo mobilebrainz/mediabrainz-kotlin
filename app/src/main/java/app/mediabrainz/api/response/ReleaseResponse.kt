@@ -11,7 +11,7 @@ import com.squareup.moshi.Json
 data class ReleaseResponse(
     @field:Json(name = "id") val mbid: String,
     @field:Json(name = "title") val title: String,
-    @field:Json(name = "cover-art-archive") val coverArt: CoverArtResponse?,
+    @field:Json(name = "cover-art-archive") val coverArtArchive: CoverArtArchiveResponse?,
     @field:Json(name = "score") val score: Int?,
     @field:Json(name = "count") val count: Int?,
     @field:Json(name = "status") val status: String?,
