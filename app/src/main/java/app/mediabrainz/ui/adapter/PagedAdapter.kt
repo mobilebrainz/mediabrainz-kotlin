@@ -11,19 +11,19 @@ import app.mediabrainz.ui.R
 import kotlinx.android.synthetic.main.test_adapter_row.view.*
 
 
-class ItemBrowseAdapter :
-    PagedListAdapter<ReleaseGroup, ItemBrowseAdapter.SearchViewHolder>(DiffUtilCallBack()) {
+class PagedAdapter :
+    PagedListAdapter<ReleaseGroup, PagedAdapter.BrowseViewHolder>(DiffUtilCallBack()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BrowseViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.test_adapter_row, parent, false)
-        return SearchViewHolder(view)
+        return BrowseViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BrowseViewHolder, position: Int) {
         getItem(position)?.let { holder.bindTo(it) }
     }
 
-    class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class BrowseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val nameView = itemView.nameView
 

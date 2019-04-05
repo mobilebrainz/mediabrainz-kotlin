@@ -10,24 +10,18 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import app.mediabrainz.api.browserequest.ArtistBrowseEntityType
-import app.mediabrainz.api.browserequest.EventBrowseEntityType
 import app.mediabrainz.api.browserequest.ReleaseGroupBrowseEntityType
 import app.mediabrainz.domain.datasource.core.NetworkState.Status.ERROR
 import app.mediabrainz.domain.datasource.core.NetworkState.Status.LOADING
 import app.mediabrainz.ui.R
-import app.mediabrainz.ui.adapter.ItemBrowseAdapter
-import app.mediabrainz.ui.adapter.ItemSearchAdapter
-import app.mediabrainz.ui.viewmodel.browseDataSource.PagedArtistBrowseViewModel
-import app.mediabrainz.ui.viewmodel.browseDataSource.PagedEventBrowseViewModel
+import app.mediabrainz.ui.adapter.PagedAdapter
 import app.mediabrainz.ui.viewmodel.browseDataSource.PagedReleaseGroupBrowseViewModel
-import app.mediabrainz.ui.viewmodel.searchDataSource.*
 
 
-class BrowseTestFragment : BaseFragment() {
+class PagedRecyclerFragment : BaseFragment() {
 
     private var isLoading: Boolean = false
-    private lateinit var adapter: ItemBrowseAdapter
+    private lateinit var adapter: PagedAdapter
     private lateinit var viewModel: PagedReleaseGroupBrowseViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
@@ -45,12 +39,12 @@ class BrowseTestFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
 
         val entityType = ReleaseGroupBrowseEntityType.ARTIST
-        val mbid = "c5119d8a-ffee-48bc-99c3-f323bdf16d82"
+        val mbid = "c3cceeed-3332-4cf0-8c4c-bbde425147b6"
 
         viewModel = ViewModelProviders.of(this).get(PagedReleaseGroupBrowseViewModel::class.java)
         viewModel.browse(entityType, mbid, true)
 
-        adapter = ItemBrowseAdapter()
+        adapter = PagedAdapter()
         viewModel.pagedItems.observe(this, Observer { adapter.submitList(it) })
 
         recyclerView.layoutManager = LinearLayoutManager(context)
