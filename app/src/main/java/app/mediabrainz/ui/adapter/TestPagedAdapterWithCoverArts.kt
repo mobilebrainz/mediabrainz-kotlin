@@ -17,8 +17,8 @@ import app.mediabrainz.ui.viewmodel.ReleaseGroupCoverArtViewModel
 import kotlinx.android.synthetic.main.test_adapter_row.view.*
 
 
-class PagedAdapterWithCoverArts(private val fragment: Fragment) :
-    PagedListAdapter<ReleaseGroup, PagedAdapterWithCoverArts.BrowseViewHolder>(DiffUtilCallBack()) {
+class TestPagedAdapterWithCoverArts(private val fragment: Fragment) :
+    PagedListAdapter<ReleaseGroup, TestPagedAdapterWithCoverArts.BrowseViewHolder>(DiffUtilCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BrowseViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.test_adapter_row, parent, false)

@@ -15,7 +15,7 @@ import app.mediabrainz.ui.R
 import app.mediabrainz.ui.viewmodel.OAuthViewModel
 
 
-class LoginTestActivity : AppCompatActivity() {
+class TestLoginActivity : AppCompatActivity() {
 
     lateinit var vm: OAuthViewModel
 

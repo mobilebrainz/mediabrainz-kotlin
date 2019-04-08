@@ -11,13 +11,13 @@ import app.mediabrainz.ui.viewmodel.lookupRepository.ArtistLookupViewModel
 import app.mediabrainz.ui.viewmodel.lookupRepository.ReleaseGroupLookupViewModel
 
 
-class MainActivity : AppCompatActivity() {
+class TestMainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        /*
+
         val vm = ViewModelProviders.of(this).get(ReleaseGroupLookupViewModel::class.java)
         vm.result.observe(this, Observer {
             it?.apply {
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
         vm.authLookup("b00fbf7c-ebaf-3ec0-91d6-5eaad124d58f")
-        */
+
         /*
         //ArtistLookupViewModel:
         vm.authLookup("c5119d8a-ffee-48bc-99c3-f323bdf16d82", true)

@@ -11,35 +11,35 @@ import app.mediabrainz.ui.R
 import kotlinx.android.synthetic.main.test_adapter_row.view.*
 
 
-class PagedAdapter :
-    PagedListAdapter<ReleaseGroup, PagedAdapter.BrowseViewHolder>(DiffUtilCallBack()) {
+class TestItemSearchAdapter :
+    PagedListAdapter<Artist, TestItemSearchAdapter.SearchViewHolder>(DiffUtilCallBack()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BrowseViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.test_adapter_row, parent, false)
-        return BrowseViewHolder(view)
+        return SearchViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: BrowseViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
         getItem(position)?.let { holder.bindTo(it) }
     }
 
-    class BrowseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val nameView = itemView.nameView
 
-        fun bindTo(item: ReleaseGroup) {
+        fun bindTo(item: Artist) {
             with(item) {
                 nameView.text = name
             }
         }
     }
 
-    class DiffUtilCallBack : DiffUtil.ItemCallback<ReleaseGroup>() {
-        override fun areItemsTheSame(oldItem: ReleaseGroup, newItem: ReleaseGroup): Boolean {
+    class DiffUtilCallBack : DiffUtil.ItemCallback<Artist>() {
+        override fun areItemsTheSame(oldItem: Artist, newItem: Artist): Boolean {
             return oldItem.mbid == newItem.mbid
         }
 
-        override fun areContentsTheSame(oldItem: ReleaseGroup, newItem: ReleaseGroup): Boolean {
+        override fun areContentsTheSame(oldItem: Artist, newItem: Artist): Boolean {
             return oldItem.name == newItem.name
             //&& oldItem.score == newItem.score
             //&& oldItem.commentCount == newItem.commentCount

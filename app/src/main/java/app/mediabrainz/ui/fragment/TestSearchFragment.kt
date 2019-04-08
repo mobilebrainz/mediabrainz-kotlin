@@ -10,19 +10,18 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import app.mediabrainz.api.browserequest.ReleaseGroupBrowseEntityType
 import app.mediabrainz.domain.datasource.core.NetworkState.Status.ERROR
 import app.mediabrainz.domain.datasource.core.NetworkState.Status.LOADING
 import app.mediabrainz.ui.R
-import app.mediabrainz.ui.adapter.PagedAdapterWithCoverArts
-import app.mediabrainz.ui.viewmodel.browseDataSource.PagedReleaseGroupBrowseViewModel
+import app.mediabrainz.ui.adapter.TestItemSearchAdapter
+import app.mediabrainz.ui.viewmodel.searchDataSource.*
 
 
-class PagedRecyclerFragmentWithCoverArts : BaseFragment() {
+class TestSearchFragment : BaseFragment() {
 
     private var isLoading: Boolean = false
-    private lateinit var adapter: PagedAdapterWithCoverArts
-    private lateinit var viewModel: PagedReleaseGroupBrowseViewModel
+    private lateinit var adapter: TestItemSearchAdapter
+    private lateinit var viewModel: PagedArtistSearchViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
@@ -38,13 +37,10 @@ class PagedRecyclerFragmentWithCoverArts : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val entityType = ReleaseGroupBrowseEntityType.ARTIST
-        val mbid = "c3cceeed-3332-4cf0-8c4c-bbde425147b6"
+        viewModel = ViewModelProviders.of(this).get(PagedArtistSearchViewModel::class.java)
+        viewModel.search("Black")
 
-        viewModel = ViewModelProviders.of(this).get(PagedReleaseGroupBrowseViewModel::class.java)
-        viewModel.browse(entityType, mbid, true)
-
-        adapter = PagedAdapterWithCoverArts(this)
+        adapter = TestItemSearchAdapter()
         viewModel.pagedItems.observe(this, Observer { adapter.submitList(it) })
 
         recyclerView.layoutManager = LinearLayoutManager(context)

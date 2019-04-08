@@ -5,11 +5,13 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activity.MainActivity">
+        tools:context=".activity.TestMainActivity">
 
-    <fragment android:name="app.mediabrainz.ui.fragment.PagedRecyclerFragmentWithCoverArts"
+
+    <fragment android:name="app.mediabrainz.ui.fragment.TestPagedRecyclerFragmentWithCoverArts"
               android:id="@+id/fragment"
               android:layout_width="match_parent"
               android:layout_height="match_parent" />
+
 
 </FrameLayout>

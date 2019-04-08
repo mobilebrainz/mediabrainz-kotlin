@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="http_error">Http Error!…</string>
+    <string name="app_error">"Application Error!"</string>
+    <string name="authorization_error">"Authorization Error!"</string>
+
+</resources>

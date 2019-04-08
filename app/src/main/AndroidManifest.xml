@@ -13,7 +13,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
 
-        <activity android:name="app.mediabrainz.ui.activity.MainActivity">
+        <activity android:name="app.mediabrainz.ui.activity.TestMainActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -22,7 +22,7 @@
 
         </activity>
 
-        <activity android:name="app.mediabrainz.ui.activity.LoginTestActivity">
+        <activity android:name="app.mediabrainz.ui.activity.TestLoginActivity">
             <intent-filter>
 <!--
                 <action android:name="android.intent.action.MAIN"/>

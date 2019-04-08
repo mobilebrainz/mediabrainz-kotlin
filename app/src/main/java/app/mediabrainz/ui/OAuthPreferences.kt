@@ -37,7 +37,6 @@ object OAuthPreferences : OAuthManager.OAuthStorageInterface {
             .putString(OAUTH_ACCESS_TOKEN, accessToken).apply()
     }
 
-    // todo: проверять ExpiresIn, если истёк - рефрешить и только потом отдавать свежий токен?
     fun getAccessToken() =
         getOAuthPreferences().getString(OAUTH_ACCESS_TOKEN, "")
 

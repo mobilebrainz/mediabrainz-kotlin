@@ -10,14 +10,12 @@ class NetworkState(val status: Status, @StringRes val messageResId: Int = -1) {
     }
 
     companion object {
-        fun success() =
-            NetworkState(Status.SUCCESS)
-        fun error(@StringRes messageResId: Int) = NetworkState(
-            Status.ERROR,
-            messageResId
-        )
-        fun loading() =
-            NetworkState(Status.LOADING)
+        fun success() = NetworkState(Status.SUCCESS)
+
+        fun error(@StringRes messageResId: Int) =
+            NetworkState(Status.ERROR, messageResId)
+
+        fun loading() = NetworkState(Status.LOADING)
     }
 
 }

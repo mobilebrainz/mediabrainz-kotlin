@@ -1,7 +1,9 @@
 package app.mediabrainz.domain.repository
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import app.mediabrainz.domain.OAuthManager
+import app.mediabrainz.ui.R
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import retrofit2.Response
@@ -9,9 +11,9 @@ import retrofit2.Response
 
 abstract class BaseApiRepository {
 
-    protected val extraTimeout = 250L
-    protected val job = Job()
-    protected val scope = CoroutineScope(Dispatchers.IO + job)
+    private val extraTimeout = 250L
+    private val job = Job()
+    private val scope = CoroutineScope(Dispatchers.IO + job)
     //private val scope = CoroutineScope(Dispatchers.Default + job)
 
     open fun cancelJob() {
@@ -24,7 +26,7 @@ abstract class BaseApiRepository {
         map: IN.() -> OUT,
         authorize: Boolean = false
     ) {
-        mutableLiveData.value = Resource.loading()
+        setLoading(mutableLiveData)
         launch(mutableLiveData, deferred, map, authorize)
     }
 
@@ -39,7 +41,7 @@ abstract class BaseApiRepository {
                 if (authorize) {
                     OAuthManager.refreshToken()
                     if (OAuthManager.isError) {
-                        mutableLiveData.postValue(Resource.error("Authorization Error!"))
+                        postError(mutableLiveData, R.string.authorization_error)
                         return@launch
                     }
                 }
@@ -49,7 +51,7 @@ abstract class BaseApiRepository {
                     response.code() == 200 -> {
                         val body = response.body()
                         if (body != null) {
-                            mutableLiveData.postValue(Resource.success(map.invoke(body)))
+                            postSuccess(mutableLiveData, map.invoke(body))
                         } else {
                             httpError = true
                         }
@@ -68,14 +70,26 @@ abstract class BaseApiRepository {
                     }
                 }
                 if (httpError) {
-                    mutableLiveData.postValue(Resource.error("Http Error!"))
+                    postError(mutableLiveData, R.string.http_error)
                 }
             } catch (e: HttpException) {
-                mutableLiveData.postValue(Resource.error("Http Error!"))
+                postError(mutableLiveData, R.string.http_error)
             } catch (e: Throwable) {
-                mutableLiveData.postValue(Resource.error("Application Error!"))
+                postError(mutableLiveData, R.string.app_error)
             }
         }
+    }
+
+    private fun <OUT> setLoading(mutableLiveData: MutableLiveData<Resource<OUT>>) {
+        mutableLiveData.value = Resource.loading()
+    }
+
+    private fun <OUT> postSuccess(mutableLiveData: MutableLiveData<Resource<OUT>>, data: OUT) {
+        mutableLiveData.postValue(Resource.success(data))
+    }
+
+    private fun <OUT> postError(mutableLiveData: MutableLiveData<Resource<OUT>>, @StringRes messageResId: Int) {
+        mutableLiveData.postValue(Resource.error(messageResId))
     }
 
 }

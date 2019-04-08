@@ -14,14 +14,14 @@ import app.mediabrainz.api.browserequest.ReleaseGroupBrowseEntityType
 import app.mediabrainz.domain.datasource.core.NetworkState.Status.ERROR
 import app.mediabrainz.domain.datasource.core.NetworkState.Status.LOADING
 import app.mediabrainz.ui.R
-import app.mediabrainz.ui.adapter.PagedAdapter
+import app.mediabrainz.ui.adapter.TestPagedAdapter
 import app.mediabrainz.ui.viewmodel.browseDataSource.PagedReleaseGroupBrowseViewModel
 
 
-class PagedRecyclerFragment : BaseFragment() {
+class TestPagedRecyclerFragment : BaseFragment() {
 
     private var isLoading: Boolean = false
-    private lateinit var adapter: PagedAdapter
+    private lateinit var adapter: TestPagedAdapter
     private lateinit var viewModel: PagedReleaseGroupBrowseViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
@@ -44,7 +44,7 @@ class PagedRecyclerFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this).get(PagedReleaseGroupBrowseViewModel::class.java)
         viewModel.browse(entityType, mbid, true)
 
-        adapter = PagedAdapter()
+        adapter = TestPagedAdapter()
         viewModel.pagedItems.observe(this, Observer { adapter.submitList(it) })
 
         recyclerView.layoutManager = LinearLayoutManager(context)
