@@ -23,7 +23,8 @@ class SeriesSearchRepository : BaseSearchRepository<Series>() {
                 },
                 {
                     PageMapper<SeriesResponse, Series> { SeriesMapper().mapTo(it) }.mapToList(items)
-                }
+                },
+                false
             )
         }
     }

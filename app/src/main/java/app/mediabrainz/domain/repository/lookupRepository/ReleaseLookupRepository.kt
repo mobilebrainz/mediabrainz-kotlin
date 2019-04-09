@@ -14,22 +14,28 @@ class ReleaseLookupRepository : BaseLookupRepository<Release>() {
 
     override fun lookup(mutableLiveData: MutableLiveData<Resource<Release>>, mbid: String) {
         if (mbid.isNotBlank()) {
-            call(mutableLiveData,
+            call(
+                mutableLiveData,
                 { ApiRequestProvider.createReleaseLookupRequest(mbid).lookup() },
-                { ReleaseMapper().mapTo(this) })
+                { ReleaseMapper().mapTo(this) },
+                false
+            )
         }
     }
 
     override fun authLookup(mutableLiveData: MutableLiveData<Resource<Release>>, mbid: String) {
         if (mbid.isNotBlank()) {
-            call(mutableLiveData,
+            call(
+                mutableLiveData,
                 {
                     ApiRequestProvider.createReleaseLookupRequest(mbid)
                         .addIncs(USER_TAGS, USER_GENRES)
                         .addAccessToken(OAuthManager.accessToken?.token ?: "")
                         .lookup()
                 },
-                { ReleaseMapper().mapTo(this) })
+                { ReleaseMapper().mapTo(this) },
+                true
+            )
         }
     }
 

@@ -23,7 +23,8 @@ class UrlSearchRepository : BaseSearchRepository<Url>() {
                 },
                 {
                     PageMapper<UrlResponse, Url> { UrlMapper().mapTo(it) }.mapToList(items)
-                }
+                },
+                false
             )
         }
     }

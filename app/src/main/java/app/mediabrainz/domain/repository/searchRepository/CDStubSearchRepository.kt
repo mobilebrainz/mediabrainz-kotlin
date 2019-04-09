@@ -23,7 +23,8 @@ class CDStubSearchRepository : BaseSearchRepository<CDStub>() {
                 },
                 {
                     PageMapper<CDStubResponse, CDStub> { CDStubMapper().mapTo(it) }.mapToList(items)
-                }
+                },
+                false
             )
         }
     }

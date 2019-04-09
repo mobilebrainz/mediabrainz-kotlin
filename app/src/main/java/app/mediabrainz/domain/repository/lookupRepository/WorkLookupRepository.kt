@@ -14,22 +14,28 @@ class WorkLookupRepository : BaseLookupRepository<Work>() {
 
     override fun lookup(mutableLiveData: MutableLiveData<Resource<Work>>, mbid: String) {
         if (mbid.isNotBlank()) {
-            call(mutableLiveData,
+            call(
+                mutableLiveData,
                 { ApiRequestProvider.createWorkLookupRequest(mbid).lookup() },
-                { WorkMapper().mapTo(this) })
+                { WorkMapper().mapTo(this) },
+                false
+            )
         }
     }
 
     override fun authLookup(mutableLiveData: MutableLiveData<Resource<Work>>, mbid: String) {
         if (mbid.isNotBlank()) {
-            call(mutableLiveData,
+            call(
+                mutableLiveData,
                 {
                     ApiRequestProvider.createWorkLookupRequest(mbid)
                         .addIncs(USER_TAGS, USER_RATINGS)
                         .addAccessToken(OAuthManager.accessToken?.token ?: "")
                         .lookup()
                 },
-                { WorkMapper().mapTo(this) })
+                { WorkMapper().mapTo(this) },
+                true
+            )
         }
     }
 

@@ -1,10 +1,268 @@
 <resources>
+
     <string name="app_name">MediaBrainz</string>
 
-    <string name="retry">Retry</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="login">Log In</string>
+    <string name="retry">Retry</string>
+    <string name="no_ratings">0 ratings</string>
+    <string name="expand_all">Expand all</string>
+    <string name="unknown">Unknown</string>
+
+    <!-- labels of destinations -->
+    <string name="start_fragment_label">Start</string>
+    <string name="search_fragment_label">Search</string>
+    <string name="about_fragment_label">About</string>
+    <string name="settings_fragment_label">Settings</string>
+    <string name="login_fragment_label">Log In</string>
+    <string name="result_search_fragment_label">Search Result</string>
+    <string name="artist_fragment_label">Artist</string>
+    <string name="artist_releases_fragment_label">Artist Releases</string>
+    <string name="artist_tags_pager_fragment_label">Artist Tags/Genres</string>
+    <string name="artist_relations_fragment_label">Artist Relations</string>
+    <string name="releases_fragment_label">Releases</string>
+    <string name="links_fragment_label">Links</string>
+    <string name="wiki_fragment_label">Wikipedia</string>
+    <string name="release_group_fragment_label">Release Group</string>
+
+    <!-- labels of menu actions -->
+    <string name="scan_barcode_action_label">Scan barcode</string>
+    <string name="feedback_action_label">Feedback</string>
+    <string name="logout_action_label">Log Out</string>
+
+    <!-- menu items -->
+    <string name="drawer_item_main">Main</string>
+    <string name="drawer_item_items">Items</string>
+    <string name="drawer_item_actions">Actions</string>
+
+    <!-- Release group types -->
+    <string name="rt_album">Album</string>
+    <string name="rt_broadcast">Broadcast</string>
+    <string name="rt_single">Single</string>
+    <string name="rt_ep">EP</string>
+    <string name="rt_other">Other</string>
+    <string name="rt_dj_mix">Dj-Mix</string>
+    <string name="rt_compilation">Compilation</string>
+    <string name="rt_mixtape">Mixtape</string>
+    <string name="rt_soundtrack">Soundtrack</string>
+    <string name="rt_spokenword">Spoken word</string>
+    <string name="rt_interview">Interview</string>
+    <string name="rt_audiobook">Audio book</string>
+    <string name="rt_live">Live</string>
+    <string name="rt_remix">Remix</string>
+    <string name="rt_street">Street</string>
+    <string name="rt_unknown">Unknown</string>
+
+    <!-- AboutFragment -->
+    <string name="version_text">Version %1$s</string>
+
+    <!-- Preferences -->
+    <string name="settings_search">Search</string>
+    <string name="settings_title_suggestions">Suggestions</string>
+    <string name="settings_summary_suggestions">Store and display search suggestions</string>
+    <string name="settings_clear_suggestions">Clear search history</string>
+    <string name="settings_clear_recommends">Clear recommends</string>
+    <string name="settings_title_images">Images</string>
+    <string name="settings_load_images">Load images</string>
+    <string name="settings_title_load_ratings">Load ratings</string>
+    <string name="settings_summary_load_ratings">Load ratings from external resources</string>
+
+    <string name="settings_title_miscellanea">Miscellanea</string>
+    <string name="settings_summary_propagate_artist_tags">Propagate artist tags to official albums</string>
+    <string name="settings_title_propagate_artist_tags">Propagate artist tags</string>
+
+    <string name="settings_title_youtube_preferences">Youtube Preferences</string>
+    <string name="settings_title_play_youtube">Choose youtube player</string>
+    <string name="settings_summary_play_youtube">Play youtube in YouTube Application</string>
+
+    <string name="settings_title_artist_preferences">Artist Preferences</string>
+    <string name="settings_summary_release_group_official">Show only official release groups</string>
+    <string name="settings_title_release_group_official">Official release groups</string>
+
+    <!-- Preferences Toasts -->
+    <string name="toast_search_err">Add some text to search</string>
+    <string name="toast_search_cleared">Search history deleted</string>
+    <string name="toast_recommends_cleared">Recommends deleted</string>
+
+    <!-- Strings related to login -->
     <string name="login_prompt">To Login, connect your MusicBrainz account with our app. You will
         be prompted to login in MusicBrainz website. Follow the instructions and return to complete
         authentication.</string>
+    <string name="login">Log In</string>
+    <string name="login_title">Sign in</string>
+    <string name="login_success">Success</string>
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_create_account">Create Account</string>
+    <string name="action_forgot_username">Forgot Username</string>
+    <string name="action_forgot_password">Forgot Password</string>
+    <string name="action_sign_in_short" translatable="false">Sign in</string>
+    <string name="error_invalid_username">This username is invalid</string>
+    <string name="error_invalid_password">This password is invalid</string>
+    <string name="error_field_required">This field is required</string>
+
+    <!-- Send email -->
+    <string name="choose_email_client">Choose email client and send message</string>
+    <string name="send_mail_error">There are no email clients installed.</string>
+
+    <!-- ZXing integration - barcode -->
+    <string name="zx_title">Install Barcode Scanner?</string>
+    <string name="zx_message">This action requires Barcode Scanner. Would you like to install it?</string>
+    <string name="zx_pos">Install</string>
+    <string name="zx_neg">Cancel</string>
+
+    <!-- Search -->
+    <string name="description_search">Search</string>
+    <string name="log_in_btn">LOG IN</string>
+    <string name="artist_field_hint">Artist</string>
+    <string name="album_field_hint">Album</string>
+    <string name="track_field_hint">Track</string>
+    <string name="search_btn">SEARCH</string>
+    <string name="search_artist_title">Search Artist</string>
+    <string name="search_album_title">Search Album</string>
+    <string name="search_track_title">Search Track</string>
+    <string name="search_tag_title">Search Tag (genre)</string>
+    <string name="search_user_title">Search User</string>
+    <string name="search_barcode_title">Search Barcode</string>
+    <string name="no_results">No results found</string>
+    <string name="connection_error">Could not connect to server…</string>
+    <string name="lastfm_connection_error">Could not connect to last.fm server…</string>
+    <string name="connection_error_retry">Retry</string>
+    <string name="search_track_artist_name">Artist: %1$s</string>
+    <string name="search_track_album_name">Album: %1$s</string>
+    <string name="searchtype_user">User</string>
+    <string name="searchtype_tag">Tag (genre)</string>
+    <string name="searchtype_barcode">Barcode</string>
+    <string name="search_hint">Search field</string>
+
+    <string name="error_connect_title">No Internet Connection</string>
+    <string name="error_connect_message">Please check your internet connection and try again</string>
+
+    <!-- ReleaseAdapter -->
+    <string name="r_tracks">%1$s / %2$d tracks</string>
+    <string name="r_barcode">Barcode: %1$s</string>
+    <string name="r_status">Status: %1$s</string>
+    <string name="r_catalog">Catalog: %1$s</string>
+    <string name="rg_text">Choose a release</string>
+
+    <!-- Release formats -->
+    <string name="fm_cd">CD</string>
+    <string name="fm_dvd">DVD</string>
+    <string name="fm_sacd">SACD</string>
+    <string name="fm_dd">DualDisc</string>
+    <string name="fm_ld">LaserDisc</string>
+    <string name="fm_md">MiniDisc</string>
+    <string name="fm_vinyl">Vinyl</string>
+    <string name="fm_cassette">Cassette</string>
+    <string name="fm_cartridge">Cartridge</string>
+    <string name="fm_rtr">Reel-to-reel</string>
+    <string name="fm_dat">DAT</string>
+    <string name="fm_dm">Digital Media</string>
+    <string name="fm_other">Other</string>
+    <string name="fm_wax">Wax Cylinder</string>
+    <string name="fm_pr">Piano Roll</string>
+    <string name="fm_dcc">Digital Compact Cassette</string>
+    <string name="fm_vhs">VHS</string>
+    <string name="fm_vcd">Video-CD</string>
+    <string name="fm_svcd">Super Video-CD</string>
+    <string name="fm_bm">Betamax</string>
+    <string name="fm_hdcd">HD Compatible Digital</string>
+    <string name="fm_usb">USB Flash Drive</string>
+    <string name="fm_sm">SlotMusic</string>
+    <string name="fm_umd">Universal Media Disc</string>
+    <string name="fm_hddvd">HD-DVD</string>
+    <string name="fm_dvda">DVD-Audio</string>
+    <string name="fm_dvdv">DVD-Video</string>
+    <string name="fm_br">Blu-ray</string>
+    <string name="fm_unknown">Unknown format</string>
+
+    <!-- BarcodeDialog -->
+    <string name="barcode_header">Barcode %1$s not found!</string>
+    <string name="barcode_info_log">This barcode is not associated with a MusicBrainz release. Would you like to add it?</string>
+    <string name="barcode_info_nolog">This barcode is not associated with a MusicBrainz release. Log in to add it.</string>
+    <string name="barcode_btn">Add barcode</string>
+    <string name="barcode_cancel">Cancel</string>
+
+    !-- ReleaseGroupsPagerAdapter -->
+    <string name="release_group_albums">Albums</string>
+    <string name="release_group_eps">EPs</string>
+    <string name="release_group_lives">Lives</string>
+    <string name="release_group_compilations">Compilations</string>
+    <string name="release_group_singles">Singles</string>
+    <string name="release_group_official">Show only official release groups</string>
+
+    <!-- Ratings nad Tags -->
+    <string name="vote_tag">Vote Tag</string>
+    <string name="rate_entity">Rate: %1$s</string>
+    <string name="edit_login">You must log in before you can edit!</string>
+    <string name="tag_hint">Tag (genre)</string>
+    <string name="rating_text">%1$.2f (%2$d)</string>
+
+    <!-- Menus -->
+    <string name="releases_item">Releases</string>
+    <string name="relations_item">Relations</string>
+    <string name="tags_item">Tags</string>
+    <string name="links_item">Links</string>
+    <string name="wiki_item">Wikipedia</string>
+    <string name="add_to_collection_item">Add to collection</string>
+    <string name="share_artist_item">Share Artist</string>
+    <string name="credits_item">Credits</string>
+    <string name="tracks_item">Tracks</string>
+    <string name="cover_arts_item">Cover Arts</string>
+
+    <!-- Tags -->
+    <string name="tag_tab_artists">Artists</string>
+    <string name="tag_tab_releases">Releases</string>
+    <string name="tag_tab_recordings">Recordings</string>
+    <string name="tags_tab_genres">Genres</string>
+    <string name="tags_tab_tags">Tags</string>
+    <string name="tag_propagated_to_albums">Tag was propagated to official albums successfully!</string>
+    <string name="error_tag_propagation_to_albums">Error of tag propagation to official albums</string>
+    <string name="error_post_tag">Error post tag</string>
+    <string name="error_propagate_tag">Error propagate tag</string>
+    <string name="error_post_rating">Error post rating</string>
+
+    <string name="select_items">Select items</string>
+    <string name="select_item">Select item</string>
+    <string name="select_all">Select all</string>
+
+    <!-- ArtistRelations -->
+    <string name="rel_cuttent_member_of_band">Current Member Of Band</string>
+    <string name="rel_past_member_of_band">Past Member Of Band</string>
+    <string name="rel_subgroup">Subgroup</string>
+    <string name="rel_conductor_position">Conductor Position</string>
+    <string name="rel_founder">Founder</string>
+    <string name="rel_supporting_musician">Supporting Musician</string>
+    <string name="rel_vocal_supporting_musician">Vocal Supporting Musician</string>
+    <string name="rel_instrumental_supporting_musician">Instrumental Supporting Musician</string>
+    <string name="rel_tribute">Tribute</string>
+    <string name="rel_voice_actor">Voice Actor</string>
+    <string name="rel_collaboration">Collaboration</string>
+    <string name="rel_is_person">Is Person</string>
+    <string name="rel_teacher">Teacher</string>
+    <string name="rel_composer_in_residence">Composer In Residence</string>
+
+    <string name="rel_current_member_of_band_description">This indicates a person is a member of a group.</string>
+    <string name="rel_past_member_of_band_description">This indicates a person was a member of a group.</string>
+    <string name="rel_subgroup_description">This links a subgroup to the group from which it was created. This relationship type is the functional equivalent of the member of band type for group-group relationships.</string>
+    <string name="rel_conductor_position_description">This indicates that a person is, or was, a conductor for a group.</string>
+    <string name="rel_founder_description">This indicates an artist (generally a person) was the founder of a group.</string>
+    <string name="rel_supporting_musician_description">Indicates an artist doing long-time instrumental or vocal support for another one on albums and/or at concerts. This is a person-to-artist relationship that normally applies to well-known solo artists, although it can sometimes apply to groups.</string>
+    <string name="rel_vocal_supporting_musician_description">Indicates a musician doing long-time vocal support for another one on albums and/or at concerts. This is a person-to-artist relationship that normally applies to well-known solo artists, although it can sometimes apply to groups.</string>
+    <string name="rel_instrumental_supporting_musician_description">Indicates a musician doing long-time instrumental support for another one on albums and/or at concerts. This is a person-to-artist relationship that normally applies to well-known solo artists, although it can sometimes apply to groups.</string>
+    <string name="rel_tribute_description">This relationship specifies that an artist is a tribute to another specific artist/band; that is, it primarily performs covers of that artist. They may also be referred to as cover bands. Some tribute artists may name themselves, dress, and/or act similarly to the artists they pay tribute to.</string>
+    <string name="rel_voice_actor_description">This links an (fictional) artist to the person that voice acted it.</string>
+    <string name="rel_collaboration_description">This is used to specify that an artist collaborated on a short-term project, for cases where artist credits can\'t be used.</string>
+    <string name="rel_is_person_description">This links an artist\'s performance name (a stage name or alias) with their legal name.</string>
+    <string name="rel_teacher_description">This relationship indicates that a person was another\'s teacher/student.</string>
+    <string name="rel_composer_in_residence_description">This links a group (often an orchestra) to a composer who has a composer-in-residence position with the group.</string>
+
+    <!-- Ratings -->
+    <string name="lastfm_listeners">last.fm listeners:</string>
+    <string name="lastfm_playcount">last.fm play count:</string>
+    <string name="rateyourmusic">rateyourmusic.com:</string>
+    <string name="progarchives">progarchives.com:</string>
+
 </resources>

@@ -23,7 +23,8 @@ class WorkSearchRepository : BaseSearchRepository<Work>() {
                 },
                 {
                     PageMapper<WorkResponse, Work> { WorkMapper().mapTo(it) }.mapToList(items)
-                }
+                },
+                false
             )
         }
     }

@@ -7,7 +7,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import app.mediabrainz.domain.repository.Resource.Status.*
 import app.mediabrainz.ui.R
-import app.mediabrainz.ui.viewmodel.lookupRepository.ArtistLookupViewModel
 import app.mediabrainz.ui.viewmodel.lookupRepository.ReleaseGroupLookupViewModel
 
 
@@ -15,7 +14,7 @@ class TestMainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.test_activity_main)
 
 
         val vm = ViewModelProviders.of(this).get(ReleaseGroupLookupViewModel::class.java)

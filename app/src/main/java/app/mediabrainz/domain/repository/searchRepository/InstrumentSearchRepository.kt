@@ -23,7 +23,8 @@ class InstrumentSearchRepository : BaseSearchRepository<Instrument>() {
                 },
                 {
                     PageMapper<InstrumentResponse, Instrument> { InstrumentMapper().mapTo(it) }.mapToList(items)
-                }
+                },
+                false
             )
         }
     }

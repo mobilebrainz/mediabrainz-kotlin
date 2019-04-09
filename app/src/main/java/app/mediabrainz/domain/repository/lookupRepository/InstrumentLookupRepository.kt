@@ -13,22 +13,28 @@ class InstrumentLookupRepository : BaseLookupRepository<Instrument>() {
 
     override fun lookup(mutableLiveData: MutableLiveData<Resource<Instrument>>, mbid: String) {
         if (mbid.isNotBlank()) {
-            call(mutableLiveData,
+            call(
+                mutableLiveData,
                 { ApiRequestProvider.createInstrumentLookupRequest(mbid).lookup() },
-                { InstrumentMapper().mapTo(this) })
+                { InstrumentMapper().mapTo(this) },
+                false
+            )
         }
     }
 
     override fun authLookup(mutableLiveData: MutableLiveData<Resource<Instrument>>, mbid: String) {
         if (mbid.isNotBlank()) {
-            call(mutableLiveData,
+            call(
+                mutableLiveData,
                 {
                     ApiRequestProvider.createInstrumentLookupRequest(mbid)
                         .addIncs(USER_TAGS)
                         .addAccessToken(OAuthManager.accessToken?.token ?: "")
                         .lookup()
                 },
-                { InstrumentMapper().mapTo(this) })
+                { InstrumentMapper().mapTo(this) },
+                true
+            )
         }
     }
 

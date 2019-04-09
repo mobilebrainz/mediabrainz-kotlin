@@ -12,7 +12,8 @@ class CoverArtRepository : BaseApiRepository() {
         if (mbid.isNotBlank()) {
             call(mutableLiveData,
                 { ApiRequestProvider.createCoverArtRequest(mbid).getReleaseCoverArt() },
-                { CoverArtMapper().mapToList(this) }
+                { CoverArtMapper().mapToList(this) },
+                false
             )
         }
     }
@@ -21,7 +22,8 @@ class CoverArtRepository : BaseApiRepository() {
         if (mbid.isNotBlank()) {
             call(mutableLiveData,
                 { ApiRequestProvider.createCoverArtRequest(mbid).getReleaseGroupCoverArt() },
-                { CoverArtMapper().mapToList(this) }
+                { CoverArtMapper().mapToList(this) },
+                false
             )
         }
     }

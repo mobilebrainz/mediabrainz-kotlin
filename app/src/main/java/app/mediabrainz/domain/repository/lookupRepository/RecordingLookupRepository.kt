@@ -13,22 +13,28 @@ class RecordingLookupRepository : BaseLookupRepository<Recording>() {
 
     override fun lookup(mutableLiveData: MutableLiveData<Resource<Recording>>, mbid: String) {
         if (mbid.isNotBlank()) {
-            call(mutableLiveData,
+            call(
+                mutableLiveData,
                 { ApiRequestProvider.createRecordingLookupRequest(mbid).lookup() },
-                { RecordingMapper().mapTo(this) })
+                { RecordingMapper().mapTo(this) },
+                false
+            )
         }
     }
 
     override fun authLookup(mutableLiveData: MutableLiveData<Resource<Recording>>, mbid: String) {
         if (mbid.isNotBlank()) {
-            call(mutableLiveData,
+            call(
+                mutableLiveData,
                 {
                     ApiRequestProvider.createRecordingLookupRequest(mbid)
                         .addIncs(USER_TAGS, USER_GENRES, USER_RATINGS)
                         .addAccessToken(OAuthManager.accessToken?.token ?: "")
                         .lookup()
                 },
-                { RecordingMapper().mapTo(this) })
+                { RecordingMapper().mapTo(this) },
+                true
+            )
         }
     }
 

@@ -12,19 +12,27 @@ class AreaLookupRepository : BaseLookupRepository<Area>() {
 
     override fun lookup(mutableLiveData: MutableLiveData<Resource<Area>>, mbid: String) {
         if (mbid.isNotBlank()) {
-            call(mutableLiveData,
+            call(
+                mutableLiveData,
                 { ApiRequestProvider.createAreaLookupRequest(mbid).lookup() },
-                { AreaMapper().mapTo(this) })
+                { AreaMapper().mapTo(this) },
+                false
+            )
         }
     }
 
     override fun authLookup(mutableLiveData: MutableLiveData<Resource<Area>>, mbid: String) {
         if (mbid.isNotBlank()) {
-            call(mutableLiveData,
-                { ApiRequestProvider.createAreaLookupRequest(mbid)
-                    .addAccessToken(OAuthManager.accessToken?.token ?: "")
-                    .lookup() },
-                { AreaMapper().mapTo(this) })
+            call(
+                mutableLiveData,
+                {
+                    ApiRequestProvider.createAreaLookupRequest(mbid)
+                        .addAccessToken(OAuthManager.accessToken?.token ?: "")
+                        .lookup()
+                },
+                { AreaMapper().mapTo(this) },
+                true
+            )
         }
     }
 

@@ -23,7 +23,8 @@ class OAuthRepository : BaseApiRepository() {
                 ApiRequestProvider.createOAuthRequest()
                     .requestToken(code, clientId, clientSecret, redirectUri, grantType)
             },
-            { AccessTokenMapper().mapTo(this) })
+            { AccessTokenMapper().mapTo(this) },
+            false)
 
     }
 
@@ -36,20 +37,23 @@ class OAuthRepository : BaseApiRepository() {
                 ApiRequestProvider.createOAuthRequest()
                     .refreshToken(refreshToken, clientId, clientSecret, grantType)
             },
-            { AccessTokenMapper().mapTo(this) })
+            { AccessTokenMapper().mapTo(this) },
+            false)
     }
 
     fun getUserInfo(mutableLiveData: MutableLiveData<Resource<UserInfo>>, accessToken: String) {
         call(mutableLiveData,
             { ApiRequestProvider.createOAuthRequest().getUserInfo(accessToken) },
-            { UserInfoMapper().mapTo(this) })
+            { UserInfoMapper().mapTo(this) },
+            true)
 
     }
 
     fun getTokenInfo(mutableLiveData: MutableLiveData<Resource<TokenInfo>>, accessToken: String) {
         call(mutableLiveData,
             { ApiRequestProvider.createOAuthRequest().getTokenInfo(accessToken) },
-            { TokenInfoMapper().mapTo(this) })
+            { TokenInfoMapper().mapTo(this) },
+            false)
     }
 
 }

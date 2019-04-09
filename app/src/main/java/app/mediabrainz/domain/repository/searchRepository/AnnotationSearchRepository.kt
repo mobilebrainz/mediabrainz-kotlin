@@ -22,7 +22,8 @@ class AnnotationSearchRepository : BaseSearchRepository<Annotation>() {
             },
             {
                 PageMapper<AnnotationResponse, Annotation> { AnnotationMapper().mapTo(it) }.mapToList(items)
-            }
+            },
+            false
         )
     }
 

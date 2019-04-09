@@ -13,22 +13,28 @@ class ReleaseGroupLookupRepository : BaseLookupRepository<ReleaseGroup>() {
 
     override fun lookup(mutableLiveData: MutableLiveData<Resource<ReleaseGroup>>, mbid: String) {
         if (mbid.isNotBlank()) {
-            call(mutableLiveData,
+            call(
+                mutableLiveData,
                 { ApiRequestProvider.createReleaseGroupLookupRequest(mbid).lookup() },
-                { ReleaseGroupMapper().mapTo(this) })
+                { ReleaseGroupMapper().mapTo(this) },
+                false
+            )
         }
     }
 
     override fun authLookup(mutableLiveData: MutableLiveData<Resource<ReleaseGroup>>, mbid: String) {
         if (mbid.isNotBlank()) {
-            call(mutableLiveData,
+            call(
+                mutableLiveData,
                 {
                     ApiRequestProvider.createReleaseGroupLookupRequest(mbid)
                         .addIncs(USER_TAGS, USER_GENRES, USER_RATINGS)
                         .addAccessToken(OAuthManager.accessToken?.token ?: "")
                         .lookup()
                 },
-                { ReleaseGroupMapper().mapTo(this) })
+                { ReleaseGroupMapper().mapTo(this) },
+                true
+            )
         }
     }
 

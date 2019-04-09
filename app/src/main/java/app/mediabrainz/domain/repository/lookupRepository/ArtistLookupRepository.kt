@@ -18,12 +18,15 @@ class ArtistLookupRepository : BaseLookupRepository<Artist>() {
 
     override fun lookup(mutableLiveData: MutableLiveData<Resource<Artist>>, mbid: String) {
         if (mbid.isNotBlank()) {
-            call(mutableLiveData,
+            call(
+                mutableLiveData,
                 {
                     ApiRequestProvider.createArtistLookupRequest(mbid)
                         .addIncs(*incs).addRels(*rels).lookup()
                 },
-                { ArtistMapper().mapTo(this) })
+                { ArtistMapper().mapTo(this) },
+                false
+            )
         }
     }
 

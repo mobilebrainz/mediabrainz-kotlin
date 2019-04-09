@@ -23,7 +23,8 @@ class ArtistSearchRepository : BaseSearchRepository<Artist>() {
                 },
                 {
                     PageMapper<ArtistResponse, Artist> { ArtistMapper().mapTo(it) }.mapToList(items)
-                }
+                },
+                false
             )
         }
     }

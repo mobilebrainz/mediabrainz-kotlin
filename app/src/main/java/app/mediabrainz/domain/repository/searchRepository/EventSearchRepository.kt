@@ -23,7 +23,8 @@ class EventSearchRepository : BaseSearchRepository<Event>() {
                 },
                 {
                     PageMapper<EventResponse, Event> { EventMapper().mapTo(it) }.mapToList(items)
-                }
+                },
+                false
             )
         }
     }

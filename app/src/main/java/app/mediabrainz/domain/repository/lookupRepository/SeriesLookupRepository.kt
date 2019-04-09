@@ -13,22 +13,28 @@ class SeriesLookupRepository : BaseLookupRepository<Series>() {
 
     override fun lookup(mutableLiveData: MutableLiveData<Resource<Series>>, mbid: String) {
         if (mbid.isNotBlank()) {
-            call(mutableLiveData,
+            call(
+                mutableLiveData,
                 { ApiRequestProvider.createSeriesLookupRequest(mbid).lookup() },
-                { SeriesMapper().mapTo(this) })
+                { SeriesMapper().mapTo(this) },
+                false
+            )
         }
     }
 
     override fun authLookup(mutableLiveData: MutableLiveData<Resource<Series>>, mbid: String) {
         if (mbid.isNotBlank()) {
-            call(mutableLiveData,
+            call(
+                mutableLiveData,
                 {
                     ApiRequestProvider.createSeriesLookupRequest(mbid)
                         .addIncs(USER_TAGS)
                         .addAccessToken(OAuthManager.accessToken?.token ?: "")
                         .lookup()
                 },
-                { SeriesMapper().mapTo(this) })
+                { SeriesMapper().mapTo(this) },
+                true
+            )
         }
     }
 

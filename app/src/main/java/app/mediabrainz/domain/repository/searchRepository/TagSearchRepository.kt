@@ -23,7 +23,8 @@ class TagSearchRepository : BaseSearchRepository<Tag>() {
                 },
                 {
                     PageMapper<TagResponse, Tag> { TagMapper().mapTo(it) }.mapToList(items)
-                }
+                },
+                false
             )
         }
     }

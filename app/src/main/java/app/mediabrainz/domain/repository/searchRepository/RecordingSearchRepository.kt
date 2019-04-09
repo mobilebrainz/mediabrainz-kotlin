@@ -41,7 +41,8 @@ class RecordingSearchRepository : BaseSearchRepository<Recording>() {
             call(mutableLiveData, deferred,
                 {
                     PageMapper<RecordingResponse, Recording> { RecordingMapper().mapTo(it) }.mapToList(items)
-                }
+                },
+                false
             )
         }
     }

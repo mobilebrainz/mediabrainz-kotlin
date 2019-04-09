@@ -24,7 +24,7 @@ abstract class BaseApiRepository {
         mutableLiveData: MutableLiveData<Resource<OUT>>,
         deferred: () -> Deferred<Response<IN>>,
         map: IN.() -> OUT,
-        authorize: Boolean = false
+        authorize: Boolean
     ) {
         setLoading(mutableLiveData)
         launch(mutableLiveData, deferred, map, authorize)

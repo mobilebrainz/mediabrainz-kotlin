@@ -23,7 +23,8 @@ class AreaSearchRepository : BaseSearchRepository<Area>() {
                 },
                 {
                     PageMapper<AreaResponse, Area> { AreaMapper().mapTo(it) }.mapToList(items)
-                }
+                },
+                false
             )
         }
     }

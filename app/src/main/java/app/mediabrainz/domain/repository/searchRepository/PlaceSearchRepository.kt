@@ -23,7 +23,8 @@ class PlaceSearchRepository : BaseSearchRepository<Place>() {
                 },
                 {
                     PageMapper<PlaceResponse, Place> { PlaceMapper().mapTo(it) }.mapToList(items)
-                }
+                },
+                false
             )
         }
     }

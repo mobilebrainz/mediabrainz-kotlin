@@ -14,22 +14,28 @@ class EventLookupRepository : BaseLookupRepository<Event>() {
 
     override fun lookup(mutableLiveData: MutableLiveData<Resource<Event>>, mbid: String) {
         if (mbid.isNotBlank()) {
-            call(mutableLiveData,
+            call(
+                mutableLiveData,
                 { ApiRequestProvider.createEventLookupRequest(mbid).lookup() },
-                { EventMapper().mapTo(this) })
+                { EventMapper().mapTo(this) },
+                false
+            )
         }
     }
 
     override fun authLookup(mutableLiveData: MutableLiveData<Resource<Event>>, mbid: String) {
         if (mbid.isNotBlank()) {
-            call(mutableLiveData,
+            call(
+                mutableLiveData,
                 {
                     ApiRequestProvider.createEventLookupRequest(mbid)
                         .addIncs(USER_TAGS, USER_RATINGS)
                         .addAccessToken(OAuthManager.accessToken?.token ?: "")
                         .lookup()
                 },
-                { EventMapper().mapTo(this) })
+                { EventMapper().mapTo(this) },
+                true
+            )
         }
     }
 

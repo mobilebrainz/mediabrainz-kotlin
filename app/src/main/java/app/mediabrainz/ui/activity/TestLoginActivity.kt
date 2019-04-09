@@ -21,7 +21,7 @@ class TestLoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.login_test_activity)
+        setContentView(R.layout.test_login_activity)
 
         vm = ViewModelProviders.of(this).get(OAuthViewModel::class.java)
         vm.accessToken.observe(this, Observer {

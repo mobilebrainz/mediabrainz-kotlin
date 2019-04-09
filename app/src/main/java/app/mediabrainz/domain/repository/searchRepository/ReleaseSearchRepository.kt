@@ -34,7 +34,8 @@ class ReleaseSearchRepository : BaseSearchRepository<Release>() {
                 },
                 {
                     PageMapper<ReleaseResponse, Release> { ReleaseMapper().mapTo(it) }.mapToList(items)
-                }
+                },
+                false
             )
         }
     }

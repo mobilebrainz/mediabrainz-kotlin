@@ -13,22 +13,28 @@ class PlaceLookupRepository : BaseLookupRepository<Place>() {
 
     override fun lookup(mutableLiveData: MutableLiveData<Resource<Place>>, mbid: String) {
         if (mbid.isNotBlank()) {
-            call(mutableLiveData,
+            call(
+                mutableLiveData,
                 { ApiRequestProvider.createPlaceLookupRequest(mbid).lookup() },
-                { PlaceMapper().mapTo(this) })
+                { PlaceMapper().mapTo(this) },
+                false
+            )
         }
     }
 
     override fun authLookup(mutableLiveData: MutableLiveData<Resource<Place>>, mbid: String) {
         if (mbid.isNotBlank()) {
-            call(mutableLiveData,
+            call(
+                mutableLiveData,
                 {
                     ApiRequestProvider.createPlaceLookupRequest(mbid)
                         .addIncs(PlaceLookupIncType.USER_TAGS)
                         .addAccessToken(OAuthManager.accessToken?.token ?: "")
                         .lookup()
                 },
-                { PlaceMapper().mapTo(this) })
+                { PlaceMapper().mapTo(this) },
+                true
+            )
         }
     }
 

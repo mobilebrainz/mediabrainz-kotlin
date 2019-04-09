@@ -14,22 +14,28 @@ class LabelLookupRepository : BaseLookupRepository<Label>() {
 
     override fun lookup(mutableLiveData: MutableLiveData<Resource<Label>>, mbid: String) {
         if (mbid.isNotBlank()) {
-            call(mutableLiveData,
+            call(
+                mutableLiveData,
                 { ApiRequestProvider.createLabelLookupRequest(mbid).lookup() },
-                { LabelMapper().mapTo(this) })
+                { LabelMapper().mapTo(this) },
+                false
+            )
         }
     }
 
     override fun authLookup(mutableLiveData: MutableLiveData<Resource<Label>>, mbid: String) {
         if (mbid.isNotBlank()) {
-            call(mutableLiveData,
+            call(
+                mutableLiveData,
                 {
                     ApiRequestProvider.createLabelLookupRequest(mbid)
                         .addIncs(USER_TAGS, USER_RATINGS)
                         .addAccessToken(OAuthManager.accessToken?.token ?: "")
                         .lookup()
                 },
-                { LabelMapper().mapTo(this) })
+                { LabelMapper().mapTo(this) },
+                true
+            )
         }
     }
 
