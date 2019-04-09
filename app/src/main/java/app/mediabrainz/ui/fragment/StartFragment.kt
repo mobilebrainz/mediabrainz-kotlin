@@ -1,10 +1,14 @@
 package app.mediabrainz.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProviders
+import app.mediabrainz.domain.repository.Resource
 import app.mediabrainz.ui.R
+import app.mediabrainz.ui.viewmodel.lookupRepository.ReleaseGroupLookupViewModel
 
 
 class StartFragment : BaseFragment() {
@@ -16,6 +20,24 @@ class StartFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setSubtitle("")
+
+        /*
+        val vm = ViewModelProviders.of(this).get(ReleaseGroupLookupViewModel::class.java)
+        vm.result.observe(this, Observer {
+            it?.apply {
+                when (status) {
+                    Resource.Status.LOADING -> Log.i("", "")
+                    Resource.Status.SUCCESS -> {
+                        data?.apply {
+                            Log.i("", "")
+                        }
+                    }
+                    Resource.Status.ERROR -> Log.i("", "")
+                }
+            }
+        })
+        vm.authLookup("b00fbf7c-ebaf-3ec0-91d6-5eaad124d58f")
+        */
     }
 
 }
