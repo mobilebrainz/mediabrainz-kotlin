@@ -3,7 +3,6 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:showIn="navigation_view">
 
-    <!--
     <item android:title="@string/drawer_item_main">
         <menu>
             <group android:checkableBehavior="single">
@@ -17,6 +16,7 @@
                     android:icon="@drawable/ic_search_24"
                     android:orderInCategory="2"
                     android:title="@string/search_fragment_label"/>
+                <!--
                 <item
                     android:id="@+id/loginFragment"
                     android:icon="@drawable/ic_login_24"
@@ -32,10 +32,12 @@
                     android:icon="@drawable/ic_settings_24"
                     android:orderInCategory="5"
                     android:title="@string/settings_fragment_label"/>
+                -->
             </group>
         </menu>
     </item>
 
+    <!--
     <item android:title="@string/drawer_item_actions">
         <menu>
             <group android:checkableBehavior="single">

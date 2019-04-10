@@ -11,6 +11,38 @@
         android:label="@string/start_fragment_label"
         tools:layout="@layout/start_fragment"/>
 
+    <fragment
+            android:id="@+id/searchFragment"
+            android:name="app.mediabrainz.ui.fragment.SearchFragment"
+            android:label="@string/search_fragment_label"
+            tools:layout="@layout/search_fragment">
+        <action
+                android:id="@+id/action_searchFragment_to_resultSearchFragment"
+                app:destination="@id/resultSearchFragment"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/resultSearchFragment"
+            android:name="app.mediabrainz.ui.fragment.ResultSearchFragment"
+            android:label="@string/result_search_fragment_label"
+            tools:layout="@layout/paged_recycler_fragment">
+        <argument
+                android:name="artistQuery"
+                app:argType="string"/>
+        <argument
+                android:name="albumQuery"
+                app:argType="string"/>
+        <argument
+                android:name="trackQuery"
+                app:argType="string"/>
+        <argument
+                android:name="searchQuery"
+                app:argType="string"/>
+        <argument
+                android:name="searchType"
+                app:argType="integer"/>
+    </fragment>
+
     <!--
     <fragment
         android:id="@+id/aboutFragment"
@@ -31,43 +63,6 @@
         <action
             android:id="@+id/action_loginFragment_to_startFragment"
             app:destination="@id/startFragment"/>
-    </fragment>
-
-    <fragment
-        android:id="@+id/searchFragment"
-        android:name="app.mediabrainz.fragment.SearchFragment"
-        android:label="@string/search_fragment_label"
-        tools:layout="@layout/search_fragment">
-        <action
-            android:id="@+id/action_searchFragment_to_resultSearchFragment"
-            app:destination="@id/resultSearchFragment"/>
-    </fragment>
-
-    <fragment
-        android:id="@+id/resultSearchFragment"
-        android:name="app.mediabrainz.fragment.ResultSearchFragment"
-        android:label="@string/result_search_fragment_label"
-        tools:layout="@layout/result_search_fragment">
-        <argument
-            android:name="artistQuery"
-            app:argType="string"
-            app:nullable="true"/>
-        <argument
-            android:name="albumQuery"
-            app:argType="string"
-            app:nullable="true"/>
-        <argument
-            android:name="trackQuery"
-            app:argType="string"
-            app:nullable="true"/>
-        <argument
-            android:name="searchQuery"
-            app:argType="string"
-            app:nullable="true"/>
-        <argument
-            android:name="searchType"
-            android:defaultValue="-1"
-            app:argType="integer"/>
     </fragment>
 
     <fragment

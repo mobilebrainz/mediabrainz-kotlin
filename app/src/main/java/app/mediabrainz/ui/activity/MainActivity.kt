@@ -95,13 +95,15 @@ class MainActivity : AppCompatActivity(),
     override fun onOptionsItemSelected(menuItem: MenuItem): Boolean {
         var handled = true
         when (menuItem.itemId) {
-            android.R.id.home ->
+            android.R.id.home -> {
                 //drawer.openDrawer(GravityCompat.START);
-                if (navController.currentDestination != null && navController.currentDestination!!.id != R.id.startFragment) {
+                val currentDestination = navController.currentDestination
+                if (currentDestination != null && currentDestination.id != R.id.startFragment) {
                     onBackPressed()
                 } else {
                     drawer.openDrawer(GravityCompat.START)
                 }
+            }
             else -> handled = NavigationUI.onNavDestinationSelected(menuItem, navController)
         }
         return handled
