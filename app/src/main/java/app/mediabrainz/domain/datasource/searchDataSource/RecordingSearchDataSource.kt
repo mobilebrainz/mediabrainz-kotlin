@@ -33,8 +33,7 @@ class RecordingSearchDataSource(
     ) : DataSourceFactory<Recording>() {
 
         override fun create(): PageKeyedDataSource<Int, Recording> {
-            val dataSource =
-                RecordingSearchDataSource(artist, release, recording)
+            val dataSource = RecordingSearchDataSource(artist, release, recording)
             setDataSource(dataSource)
             return dataSource
         }

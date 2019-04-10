@@ -23,8 +23,8 @@ data class RecordingResponse(
      search return array of objects with fields id = isrc
      lookup ISRCS return array of String isrc
      */
-    @field:Json(name = "isrcs") val isrcs: List<String>?, // from lookup inc=isrcs
-    //@Json(name = "isrcs") val isrcs: List<ISRCResponse> = ArrayList(), // from search query=isrc - ERROR!
+    //@field:Json(name = "isrcs") val isrcs: List<String>?,         // from lookup inc=isrcs - ERROR!
+    //@field:Json(name = "isrcs") val isrcs: List<ISRCResponse>?,   // from search query=isrc - ERROR!
     /**
      * inc=aliases
      */

@@ -13,9 +13,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import app.mediabrainz.domain.datasource.core.NetworkState.Status.ERROR
 import app.mediabrainz.domain.datasource.core.NetworkState.Status.LOADING
 import app.mediabrainz.ui.R
+import app.mediabrainz.ui.adapter.AlbumSearchAdapter
 import app.mediabrainz.ui.adapter.ArtistSearchAdapter
+import app.mediabrainz.ui.adapter.RecordingSearchAdapter
 import app.mediabrainz.ui.viewmodel.BaseDataSourceViewModel
 import app.mediabrainz.ui.viewmodel.searchDataSource.PagedArtistSearchViewModel
+import app.mediabrainz.ui.viewmodel.searchDataSource.PagedRecordingSearchViewModel
+import app.mediabrainz.ui.viewmodel.searchDataSource.PagedReleaseGroupSearchViewModel
 
 
 class ResultSearchFragment : BaseFragment() {
@@ -63,15 +67,6 @@ class ResultSearchFragment : BaseFragment() {
         recyclerView.isNestedScrollingEnabled = true
         //recyclerView.setItemViewCacheSize(10)
         recyclerView.setHasFixedSize(true)
-    }
-
-    private fun initArtistSearch(): BaseDataSourceViewModel<*> {
-        val vm = getViewModel(PagedArtistSearchViewModel::class.java)
-        vm.search(artistQuery)
-        val adapter = ArtistSearchAdapter()
-        vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
-        recyclerView.adapter  = adapter
-        return vm
     }
 
     private fun initSwipeToRefresh() {
@@ -131,25 +126,19 @@ class ResultSearchFragment : BaseFragment() {
             }
             trackQuery.isNotBlank() -> {
                 actionBar.setTitle(R.string.search_track_title)
-
                 // todo: do title without artistQuery?
                 actionBar.subtitle =
                     if (artistQuery.isNotBlank()) "$artistQuery / $trackQuery" else trackQuery
                 //actionBar.setSubtitle(!TextUtils.isEmpty(trackQuery);
-
-                //resultSearchVM.searchRecordigs(artistQuery, albumQuery, trackQuery, refresh)
-
+                viewModel = initRecordingSearch()
             }
             albumQuery.isNotBlank() -> {
                 actionBar.setTitle(R.string.search_album_title)
-
                 // todo: do title without artistQuery?
                 actionBar.subtitle =
                     if (artistQuery.isNotBlank()) "$artistQuery / $albumQuery" else albumQuery
                 //actionBar.setSubtitle(albumQuery);
-
-                //resultSearchVM.searchReleaseGroups(artistQuery, albumQuery, refresh)
-
+                viewModel = initAlbumSearch()
             }
             artistQuery.isNotBlank() -> {
                 actionBar.setTitle(R.string.search_artist_title)
@@ -157,6 +146,33 @@ class ResultSearchFragment : BaseFragment() {
                 viewModel = initArtistSearch()
             }
         }
+    }
+
+    private fun initRecordingSearch(): BaseDataSourceViewModel<*> {
+        val vm = getViewModel(PagedRecordingSearchViewModel::class.java)
+        vm.search(artistQuery, albumQuery, trackQuery)
+        val adapter = RecordingSearchAdapter()
+        vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
+        recyclerView.adapter  = adapter
+        return vm
+    }
+
+    private fun initAlbumSearch(): BaseDataSourceViewModel<*> {
+        val vm = getViewModel(PagedReleaseGroupSearchViewModel::class.java)
+        vm.search(artistQuery, albumQuery)
+        val adapter = AlbumSearchAdapter()
+        vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
+        recyclerView.adapter  = adapter
+        return vm
+    }
+
+    private fun initArtistSearch(): BaseDataSourceViewModel<*> {
+        val vm = getViewModel(PagedArtistSearchViewModel::class.java)
+        vm.search(artistQuery)
+        val adapter = ArtistSearchAdapter()
+        vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
+        recyclerView.adapter  = adapter
+        return vm
     }
 
 }
