@@ -1,8 +1,17 @@
 package app.mediabrainz.ui.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import app.mediabrainz.domain.datasource.core.NetworkState.Status.ERROR
+import app.mediabrainz.domain.datasource.core.NetworkState.Status.LOADING
 import app.mediabrainz.ui.R
 import app.mediabrainz.ui.adapter.AlbumSearchAdapter
 import app.mediabrainz.ui.adapter.ArtistSearchAdapter
@@ -13,13 +22,28 @@ import app.mediabrainz.ui.viewmodel.searchDataSource.PagedRecordingSearchViewMod
 import app.mediabrainz.ui.viewmodel.searchDataSource.PagedReleaseGroupSearchViewModel
 
 
-class ResultSearchFragment : BaseDataSourceFragment() {
+class ResultSearchFragment2 : BaseFragment() {
 
     private var artistQuery: String = ""
     private var albumQuery: String = ""
     private var trackQuery: String = ""
     private var searchQuery: String = ""
     private var searchType = -1
+    private var isError: Boolean = false
+    private var isLoading: Boolean = false
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var viewModel: BaseDataSourceViewModel<*>
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.paged_recycler_fragment, container, false)
+
+        recyclerView = view.findViewById(R.id.recyclerView)
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
+
+        return view
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -34,8 +58,49 @@ class ResultSearchFragment : BaseDataSourceFragment() {
             searchType = args.searchType
 
             search()
+            initRecycler()
             initSwipeToRefresh()
         }
+    }
+
+    private fun initRecycler() {
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.isNestedScrollingEnabled = true
+        //recyclerView.setItemViewCacheSize(10)
+        recyclerView.setHasFixedSize(true)
+    }
+
+    private fun initSwipeToRefresh() {
+        viewModel.getInitialLoadState().observe(this, Observer {
+            isLoading = it.status == LOADING
+            swipeRefreshLayout.isRefreshing = isLoading
+            showError(it.status == ERROR, it.messageResId)
+        })
+
+        viewModel.getAfterLoadState().observe(this, Observer {
+            isLoading = it.status == LOADING
+            swipeRefreshLayout.isRefreshing = isLoading
+            showError(it.status == ERROR, it.messageResId)
+        })
+
+        swipeRefreshLayout.setOnRefreshListener {
+            if (!isLoading) {
+                viewModel.refresh()
+                recyclerView.scrollToPosition(0)
+            }
+        }
+    }
+
+    private fun showError(show: Boolean, @StringRes messageResId: Int) {
+        if (show) {
+            showErrorSnackbar(messageResId, R.string.retry, View.OnClickListener { retry() })
+        } else {
+            dismissErrorSnackbar()
+        }
+    }
+
+    private fun retry() {
+        viewModel.retry()
     }
 
     private fun search() {
@@ -89,7 +154,7 @@ class ResultSearchFragment : BaseDataSourceFragment() {
         vm.search(artistQuery, albumQuery, trackQuery)
         val adapter = RecordingSearchAdapter()
         vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
-        recyclerView.adapter = adapter
+        recyclerView.adapter  = adapter
         return vm
     }
 
@@ -98,7 +163,7 @@ class ResultSearchFragment : BaseDataSourceFragment() {
         vm.search(artistQuery, albumQuery)
         val adapter = AlbumSearchAdapter()
         vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
-        recyclerView.adapter = adapter
+        recyclerView.adapter  = adapter
         return vm
     }
 
@@ -107,7 +172,7 @@ class ResultSearchFragment : BaseDataSourceFragment() {
         vm.search(artistQuery)
         val adapter = ArtistSearchAdapter()
         vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
-        recyclerView.adapter = adapter
+        recyclerView.adapter  = adapter
         return vm
     }
 
