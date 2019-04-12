@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,13 +12,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import app.mediabrainz.domain.datasource.core.NetworkState.Status.ERROR
 import app.mediabrainz.domain.datasource.core.NetworkState.Status.LOADING
 import app.mediabrainz.ui.R
-import app.mediabrainz.ui.adapter.AlbumSearchAdapter
-import app.mediabrainz.ui.adapter.ArtistSearchAdapter
-import app.mediabrainz.ui.adapter.RecordingSearchAdapter
 import app.mediabrainz.ui.viewmodel.BaseDataSourceViewModel
-import app.mediabrainz.ui.viewmodel.searchDataSource.PagedArtistSearchViewModel
-import app.mediabrainz.ui.viewmodel.searchDataSource.PagedRecordingSearchViewModel
-import app.mediabrainz.ui.viewmodel.searchDataSource.PagedReleaseGroupSearchViewModel
 
 
 abstract class BaseDataSourceFragment : BaseFragment() {

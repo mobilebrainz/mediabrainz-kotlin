@@ -76,10 +76,26 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
+    protected fun setSubtitle(@StringRes resId: Int) {
+        activity?.let {
+            (it as AppCompatActivity).supportActionBar?.apply {
+                this.setSubtitle(resId)
+            }
+        }
+    }
+
     protected fun setTitle(title: String) {
         activity?.let {
             (it as AppCompatActivity).supportActionBar?.apply {
                 this.title = title
+            }
+        }
+    }
+
+    protected fun setTitle(@StringRes resId: Int) {
+        activity?.let {
+            (it as AppCompatActivity).supportActionBar?.apply {
+                this.setTitle(resId)
             }
         }
     }

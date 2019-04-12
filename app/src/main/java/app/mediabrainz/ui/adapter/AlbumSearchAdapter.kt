@@ -3,32 +3,24 @@ package app.mediabrainz.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
-import app.mediabrainz.domain.model.Artist
 import app.mediabrainz.domain.model.ReleaseGroup
 import app.mediabrainz.ui.R
 import kotlinx.android.synthetic.main.test_adapter_row.view.*
 
 
-class AlbumSearchAdapter :
-    PagedListAdapter<ReleaseGroup, AlbumSearchAdapter.BrowseViewHolder>(DiffUtilCallBack()) {
+class AlbumSearchAdapter : BasePagedListAdapter<ReleaseGroup>(DiffUtilCallBack()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BrowseViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.test_adapter_row, parent, false)
-        return BrowseViewHolder(view)
+        return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: BrowseViewHolder, position: Int) {
-        getItem(position)?.let { holder.bindTo(it) }
-    }
-
-    class BrowseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : BaseViewHolder<ReleaseGroup>(itemView) {
 
         val nameView = itemView.nameView
 
-        fun bindTo(item: ReleaseGroup) {
+        override fun bindTo(item: ReleaseGroup) {
             with(item) {
                 nameView.text = name
             }

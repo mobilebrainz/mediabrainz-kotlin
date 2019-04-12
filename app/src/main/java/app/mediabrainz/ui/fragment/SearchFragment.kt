@@ -8,7 +8,10 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Spinner
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import app.mediabrainz.db.entity.SuggestionField
+import app.mediabrainz.db.entity.SuggestionField.*
 import app.mediabrainz.ui.R
+import app.mediabrainz.ui.adapter.SuggestionListAdapter
 import app.mediabrainz.ui.extension.hideKeyboard
 import app.mediabrainz.ui.extension.trim
 
@@ -91,6 +94,21 @@ class SearchFragment : BaseFragment() {
             SearchFragmentDirections
                 .actionSearchFragmentToResultSearchFragment(artist, album, track, "", searchType)
         )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        context?.let {
+            //if (MediaBrainzApp.getPreferences().isSearchSuggestionsEnabled()) {
+                artistFieldView.setAdapter(SuggestionListAdapter(it, ARTIST))
+                albumFieldView.setAdapter(SuggestionListAdapter(it, ALBUM))
+                trackFieldView.setAdapter(SuggestionListAdapter(it, TRACK))
+            //} else {
+                //artistFieldView.setAdapter(ArrayAdapter(context, R.layout.layout_dropdown_item, arrayOf<String>()))
+                //albumFieldView.setAdapter(ArrayAdapter(context, R.layout.layout_dropdown_item, arrayOf<String>()))
+                //trackFieldView.setAdapter(ArrayAdapter(context, R.layout.layout_dropdown_item, arrayOf<String>()))
+            //}
+        }
     }
 
 }
