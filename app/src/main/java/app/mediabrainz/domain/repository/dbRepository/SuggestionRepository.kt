@@ -26,9 +26,14 @@ class SuggestionRepository(application: Application) {
         DeleteAllSuggestionsTask(suggestionDao, postAction).execute()
     }
 
-    fun getSuggestions(word: String, field: SuggestionField): List<Suggestion> {
-        return suggestionDao.findSuggestionsByWordAndField("$word%", field.field)
+    fun findByWordAndField(word: String, field: SuggestionField): List<Suggestion> {
+        return suggestionDao.findByWordAndField("$word%", field.field)
     }
+
+    fun getAll() = suggestionDao.getAll()
+
+    fun getByField(suggestionField: SuggestionField) =
+        suggestionDao.getByField(suggestionField.field)
 
     private class InsertSuggestionTask(
         val asyncSuggestionDao: SuggestionDao,

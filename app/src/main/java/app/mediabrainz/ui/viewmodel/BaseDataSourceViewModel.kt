@@ -25,7 +25,7 @@ abstract class BaseDataSourceViewModel<T> : ViewModel() {
         initialLoadSize: Int = loadSize,
         enablePlaceholders: Boolean = false
 
-    ) = PagedList.Config.Builder()
+    ): PagedList.Config = PagedList.Config.Builder()
         .setInitialLoadSizeHint(initialLoadSize)
         .setPageSize(loadSize)
         .setEnablePlaceholders(enablePlaceholders)

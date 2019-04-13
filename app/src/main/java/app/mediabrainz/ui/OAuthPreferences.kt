@@ -38,7 +38,7 @@ object OAuthPreferences : OAuthManager.OAuthStorageInterface {
     }
 
     fun getAccessToken() =
-        getOAuthPreferences().getString(OAUTH_ACCESS_TOKEN, "")
+        getOAuthPreferences().getString(OAUTH_ACCESS_TOKEN, "") ?: ""
 
     fun setRefreshToken(refreshToken: String) {
         getOAuthPreferences().edit()
@@ -46,7 +46,7 @@ object OAuthPreferences : OAuthManager.OAuthStorageInterface {
     }
 
     fun getRefreshToken() =
-        getOAuthPreferences().getString(OAUTH_REFRESH_TOKEN, "")
+        getOAuthPreferences().getString(OAUTH_REFRESH_TOKEN, "") ?: ""
 
 
     fun setExpiresIn(expiresIn: Long) {

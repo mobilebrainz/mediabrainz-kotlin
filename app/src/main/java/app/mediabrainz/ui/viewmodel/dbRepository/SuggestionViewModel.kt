@@ -23,4 +23,8 @@ class SuggestionViewModel : ViewModel() {
     }
     */
 
+    fun getAll() = repository.getAll()
+
+    fun getByField(suggestionField: SuggestionField) = repository.getByField(suggestionField)
+
 }

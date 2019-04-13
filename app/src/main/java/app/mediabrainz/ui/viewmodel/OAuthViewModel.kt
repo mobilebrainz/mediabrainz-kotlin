@@ -26,7 +26,7 @@ class OAuthViewModel : ViewModel() {
 
     private val repository: OAuthRepository = OAuthRepository()
 
-    fun getAuthorizationUri() = Uri.parse(
+    fun getAuthorizationUri(): Uri = Uri.parse(
         OAuthManager.getAuthorizeUrl()
                 + "?response_type=$OAUTH_RESPONSE_TYPE"
                 + "&client_id=$OAUTH_CLIENT_ID"
