@@ -120,22 +120,48 @@
     <string name="album_field_hint">Album</string>
     <string name="track_field_hint">Track</string>
     <string name="search_btn">SEARCH</string>
-    <string name="search_artist_title">Search Artist</string>
-    <string name="search_album_title">Search Album</string>
-    <string name="search_track_title">Search Track</string>
-    <string name="search_tag_title">Search Tag (genre)</string>
-    <string name="search_user_title">Search User</string>
-    <string name="search_barcode_title">Search Barcode</string>
     <string name="no_results">No results found</string>
     <string name="connection_error">Could not connect to server…</string>
     <string name="lastfm_connection_error">Could not connect to last.fm server…</string>
     <string name="connection_error_retry">Retry</string>
     <string name="search_track_artist_name">Artist: %1$s</string>
     <string name="search_track_album_name">Album: %1$s</string>
-    <string name="searchtype_user">User</string>
-    <string name="searchtype_tag">Tag (genre)</string>
-    <string name="searchtype_barcode">Barcode</string>
     <string name="search_hint">Search field</string>
+
+    <!-- search titles -->
+    <string name="search_artist_title">Search Artist</string>
+    <string name="search_album_title">Search Album</string>
+    <string name="search_track_title">Search Track</string>
+    <string name="search_tag_title">Search Tag (genre)</string>
+    <string name="search_user_title">Search User</string>
+    <string name="search_barcode_title">Search Barcode</string>
+    <string name="search_annotation_title">Search Annotation</string>
+    <string name="search_area_title">Search Area</string>
+    <string name="search_cdstub_title">Search CDStub</string>
+    <string name="search_event_title">Search Event</string>
+    <string name="search_instrument_title">Search Instrument</string>
+    <string name="search_label_title">Search Label</string>
+    <string name="search_place_title">Search Place</string>
+    <string name="search_release_title">Search Release</string>
+    <string name="search_series_title">Search Series</string>
+    <string name="search_url_title">Search Url</string>
+    <string name="search_work_title">Search Work</string>
+
+    <!-- search types -->
+    <string name="searchtype_annotation">Annotation</string>
+    <string name="searchtype_area">Area</string>
+    <string name="searchtype_barcode">Barcode</string>
+    <string name="searchtype_cdstub">CDStub</string>
+    <string name="searchtype_event">Event</string>
+    <string name="searchtype_instrument">Instrument</string>
+    <string name="searchtype_label">Label</string>
+    <string name="searchtype_place">Place</string>
+    <string name="searchtype_release">Release</string>
+    <string name="searchtype_series">Series</string>
+    <string name="searchtype_tag">Tag (genre)</string>
+    <string name="searchtype_url">Url</string>
+    <string name="searchtype_work">Work</string>
+    <string name="searchtype_user">User</string>
 
     <string name="error_connect_title">No Internet Connection</string>
     <string name="error_connect_message">Please check your internet connection and try again</string>

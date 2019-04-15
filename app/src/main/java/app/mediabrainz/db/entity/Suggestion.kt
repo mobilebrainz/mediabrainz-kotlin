@@ -6,6 +6,7 @@ import androidx.room.Ignore
 import app.mediabrainz.db.entity.SuggestionTable.TABLE_FIELD_FIELD
 import app.mediabrainz.db.entity.SuggestionTable.TABLE_FIELD_WORD
 import app.mediabrainz.db.entity.SuggestionTable.TABLE_NAME
+import app.mediabrainz.ui.R
 
 
 @Entity(tableName = TABLE_NAME, primaryKeys = [TABLE_FIELD_WORD, TABLE_FIELD_FIELD])
@@ -30,8 +31,21 @@ enum class SuggestionField(val field: String) {
     ARTIST("artist"),
     ALBUM("album"),
     TRACK("track"),
+    USER("user"),
+
+    ANNOTATION("annotation"),
+    AREA("area"),
+    BARCODE("barcode"),
+    CDSTUB("cdstub"),
+    EVENT("event"),
+    INSTRUMENT("instrument"),
+    LABEL("label"),
+    PLACE("place"),
+    RELEASE("release"),
+    SERIES("series"),
     TAG("tag"),
-    USER("user");
+    URL("url"),
+    WORK("work");
 
     override fun toString() = field
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Spinner
@@ -14,6 +15,7 @@ import app.mediabrainz.ui.R
 import app.mediabrainz.ui.adapter.SuggestionListAdapter
 import app.mediabrainz.ui.extension.hideKeyboard
 import app.mediabrainz.ui.extension.trim
+import java.util.*
 
 
 class SearchFragment : BaseFragment() {
@@ -52,27 +54,83 @@ class SearchFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setSubtitle("")
+        setupSearchTypeSpinner()
+    }
 
+    private fun setupSearchTypeSpinner() {
+        val types = ArrayList<CharSequence>()
+        for (searchType in SearchType.values()) {
+            types.add(resources.getText(searchType.res))
+        }
+        val typeAdapter = ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, types)
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        searchSpinner.adapter = typeAdapter
+
+        searchSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(adapterView: AdapterView<*>, view: View?, pos: Int, id: Long) {
+                context?.let {
+                    queryInputView.threshold = 2
+                    when (pos) {
+                        SearchType.ANNOTATION.ordinal ->
+                            queryInputView.setAdapter(SuggestionListAdapter(it, ANNOTATION))
+
+                        SearchType.AREA.ordinal ->
+                            queryInputView.setAdapter(SuggestionListAdapter(it, AREA))
+
+                        SearchType.BARCODE.ordinal ->
+                            queryInputView.setAdapter(SuggestionListAdapter(it, BARCODE))
+
+                        SearchType.CDSTUB.ordinal ->
+                            queryInputView.setAdapter(SuggestionListAdapter(it, CDSTUB))
+
+                        SearchType.EVENT.ordinal ->
+                            queryInputView.setAdapter(SuggestionListAdapter(it, EVENT))
+
+                        SearchType.INSTRUMENT.ordinal ->
+                            queryInputView.setAdapter(SuggestionListAdapter(it, INSTRUMENT))
+
+                        SearchType.LABEL.ordinal ->
+                            queryInputView.setAdapter(SuggestionListAdapter(it, LABEL))
+
+                        SearchType.PLACE.ordinal ->
+                            queryInputView.setAdapter(SuggestionListAdapter(it, PLACE))
+
+                        SearchType.SERIES.ordinal ->
+                            queryInputView.setAdapter(SuggestionListAdapter(it, SERIES))
+
+                        SearchType.TAG.ordinal ->
+                            queryInputView.setAdapter(SuggestionListAdapter(it, SuggestionField.TAG))
+
+                        SearchType.URL.ordinal ->
+                            queryInputView.setAdapter(SuggestionListAdapter(it, URL))
+
+                        SearchType.WORK.ordinal ->
+                            queryInputView.setAdapter(SuggestionListAdapter(it, WORK))
+
+                        SearchType.USER.ordinal ->
+                            queryInputView.setAdapter(SuggestionListAdapter(it, USER))
+
+                        else ->
+                            queryInputView.setAdapter(
+                                ArrayAdapter(it, R.layout.layout_dropdown_item, arrayOf<String>())
+                            )
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
     }
 
     private fun selectedSearch(): Boolean {
         if (isLoading || isError) return false
-        /*
-        val query = queryInputView.text.toString().trim { it <= ' ' }.toLowerCase()
+        val query = queryInputView.trim().toLowerCase()
         if (query.isNotBlank()) {
-            if (activity != null) {
-                UiUtils.hideKeyboard(activity)
-            }
-            if (genres.contains(query)) {
-                //ActivityFactory.startTagActivity(getContext(), query, true);
-            } else {
-                val action =
-                    SearchFragmentDirections.actionSearchFragmentToResultSearchFragment(null, null, null, query)
-                action.setSearchType(SearchType.values()[searchSpinner.selectedItemPosition].ordinal())
-                navigate(action)
-            }
+            activity?.hideKeyboard()
+            val searchType = SearchType.values()[searchSpinner.selectedItemPosition].ordinal
+            navigate("", "", "", query, searchType)
         }
-        */
         return false
     }
 
@@ -84,7 +142,7 @@ class SearchFragment : BaseFragment() {
         val track = trackFieldView.trim()
 
         if (track.isNotBlank() || album.isNotBlank() || artist.isNotBlank()) {
-            activity?.apply { hideKeyboard() }
+            activity?.hideKeyboard()
             navigate(artist, album, track)
         }
     }
@@ -92,7 +150,7 @@ class SearchFragment : BaseFragment() {
     private fun navigate(artist: String, album: String, track: String, query: String = "", searchType: Int = -1) {
         navigate(
             SearchFragmentDirections
-                .actionSearchFragmentToResultSearchFragment(artist, album, track, "", searchType)
+                .actionSearchFragmentToResultSearchFragment(artist, album, track, query, searchType)
         )
     }
 
@@ -100,13 +158,13 @@ class SearchFragment : BaseFragment() {
         super.onResume()
         context?.let {
             //if (MediaBrainzApp.getPreferences().isSearchSuggestionsEnabled()) {
-                artistFieldView.setAdapter(SuggestionListAdapter(it, ARTIST))
-                albumFieldView.setAdapter(SuggestionListAdapter(it, ALBUM))
-                trackFieldView.setAdapter(SuggestionListAdapter(it, TRACK))
+            artistFieldView.setAdapter(SuggestionListAdapter(it, ARTIST))
+            albumFieldView.setAdapter(SuggestionListAdapter(it, ALBUM))
+            trackFieldView.setAdapter(SuggestionListAdapter(it, TRACK))
             //} else {
-                //artistFieldView.setAdapter(ArrayAdapter(context, R.layout.layout_dropdown_item, arrayOf<String>()))
-                //albumFieldView.setAdapter(ArrayAdapter(context, R.layout.layout_dropdown_item, arrayOf<String>()))
-                //trackFieldView.setAdapter(ArrayAdapter(context, R.layout.layout_dropdown_item, arrayOf<String>()))
+            //artistFieldView.setAdapter(ArrayAdapter(context, R.layout.layout_dropdown_item, arrayOf<String>()))
+            //albumFieldView.setAdapter(ArrayAdapter(context, R.layout.layout_dropdown_item, arrayOf<String>()))
+            //trackFieldView.setAdapter(ArrayAdapter(context, R.layout.layout_dropdown_item, arrayOf<String>()))
             //}
         }
     }
