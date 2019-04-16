@@ -96,7 +96,7 @@ class ArtistBrowseResponse : BaseItemsResponse<ArtistResponse>(), BrowseResponse
 
 data class ArtistCreditResponse(
     @field:Json(name = "artist") val artist: ArtistResponse,
-    @field:Json(name = "name") val name: String,
+    @field:Json(name = "name") val name: String?,
     @field:Json(name = "joinphrase") val joinphrase: String?
 )
 
