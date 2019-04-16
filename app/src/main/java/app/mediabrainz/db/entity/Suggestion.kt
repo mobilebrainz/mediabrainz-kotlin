@@ -29,8 +29,8 @@ object SuggestionTable {
 
 enum class SuggestionField(val field: String) {
     ARTIST("artist"),
-    ALBUM("album"),
-    TRACK("track"),
+    RELEASE_GROUP("album"),
+    RECORDING("track"),
     USER("user"),
 
     ANNOTATION("annotation"),

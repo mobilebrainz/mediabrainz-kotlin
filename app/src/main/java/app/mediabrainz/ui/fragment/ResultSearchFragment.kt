@@ -4,20 +4,12 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import app.mediabrainz.db.entity.SuggestionField
 import app.mediabrainz.domain.OAuthManager.isError
-import app.mediabrainz.domain.model.*
-import app.mediabrainz.domain.model.Annotation
 import app.mediabrainz.ui.R
-import app.mediabrainz.ui.adapter.AlbumSearchAdapter
-import app.mediabrainz.ui.adapter.AreaSearchAdapter
-import app.mediabrainz.ui.adapter.ArtistSearchAdapter
-import app.mediabrainz.ui.adapter.RecordingSearchAdapter
+import app.mediabrainz.ui.adapter.*
 import app.mediabrainz.ui.fragment.SearchType.*
 import app.mediabrainz.ui.viewmodel.BaseDataSourceViewModel
 import app.mediabrainz.ui.viewmodel.dbRepository.SuggestionViewModel
-import app.mediabrainz.ui.viewmodel.searchDataSource.PagedAreaSearchViewModel
-import app.mediabrainz.ui.viewmodel.searchDataSource.PagedArtistSearchViewModel
-import app.mediabrainz.ui.viewmodel.searchDataSource.PagedRecordingSearchViewModel
-import app.mediabrainz.ui.viewmodel.searchDataSource.PagedReleaseGroupSearchViewModel
+import app.mediabrainz.ui.viewmodel.searchDataSource.*
 
 
 class ResultSearchFragment : BaseDataSourceFragment() {
@@ -49,7 +41,7 @@ class ResultSearchFragment : BaseDataSourceFragment() {
         }
     }
 
-    private fun search() : Boolean {
+    private fun search(): Boolean {
         var flag = true
         when {
             searchType != -1 -> {
@@ -57,9 +49,7 @@ class ResultSearchFragment : BaseDataSourceFragment() {
                 when (searchType) {
                     ANNOTATION.ordinal -> {
                         setTitle(R.string.search_annotation_title)
-                        //viewModel = initAnnotationSearch()
-                        //todo: for test
-                        flag = false
+                        viewModel = initAnnotationSearch()
                     }
                     AREA.ordinal -> {
                         setTitle(R.string.search_area_title)
@@ -73,63 +63,43 @@ class ResultSearchFragment : BaseDataSourceFragment() {
                     }
                     CDSTUB.ordinal -> {
                         setTitle(R.string.search_cdstub_title)
-                        //viewModel = initCdstubSearch()
-                        //todo: for test
-                        flag = false
+                        viewModel = initCDStubSearch()
                     }
                     EVENT.ordinal -> {
                         setTitle(R.string.search_event_title)
-                        //viewModel = initEventSearch()
-                        //todo: for test
-                        flag = false
+                        viewModel = initEventSearch()
                     }
                     INSTRUMENT.ordinal -> {
                         setTitle(R.string.search_instrument_title)
-                        //viewModel = initInstrumentSearch()
-                        //todo: for test
-                        flag = false
+                        viewModel = initInstrumentSearch()
                     }
                     LABEL.ordinal -> {
                         setTitle(R.string.search_label_title)
-                        //viewModel = initLabelSearch()
-                        //todo: for test
-                        flag = false
+                        viewModel = initLabelSearch()
                     }
                     PLACE.ordinal -> {
                         setTitle(R.string.search_place_title)
-                        //viewModel = initPlaceSearch()
-                        //todo: for test
-                        flag = false
+                        viewModel = initPlaceSearch()
                     }
                     RELEASE.ordinal -> {
                         setTitle(R.string.search_release_title)
-                        //viewModel = initReleaseSearch()
-                        //todo: for test
-                        flag = false
+                        viewModel = initReleaseSearch()
                     }
                     SERIES.ordinal -> {
                         setTitle(R.string.search_series_title)
-                        //viewModel = initSeriesSearch()
-                        //todo: for test
-                        flag = false
+                        viewModel = initSeriesSearch()
                     }
                     TAG.ordinal -> {
                         setTitle(R.string.search_tag_title)
-                        //viewModel = initTagSearch()
-                        //todo: for test
-                        flag = false
+                        viewModel = initTagSearch()
                     }
                     URL.ordinal -> {
                         setTitle(R.string.search_url_title)
-                        //viewModel = initUrlSearch()
-                        //todo: for test
-                        flag = false
+                        viewModel = initUrlSearch()
                     }
                     WORK.ordinal -> {
                         setTitle(R.string.search_work_title)
-                        //viewModel = initWorkSearch()
-                        //todo: for test
-                        flag = false
+                        viewModel = initWorkSearch()
                     }
                     USER.ordinal -> {
                         setTitle(R.string.search_user_title)
@@ -151,7 +121,7 @@ class ResultSearchFragment : BaseDataSourceFragment() {
                 // todo: do title without artistQuery?
                 setSubtitle(if (artistQuery.isNotBlank()) "$artistQuery / $albumQuery" else albumQuery)
                 //actionBar.setSubtitle(albumQuery);
-                viewModel = initAlbumSearch()
+                viewModel = initReleaseGroupSearch()
             }
             artistQuery.isNotBlank() -> {
                 setTitle(R.string.search_artist_title)
@@ -167,17 +137,41 @@ class ResultSearchFragment : BaseDataSourceFragment() {
         val vm = getViewModel(PagedRecordingSearchViewModel::class.java)
         vm.search(artistQuery, albumQuery, trackQuery)
         val adapter = RecordingSearchAdapter()
-        adapter.holderClickListener = { navigateToRecording(it) }
+        adapter.holderClickListener = {
+            if (!isLoading && !isError) {
+                suggestionViewModel.insert(it.name, SuggestionField.RECORDING)
+                /*
+                val artists = recording.getArtistCredits()
+                if (artists != null && !artists!!.isEmpty()) {
+                    resultSearchVM.insertSuggestion(artists!!.get(0).getArtist().name, SuggestionField.ARTIST)
+                }
+                navigate(action)
+                */
+            }
+        }
         vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
         recyclerView.adapter = adapter
         return vm
     }
 
-    private fun initAlbumSearch(): BaseDataSourceViewModel<*> {
+    private fun initReleaseGroupSearch(): BaseDataSourceViewModel<*> {
         val vm = getViewModel(PagedReleaseGroupSearchViewModel::class.java)
         vm.search(artistQuery, albumQuery)
-        val adapter = AlbumSearchAdapter()
-        adapter.holderClickListener = { navigateToAlbum(it) }
+        val adapter = ReleaseGroupSearchAdapter()
+        adapter.holderClickListener = {
+            if (!isLoading && !isError) {
+                suggestionViewModel.insert(it.name, SuggestionField.RELEASE_GROUP)
+                /*
+                val artists = releaseGroup.getArtistCredits()
+                if (artists != null && !artists!!.isEmpty()) {
+                    suggestionViewModel.insert(artists!!.get(0).getArtist().name, SuggestionField.ARTIST)
+                }
+                val type = ReleaseBrowseService.ReleaseBrowseEntityType.RELEASE_GROUP.ordinal()
+                val action = NavGraphDirections.actionGlobalReleasesFragment(type, releaseGroup.mbid, null)
+                navigate(action)
+                */
+            }
+        }
         vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
         recyclerView.adapter = adapter
         return vm
@@ -187,72 +181,48 @@ class ResultSearchFragment : BaseDataSourceFragment() {
         val vm = getViewModel(PagedArtistSearchViewModel::class.java)
         vm.search(artistQuery)
         val adapter = ArtistSearchAdapter()
-        adapter.holderClickListener = { navigateToArtist(it) }
+        adapter.holderClickListener = {
+            if (!isLoading && !isError) {
+                suggestionViewModel.insert(it.name, SuggestionField.ARTIST)
+                //val action = NavGraphDirections.actionGlobalArtistFragment(it.mbid)
+                //navigate(action)
+            }
+        }
         vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
         recyclerView.adapter = adapter
         return vm
-    }
-
-    private fun navigateToArtist(artist: Artist) {
-        if (!isLoading && !isError) {
-            suggestionViewModel.insert(artist.name, SuggestionField.ARTIST)
-            //val action = NavGraphDirections.actionGlobalArtistFragment(artist.mbid)
-            //navigate(action)
-        }
     }
 
     private fun initAreaSearch(): BaseDataSourceViewModel<*> {
         val vm = getViewModel(PagedAreaSearchViewModel::class.java)
         vm.search(searchQuery)
         val adapter = AreaSearchAdapter()
-        adapter.holderClickListener = { navigateToArea(it) }
+        adapter.holderClickListener = {
+            if (!isLoading && !isError) {
+                suggestionViewModel.insert(it.name, SuggestionField.AREA)
+                //val action = NavGraphDirections.
+                //navigate(action)
+            }
+        }
         vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
         recyclerView.adapter = adapter
         return vm
     }
 
-    private fun navigateToAlbum(releaseGroup: ReleaseGroup) {
-        if (!isLoading && !isError) {
-            suggestionViewModel.insert(releaseGroup.name, SuggestionField.ALBUM)
-            /*
-            val artists = releaseGroup.getArtistCredits()
-            if (artists != null && !artists!!.isEmpty()) {
-                suggestionViewModel.insert(artists!!.get(0).getArtist().name, SuggestionField.ARTIST)
+    private fun initAnnotationSearch(): BaseDataSourceViewModel<*> {
+        val vm = getViewModel(PagedAnnotationSearchViewModel::class.java)
+        vm.search(searchQuery)
+        val adapter = AnnotationSearchAdapter()
+        adapter.holderClickListener = {
+            if (!isLoading && !isError) {
+                suggestionViewModel.insert(it.name, SuggestionField.ANNOTATION)
+                //val action = NavGraphDirections.
+                //navigate(action)
             }
-            val type = ReleaseBrowseService.ReleaseBrowseEntityType.RELEASE_GROUP.ordinal()
-            val action = NavGraphDirections.actionGlobalReleasesFragment(type, releaseGroup.mbid, null)
-            navigate(action)
-            */
         }
-    }
-
-    private fun navigateToRecording(recording: Recording) {
-        if (!isLoading && !isError) {
-            suggestionViewModel.insert(recording.name, SuggestionField.TRACK)
-            /*
-            val artists = recording.getArtistCredits()
-            if (artists != null && !artists!!.isEmpty()) {
-                resultSearchVM.insertSuggestion(artists!!.get(0).getArtist().name, SuggestionField.ARTIST)
-            }
-            navigate(action)
-            */
-        }
-    }
-
-    private fun navigateToAnnotation(item: Annotation) {
-        if (!isLoading && !isError) {
-            suggestionViewModel.insert(item.name, SuggestionField.ANNOTATION)
-            //val action = NavGraphDirections.
-            //navigate(action)
-        }
-    }
-
-    private fun navigateToArea(item: Area) {
-        if (!isLoading && !isError) {
-            suggestionViewModel.insert(item.name, SuggestionField.AREA)
-            //val action = NavGraphDirections.
-            //navigate(action)
-        }
+        vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
+        recyclerView.adapter = adapter
+        return vm
     }
 
     /*
@@ -265,86 +235,164 @@ class ResultSearchFragment : BaseDataSourceFragment() {
     }
     */
 
-    private fun navigateToCDStub(item: CDStub) {
-        if (!isLoading && !isError) {
-            suggestionViewModel.insert(item.name, SuggestionField.CDSTUB)
-            //val action = NavGraphDirections.
-            //navigate(action)
+    private fun initCDStubSearch(): BaseDataSourceViewModel<*> {
+        val vm = getViewModel(PagedCDStubSearchViewModel::class.java)
+        vm.search(searchQuery)
+        val adapter = CDStubSearchAdapter()
+        adapter.holderClickListener = {
+            if (!isLoading && !isError) {
+                suggestionViewModel.insert(it.name, SuggestionField.CDSTUB)
+                //val action = NavGraphDirections.
+                //navigate(action)
+            }
         }
+        vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
+        recyclerView.adapter = adapter
+        return vm
     }
 
-    private fun navigateToEvent(item: Event) {
-        if (!isLoading && !isError) {
-            suggestionViewModel.insert(item.name, SuggestionField.EVENT)
-            //val action = NavGraphDirections.
-            //navigate(action)
+    private fun initEventSearch(): BaseDataSourceViewModel<*> {
+        val vm = getViewModel(PagedEventSearchViewModel::class.java)
+        vm.search(searchQuery)
+        val adapter = EventSearchAdapter()
+        adapter.holderClickListener = {
+            if (!isLoading && !isError) {
+                suggestionViewModel.insert(it.name, SuggestionField.EVENT)
+                //val action = NavGraphDirections.
+                //navigate(action)
+            }
         }
+        vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
+        recyclerView.adapter = adapter
+        return vm
     }
 
-    private fun navigateToInstrument(item: Instrument) {
-        if (!isLoading && !isError) {
-            suggestionViewModel.insert(item.name, SuggestionField.INSTRUMENT)
-            //val action = NavGraphDirections.
-            //navigate(action)
+    private fun initInstrumentSearch(): BaseDataSourceViewModel<*> {
+        val vm = getViewModel(PagedInstrumentSearchViewModel::class.java)
+        vm.search(searchQuery)
+        val adapter = InstrumentSearchAdapter()
+        adapter.holderClickListener = {
+            if (!isLoading && !isError) {
+                suggestionViewModel.insert(it.name, SuggestionField.INSTRUMENT)
+                //val action = NavGraphDirections.
+                //navigate(action)
+            }
         }
+        vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
+        recyclerView.adapter = adapter
+        return vm
     }
 
-    private fun navigateToLabel(item: Label) {
-        if (!isLoading && !isError) {
-            suggestionViewModel.insert(item.name, SuggestionField.LABEL)
-            //val action = NavGraphDirections.
-            //navigate(action)
+    private fun initLabelSearch(): BaseDataSourceViewModel<*> {
+        val vm = getViewModel(PagedLabelSearchViewModel::class.java)
+        vm.search(searchQuery)
+        val adapter = LabelSearchAdapter()
+        adapter.holderClickListener = {
+            if (!isLoading && !isError) {
+                suggestionViewModel.insert(it.name, SuggestionField.LABEL)
+                //val action = NavGraphDirections.
+                //navigate(action)
+            }
         }
+        vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
+        recyclerView.adapter = adapter
+        return vm
     }
 
-    private fun navigateToPlace(item: Place) {
-        if (!isLoading && !isError) {
-            suggestionViewModel.insert(item.name, SuggestionField.PLACE)
-            //val action = NavGraphDirections.
-            //navigate(action)
+    private fun initPlaceSearch(): BaseDataSourceViewModel<*> {
+        val vm = getViewModel(PagedPlaceSearchViewModel::class.java)
+        vm.search(searchQuery)
+        val adapter = PlaceSearchAdapter()
+        adapter.holderClickListener = {
+            if (!isLoading && !isError) {
+                suggestionViewModel.insert(it.name, SuggestionField.PLACE)
+                //val action = NavGraphDirections.
+                //navigate(action)
+            }
         }
+        vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
+        recyclerView.adapter = adapter
+        return vm
     }
 
-    private fun navigateToRelease(item: Release) {
-        if (!isLoading && !isError) {
-            suggestionViewModel.insert(item.name, SuggestionField.RELEASE)
-            //val action = NavGraphDirections.
-            //navigate(action)
+    private fun initReleaseSearch(): BaseDataSourceViewModel<*> {
+        val vm = getViewModel(PagedReleaseSearchViewModel::class.java)
+        vm.search(searchQuery)
+        val adapter = ReleaseSearchAdapter()
+        adapter.holderClickListener = {
+            if (!isLoading && !isError) {
+                suggestionViewModel.insert(it.name, SuggestionField.RELEASE)
+                //val action = NavGraphDirections.
+                //navigate(action)
+            }
         }
+        vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
+        recyclerView.adapter = adapter
+        return vm
     }
 
-    private fun navigateToSeries(item: Series) {
-        if (!isLoading && !isError) {
-            suggestionViewModel.insert(item.name, SuggestionField.SERIES)
-            //val action = NavGraphDirections.
-            //navigate(action)
+    private fun initSeriesSearch(): BaseDataSourceViewModel<*> {
+        val vm = getViewModel(PagedSeriesSearchViewModel::class.java)
+        vm.search(searchQuery)
+        val adapter = SeriesSearchAdapter()
+        adapter.holderClickListener = {
+            if (!isLoading && !isError) {
+                suggestionViewModel.insert(it.name, SuggestionField.SERIES)
+                //val action = NavGraphDirections.
+                //navigate(action)
+            }
         }
+        vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
+        recyclerView.adapter = adapter
+        return vm
     }
 
-    private fun navigateToTag(item: Tag) {
-        if (!isLoading && !isError) {
-            suggestionViewModel.insert(item.name, SuggestionField.TAG)
-            //val action = NavGraphDirections.
-            //navigate(action)
+    private fun initTagSearch(): BaseDataSourceViewModel<*> {
+        val vm = getViewModel(PagedTagSearchViewModel::class.java)
+        vm.search(searchQuery)
+        val adapter = TagSearchAdapter()
+        adapter.holderClickListener = {
+            if (!isLoading && !isError) {
+                suggestionViewModel.insert(it.name, SuggestionField.TAG)
+                //val action = NavGraphDirections.
+                //navigate(action)
+            }
         }
+        vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
+        recyclerView.adapter = adapter
+        return vm
     }
 
-    /*
-    private fun navigateToUrl(item: Url) {
-        if (!isLoading && !isError) {
-            suggestionViewModel.insert(item.name, SuggestionField.URL)
-            //val action = NavGraphDirections.
-            //navigate(action)
+    private fun initUrlSearch(): BaseDataSourceViewModel<*> {
+        val vm = getViewModel(PagedUrlSearchViewModel::class.java)
+        vm.search(searchQuery)
+        val adapter = UrlSearchAdapter()
+        adapter.holderClickListener = {
+            if (!isLoading && !isError) {
+                suggestionViewModel.insert(it.resource, SuggestionField.URL)
+                //val action = NavGraphDirections.
+                //navigate(action)
+            }
         }
+        vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
+        recyclerView.adapter = adapter
+        return vm
     }
-    */
 
-    private fun navigateToWork(item: Work) {
-        if (!isLoading && !isError) {
-            suggestionViewModel.insert(item.name, SuggestionField.WORK)
-            //val action = NavGraphDirections.
-            //navigate(action)
+    private fun initWorkSearch(): BaseDataSourceViewModel<*> {
+        val vm = getViewModel(PagedWorkSearchViewModel::class.java)
+        vm.search(searchQuery)
+        val adapter = WorkSearchAdapter()
+        adapter.holderClickListener = {
+            if (!isLoading && !isError) {
+                suggestionViewModel.insert(it.name, SuggestionField.WORK)
+                //val action = NavGraphDirections.
+                //navigate(action)
+            }
         }
+        vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
+        recyclerView.adapter = adapter
+        return vm
     }
 
 }

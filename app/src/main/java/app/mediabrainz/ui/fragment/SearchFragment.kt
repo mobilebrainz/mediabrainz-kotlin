@@ -108,8 +108,8 @@ class SearchFragment : BaseFragment() {
                         SearchType.WORK.ordinal ->
                             queryInputView.setAdapter(SuggestionListAdapter(it, WORK))
 
-                        SearchType.USER.ordinal ->
-                            queryInputView.setAdapter(SuggestionListAdapter(it, USER))
+                        //SearchType.USER.ordinal ->
+                        //    queryInputView.setAdapter(SuggestionListAdapter(it, USER))
 
                         else ->
                             queryInputView.setAdapter(
@@ -159,8 +159,8 @@ class SearchFragment : BaseFragment() {
         context?.let {
             //if (MediaBrainzApp.getPreferences().isSearchSuggestionsEnabled()) {
             artistFieldView.setAdapter(SuggestionListAdapter(it, ARTIST))
-            albumFieldView.setAdapter(SuggestionListAdapter(it, ALBUM))
-            trackFieldView.setAdapter(SuggestionListAdapter(it, TRACK))
+            albumFieldView.setAdapter(SuggestionListAdapter(it, RELEASE_GROUP))
+            trackFieldView.setAdapter(SuggestionListAdapter(it, RECORDING))
             //} else {
             //artistFieldView.setAdapter(ArrayAdapter(context, R.layout.layout_dropdown_item, arrayOf<String>()))
             //albumFieldView.setAdapter(ArrayAdapter(context, R.layout.layout_dropdown_item, arrayOf<String>()))
