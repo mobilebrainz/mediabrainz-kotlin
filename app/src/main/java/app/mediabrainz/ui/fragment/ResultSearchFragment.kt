@@ -157,7 +157,7 @@ class ResultSearchFragment : BaseDataSourceFragment() {
     private fun initReleaseGroupSearch(): BaseDataSourceViewModel<*> {
         val vm = getViewModel(PagedReleaseGroupSearchViewModel::class.java)
         vm.search(artistQuery, albumQuery)
-        val adapter = ReleaseGroupSearchAdapter()
+        val adapter = ReleaseGroupSearchAdapter(this)
         adapter.holderClickListener = {
             if (!isLoading && !isError) {
                 suggestionViewModel.insert(it.name, SuggestionField.RELEASE_GROUP)

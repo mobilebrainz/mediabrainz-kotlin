@@ -11,7 +11,7 @@ data class CoverArtImageResponse(
     @field:Json(name = "id") val id: String,
     @field:Json(name = "image") val image: String,
     @field:Json(name = "edit") val edit: Long?,
-    @field:Json(name = "types") val types: List<String>,
+    @field:Json(name = "types") val types: List<String>?,
     @field:Json(name = "front") val front: Boolean?,
     @field:Json(name = "back") val back: Boolean?,
     @field:Json(name = "approved") val approved: Boolean?,
@@ -20,11 +20,9 @@ data class CoverArtImageResponse(
 )
 
 data class ThumbnailsResponse(
-    //todo: don't compile?
-    //@field:Json(name = "250") val i250: String?,
-    //@field:Json(name = "500") val i500: String?,
-    //@field:Json(name = "1200") val i1200: String?,
-
+    @field:Json(name = "250") val i250: String?,
+    @field:Json(name = "500") val i500: String?,
+    @field:Json(name = "1200") val i1200: String?,
     @field:Json(name = "small") val small: String?,
     @field:Json(name = "large") val large: String?
 )

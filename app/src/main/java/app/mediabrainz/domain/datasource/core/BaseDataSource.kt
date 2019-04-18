@@ -90,13 +90,12 @@ abstract class BaseDataSource<IN, OUT, T : BaseItemsResponse<IN>> :
                 }
                 var httpError = true
                 val response = request(loadSize, offset).await()
-                when {
-                    response.code() == 200 -> {
-                        val body = response.body()
-                        if (body != null) {
+                when (response.code()) {
+                    200 -> {
+                        response.body()?.let {
                             httpError = false
                             retryAction = null
-                            val entities = PageMapper(map()).mapTo(body)
+                            val entities = PageMapper(map()).mapTo(it)
                             val nextOffset = entities.offset + loadSize
                             val nextPageKey = if (entities.count > nextOffset) nextOffset else null
 
@@ -108,11 +107,11 @@ abstract class BaseDataSource<IN, OUT, T : BaseItemsResponse<IN>> :
                             postSuccess()
                         }
                     }
-                    response.code() == 503 -> {
-                        httpError = false
-                        retryAction = null
+                    503 -> {
                         val retryAfter = response.headers().get("retry-after")
-                        if (retryAfter != null && retryAfter != "") {
+                        if (!retryAfter.isNullOrEmpty()) {
+                            httpError = false
+                            retryAction = null
                             delay(retryAfter.toLong() * 1000 + extraTimeout)
                             call(loadInitialCallback, loadCallback, loadSize, offset)
                         }
