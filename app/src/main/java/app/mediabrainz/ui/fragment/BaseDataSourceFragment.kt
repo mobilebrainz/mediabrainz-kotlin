@@ -36,8 +36,6 @@ abstract class BaseDataSourceFragment : BaseFragment() {
         recyclerView.isNestedScrollingEnabled = true
         //recyclerView.setItemViewCacheSize(10)
         recyclerView.setHasFixedSize(true)
-        //recyclerView.isDrawingCacheEnabled = true
-        //recyclerView.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_LOW
     }
 
     protected fun initSwipeToRefresh() {

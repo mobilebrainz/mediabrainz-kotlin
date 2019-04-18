@@ -9,17 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DiffUtil
-import app.mediabrainz.api.response.CoverArtSize.SMALL_SIZE
 import app.mediabrainz.domain.model.ReleaseGroup
 import app.mediabrainz.domain.model.getFrontCoverArtImage
 import app.mediabrainz.domain.repository.Resource.Status.*
 import app.mediabrainz.ui.R
-import app.mediabrainz.ui.extension.RequestListenerCallback
 import app.mediabrainz.ui.extension.StringMapper
 import app.mediabrainz.ui.extension.show
 import app.mediabrainz.ui.viewmodel.ReleaseGroupCoverArtViewModel
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.android.synthetic.main.release_group_search_layout.view.*
 
 
@@ -73,12 +69,10 @@ class ReleaseGroupSearchAdapter(private val fragment: Fragment) :
                         SUCCESS -> {
                             val coverArt = if (data != null) getFrontCoverArtImage(data) else ""
                             if (coverArt.isNotEmpty()) {
-                                coverartView.show(coverArt, { showImageProgress(false) })
-                            } else {
-                                showImageProgress(false)
-                            }
+                                coverartView.show(coverArt, { showImageProgress(false) }, { showError() })
+                            } else showError()
                         }
-                        ERROR -> showImageProgress(false)
+                        ERROR -> showError()
                     }
                 }
             })
@@ -88,6 +82,11 @@ class ReleaseGroupSearchAdapter(private val fragment: Fragment) :
         private fun showImageProgress(show: Boolean) {
             coverartView.visibility = if (show) INVISIBLE else VISIBLE
             coverartLoadingView.visibility = if (show) VISIBLE else INVISIBLE
+        }
+
+        private fun showError() {
+            showImageProgress(false)
+            coverartView.setImageResource(R.drawable.ic_album_24_dark)
         }
     }
 
