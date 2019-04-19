@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import app.mediabrainz.domain.model.Recording
 import app.mediabrainz.ui.R
+import app.mediabrainz.ui.extension.findViewById
 
 
 class RecordingSearchAdapter : BasePagedListAdapter<Recording>(DiffUtilCallBack()) {
@@ -18,7 +19,7 @@ class RecordingSearchAdapter : BasePagedListAdapter<Recording>(DiffUtilCallBack(
 
     class ViewHolder(itemView: View) : BaseViewHolder<Recording>(itemView) {
 
-        val nameView: TextView = itemView.findViewById(R.id.nameView)
+        val nameView: TextView = findViewById(R.id.nameView)
 
         override fun bindTo(item: Recording) {
             with(item) {

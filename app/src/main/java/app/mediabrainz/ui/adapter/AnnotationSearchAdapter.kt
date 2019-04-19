@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import app.mediabrainz.domain.model.Annotation
 import app.mediabrainz.ui.R
+import app.mediabrainz.ui.extension.findViewById
 
 
 class AnnotationSearchAdapter : BasePagedListAdapter<Annotation>(DiffUtilCallBack()) {
@@ -18,7 +19,7 @@ class AnnotationSearchAdapter : BasePagedListAdapter<Annotation>(DiffUtilCallBac
 
     class ViewHolder(itemView: View) : BaseViewHolder<Annotation>(itemView) {
 
-        val nameView: TextView = itemView.findViewById(R.id.nameView)
+        val nameView: TextView = findViewById(R.id.nameView)
 
         override fun bindTo(item: Annotation) {
             with(item) {

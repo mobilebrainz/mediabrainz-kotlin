@@ -4,20 +4,24 @@ import app.mediabrainz.api.response.ArtistCreditResponse
 import app.mediabrainz.api.response.ReleaseGroupResponse
 import app.mediabrainz.api.response.ReleaseResponse
 import app.mediabrainz.api.response.TagResponse
-import app.mediabrainz.domain.model.ArtistCredit
-import app.mediabrainz.domain.model.Release
-import app.mediabrainz.domain.model.ReleaseGroup
-import app.mediabrainz.domain.model.Tag
+import app.mediabrainz.domain.model.*
 
 
 class ReleaseGroupMapper {
 
     fun mapTo(response: ReleaseGroupResponse) = with(response) {
+        val sTypes: ArrayList<RGSecondaryType> = ArrayList()
+        secondaryTypes?.let {
+            for (secondaryType in secondaryTypes) {
+                RGSecondaryType.typeOf(secondaryType)?.let { sTypes.add(it) }
+            }
+        }
+
         val rg = ReleaseGroup(
             mbid,
             title,
-            primaryType ?: "",
-            secondaryTypes ?: ArrayList(),
+            RGPrimaryType.typeOf(primaryType),
+            sTypes,
             disambiguation ?: "",
             firstReleaseDate ?: "",
             PageMapper<ReleaseResponse, Release> { ReleaseMapper().mapTo(it) }.mapToList(releases),

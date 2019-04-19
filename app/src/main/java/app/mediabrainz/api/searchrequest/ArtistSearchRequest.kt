@@ -1,10 +1,7 @@
 package app.mediabrainz.api.searchrequest
 
-import app.mediabrainz.api.core.Config
-import app.mediabrainz.api.retrofit.SearchRequestService
-import app.mediabrainz.api.core.WebService
 import app.mediabrainz.api.response.ArtistSearchResponse
-import app.mediabrainz.api.response.ArtistType
+import app.mediabrainz.api.response.ArtistTypeResponse
 import app.mediabrainz.api.search.BaseSearchRequest
 import app.mediabrainz.api.search.LuceneOperator
 import app.mediabrainz.api.search.SearchFieldInterface
@@ -19,7 +16,7 @@ class ArtistSearchRequest :
 
     override fun search() = createJsonRetrofitService().searchArtist(buildParams())
 
-    fun addType(artistType: ArtistType): ArtistSearchRequest {
+    fun addType(artistType: ArtistTypeResponse): ArtistSearchRequest {
         add(ArtistSearchField.TYPE, artistType.type)
         return this
     }

@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import app.mediabrainz.domain.model.Tag
 import app.mediabrainz.ui.R
+import app.mediabrainz.ui.extension.findViewById
 
 
 class TagSearchAdapter : BasePagedListAdapter<Tag>(DiffUtilCallBack()) {
@@ -18,7 +19,7 @@ class TagSearchAdapter : BasePagedListAdapter<Tag>(DiffUtilCallBack()) {
 
     class ViewHolder(itemView: View) : BaseViewHolder<Tag>(itemView) {
 
-        val nameView: TextView = itemView.findViewById(R.id.nameView)
+        val nameView: TextView = findViewById(R.id.nameView)
 
         override fun bindTo(item: Tag) {
             with(item) {

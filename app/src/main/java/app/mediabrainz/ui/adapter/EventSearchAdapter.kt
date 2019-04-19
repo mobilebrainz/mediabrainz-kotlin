@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import app.mediabrainz.domain.model.Event
 import app.mediabrainz.ui.R
+import app.mediabrainz.ui.extension.findViewById
 
 
 class EventSearchAdapter : BasePagedListAdapter<Event>(DiffUtilCallBack()) {
@@ -18,7 +19,7 @@ class EventSearchAdapter : BasePagedListAdapter<Event>(DiffUtilCallBack()) {
 
     class ViewHolder(itemView: View) : BaseViewHolder<Event>(itemView) {
 
-        val nameView: TextView = itemView.findViewById(R.id.nameView)
+        val nameView: TextView = findViewById(R.id.nameView)
 
         override fun bindTo(item: Event) {
             with(item) {

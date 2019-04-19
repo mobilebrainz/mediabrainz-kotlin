@@ -100,7 +100,8 @@ data class ArtistCreditResponse(
     @field:Json(name = "joinphrase") val joinphrase: String?
 )
 
-enum class ArtistType(val type: String) {
+
+enum class ArtistTypeResponse(val type: String) {
     PERSON("Person"),
     GROUP("Group"),
     ORCHESTRA("Orchestra"),

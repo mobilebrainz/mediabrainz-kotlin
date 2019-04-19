@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import app.mediabrainz.domain.model.ReleaseGroup
 import app.mediabrainz.domain.repository.Resource.Status.*
 import app.mediabrainz.ui.R
+import app.mediabrainz.ui.extension.findViewById
 import app.mediabrainz.ui.viewmodel.ReleaseGroupCoverArtViewModel
 
 
@@ -31,7 +32,7 @@ class TestPagedAdapterWithCoverArts(private val fragment: Fragment) :
 
     class BrowseViewHolder(itemView: View, private val fragment: Fragment) : RecyclerView.ViewHolder(itemView) {
 
-        val nameView: TextView = itemView.findViewById(R.id.nameView)
+        val nameView: TextView = findViewById(R.id.nameView)
 
         fun bindTo(item: ReleaseGroup) {
             with(item) {

@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import app.mediabrainz.domain.model.Series
 import app.mediabrainz.ui.R
+import app.mediabrainz.ui.extension.findViewById
 
 
 class SeriesSearchAdapter : BasePagedListAdapter<Series>(DiffUtilCallBack()) {
@@ -18,7 +19,7 @@ class SeriesSearchAdapter : BasePagedListAdapter<Series>(DiffUtilCallBack()) {
 
     class ViewHolder(itemView: View) : BaseViewHolder<Series>(itemView) {
 
-        val nameView: TextView = itemView.findViewById(R.id.nameView)
+        val nameView: TextView = findViewById(R.id.nameView)
 
         override fun bindTo(item: Series) {
             with(item) {

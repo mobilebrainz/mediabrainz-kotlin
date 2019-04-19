@@ -17,7 +17,7 @@ import app.mediabrainz.domain.model.ReleaseGroup
 import app.mediabrainz.domain.model.getFrontCoverArtImage
 import app.mediabrainz.domain.repository.Resource.Status.*
 import app.mediabrainz.ui.R
-import app.mediabrainz.ui.extension.StringMapper
+import app.mediabrainz.ui.extension.findViewById
 import app.mediabrainz.ui.extension.show
 import app.mediabrainz.ui.viewmodel.ReleaseGroupCoverArtViewModel
 
@@ -39,12 +39,12 @@ class ReleaseGroupSearchAdapter(private val fragment: Fragment) :
             }
         }
 
-        private val coverartView: ImageView = itemView.findViewById(R.id.coverartView)
-        private val coverartLoadingView: ProgressBar = itemView.findViewById(R.id.coverartLoadingView)
-        private val releaseNameView: TextView = itemView.findViewById(R.id.releaseNameView)
-        private val releaseTypeView: TextView = itemView.findViewById(R.id.releaseTypeView)
-        private val artistNameView: TextView = itemView.findViewById(R.id.artistNameView)
-        private val tagsView: TextView = itemView.findViewById(R.id.tagsView)
+        private val coverartView: ImageView = findViewById(R.id.coverartView)
+        private val coverartLoadingView: ProgressBar = findViewById(R.id.coverartLoadingView)
+        private val releaseNameView: TextView = findViewById(R.id.releaseNameView)
+        private val releaseTypeView: TextView = findViewById(R.id.releaseTypeView)
+        private val artistNameView: TextView = findViewById(R.id.artistNameView)
+        private val tagsView: TextView = findViewById(R.id.tagsView)
 
         override fun bindTo(item: ReleaseGroup) {
             with(item) {
@@ -54,10 +54,10 @@ class ReleaseGroupSearchAdapter(private val fragment: Fragment) :
                     val artist = artistCredits[0].artist
                     artistNameView.text = artist.name
                     if (tags.isEmpty()) {
-                        //tagsView.text = artist.disambigution
+                        tagsView.text = artist.disambiguation
                     }
                 }
-                releaseTypeView.text = StringMapper.mapReleaseGroupOneType(item)
+                releaseTypeView.text = item.getFirstType()
                 initCoverArt(item.mbid)
             }
         }

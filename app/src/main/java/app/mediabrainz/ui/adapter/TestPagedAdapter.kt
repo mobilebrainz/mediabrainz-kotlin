@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import app.mediabrainz.domain.model.ReleaseGroup
 import app.mediabrainz.ui.R
+import app.mediabrainz.ui.extension.findViewById
 
 
 class TestPagedAdapter :
@@ -25,7 +26,7 @@ class TestPagedAdapter :
 
     class BrowseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val nameView: TextView = itemView.findViewById(R.id.nameView)
+        val nameView: TextView = findViewById(R.id.nameView)
 
         fun bindTo(item: ReleaseGroup) {
             with(item) {
