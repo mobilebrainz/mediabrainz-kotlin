@@ -3,10 +3,10 @@ package app.mediabrainz.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import app.mediabrainz.domain.model.Recording
 import app.mediabrainz.ui.R
-import kotlinx.android.synthetic.main.test_adapter_row.view.*
 
 
 class RecordingSearchAdapter : BasePagedListAdapter<Recording>(DiffUtilCallBack()) {
@@ -18,7 +18,7 @@ class RecordingSearchAdapter : BasePagedListAdapter<Recording>(DiffUtilCallBack(
 
     class ViewHolder(itemView: View) : BaseViewHolder<Recording>(itemView) {
 
-        val nameView = itemView.nameView
+        val nameView: TextView = itemView.findViewById(R.id.nameView)
 
         override fun bindTo(item: Recording) {
             with(item) {

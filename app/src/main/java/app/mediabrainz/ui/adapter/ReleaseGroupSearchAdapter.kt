@@ -5,10 +5,14 @@ import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DiffUtil
+import app.mediabrainz.api.core.getStringFromList
 import app.mediabrainz.domain.model.ReleaseGroup
 import app.mediabrainz.domain.model.getFrontCoverArtImage
 import app.mediabrainz.domain.repository.Resource.Status.*
@@ -16,7 +20,6 @@ import app.mediabrainz.ui.R
 import app.mediabrainz.ui.extension.StringMapper
 import app.mediabrainz.ui.extension.show
 import app.mediabrainz.ui.viewmodel.ReleaseGroupCoverArtViewModel
-import kotlinx.android.synthetic.main.release_group_search_layout.view.*
 
 
 class ReleaseGroupSearchAdapter(private val fragment: Fragment) :
@@ -36,26 +39,25 @@ class ReleaseGroupSearchAdapter(private val fragment: Fragment) :
             }
         }
 
-        private val coverartView = itemView.coverartView
-        private val coverartLoadingView = itemView.coverartLoadingView
-        private val releaseNameView = itemView.releaseNameView
-        private val releaseTypeView = itemView.releaseTypeView
-        private val artistNameView = itemView.artistNameView
-        private val tagsView = itemView.tagsView
+        private val coverartView: ImageView = itemView.findViewById(R.id.coverartView)
+        private val coverartLoadingView: ProgressBar = itemView.findViewById(R.id.coverartLoadingView)
+        private val releaseNameView: TextView = itemView.findViewById(R.id.releaseNameView)
+        private val releaseTypeView: TextView = itemView.findViewById(R.id.releaseTypeView)
+        private val artistNameView: TextView = itemView.findViewById(R.id.artistNameView)
+        private val tagsView: TextView = itemView.findViewById(R.id.tagsView)
 
         override fun bindTo(item: ReleaseGroup) {
             with(item) {
                 releaseNameView.text = name
+                tagsView.text = getStringFromList(tags, ", ")
                 if (artistCredits.isNotEmpty()) {
                     val artist = artistCredits[0].artist
                     artistNameView.text = artist.name
-                    //tagsView.text =
-                    //    if (tags.isNotEmpty()) getStringFromList(tags, ", ")
-                    //    else artist.disambigution
-
+                    if (tags.isEmpty()) {
+                        //tagsView.text = artist.disambigution
+                    }
                 }
                 releaseTypeView.text = StringMapper.mapReleaseGroupOneType(item)
-
                 initCoverArt(item.mbid)
             }
         }
@@ -67,7 +69,7 @@ class ReleaseGroupSearchAdapter(private val fragment: Fragment) :
                     when (status) {
                         LOADING -> showImageProgress(true)
                         SUCCESS -> {
-                            val coverArt = if (data != null) getFrontCoverArtImage(data) else ""
+                            val coverArt = if (data != null) getFrontCoverArtImage(data!!) else ""
                             if (coverArt.isNotEmpty()) {
                                 coverartView.show(coverArt, { showImageProgress(false) }, { showError() })
                             } else showError()

@@ -3,12 +3,12 @@ package app.mediabrainz.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import app.mediabrainz.domain.model.*
+import app.mediabrainz.domain.model.ReleaseGroup
 import app.mediabrainz.ui.R
-import kotlinx.android.synthetic.main.test_adapter_row.view.*
 
 
 class TestPagedAdapter :
@@ -25,7 +25,7 @@ class TestPagedAdapter :
 
     class BrowseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val nameView = itemView.nameView
+        val nameView: TextView = itemView.findViewById(R.id.nameView)
 
         fun bindTo(item: ReleaseGroup) {
             with(item) {

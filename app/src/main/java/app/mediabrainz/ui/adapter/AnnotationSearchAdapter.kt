@@ -3,11 +3,10 @@ package app.mediabrainz.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import app.mediabrainz.domain.model.Annotation
-import app.mediabrainz.domain.model.Area
 import app.mediabrainz.ui.R
-import kotlinx.android.synthetic.main.test_adapter_row.view.*
 
 
 class AnnotationSearchAdapter : BasePagedListAdapter<Annotation>(DiffUtilCallBack()) {
@@ -19,7 +18,7 @@ class AnnotationSearchAdapter : BasePagedListAdapter<Annotation>(DiffUtilCallBac
 
     class ViewHolder(itemView: View) : BaseViewHolder<Annotation>(itemView) {
 
-        val nameView = itemView.nameView
+        val nameView: TextView = itemView.findViewById(R.id.nameView)
 
         override fun bindTo(item: Annotation) {
             with(item) {

@@ -3,11 +3,10 @@ package app.mediabrainz.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
-import app.mediabrainz.domain.model.Area
 import app.mediabrainz.domain.model.CDStub
 import app.mediabrainz.ui.R
-import kotlinx.android.synthetic.main.test_adapter_row.view.*
 
 
 class CDStubSearchAdapter : BasePagedListAdapter<CDStub>(DiffUtilCallBack()) {
@@ -19,7 +18,7 @@ class CDStubSearchAdapter : BasePagedListAdapter<CDStub>(DiffUtilCallBack()) {
 
     class ViewHolder(itemView: View) : BaseViewHolder<CDStub>(itemView) {
 
-        val nameView = itemView.nameView
+        val nameView: TextView = itemView.findViewById(R.id.nameView)
 
         override fun bindTo(item: CDStub) {
             with(item) {

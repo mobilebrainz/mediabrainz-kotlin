@@ -1,14 +1,10 @@
 package app.mediabrainz.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
-import app.mediabrainz.domain.repository.Resource
 import app.mediabrainz.ui.R
-import app.mediabrainz.ui.viewmodel.lookupRepository.ReleaseGroupLookupViewModel
 
 
 class StartFragment : BaseFragment() {

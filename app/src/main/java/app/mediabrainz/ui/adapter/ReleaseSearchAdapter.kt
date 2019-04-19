@@ -3,10 +3,10 @@ package app.mediabrainz.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import app.mediabrainz.domain.model.Release
 import app.mediabrainz.ui.R
-import kotlinx.android.synthetic.main.test_adapter_row.view.*
 
 
 class ReleaseSearchAdapter : BasePagedListAdapter<Release>(DiffUtilCallBack()) {
@@ -18,7 +18,7 @@ class ReleaseSearchAdapter : BasePagedListAdapter<Release>(DiffUtilCallBack()) {
 
     class ViewHolder(itemView: View) : BaseViewHolder<Release>(itemView) {
 
-        val nameView = itemView.nameView
+        val nameView: TextView = itemView.findViewById(R.id.nameView)
 
         override fun bindTo(item: Release) {
             with(item) {

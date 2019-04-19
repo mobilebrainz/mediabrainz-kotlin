@@ -47,7 +47,7 @@ object OAuthManager {
 
     private fun refresh() {
         accessToken?.apply {
-            isError = false
+            isError = true
             refreshing = true
             scope.launch {
                 try {
@@ -59,18 +59,16 @@ object OAuthManager {
                             OAUTH_REFRESH_GRANT_TYPE
                         )
                     val response = deferred.await()
-                    val body = response.body()
-                    if (response.code() == 200 && body != null) {
-                        accessToken = AccessTokenMapper().mapTo(body)
-                    } else {
-                        isError = true
+                    response.body()?.let {
+                        if (response.code() == 200) {
+                            accessToken = AccessTokenMapper().mapTo(it)
+                            isError = false
+                        }
                     }
                     refreshing = false
                 } catch (e: HttpException) {
-                    isError = true
                     refreshing = false
                 } catch (e: Throwable) {
-                    isError = true
                     refreshing = false
                 }
             }

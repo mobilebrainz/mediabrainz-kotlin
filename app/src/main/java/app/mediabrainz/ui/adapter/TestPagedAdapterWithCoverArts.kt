@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -14,7 +15,6 @@ import app.mediabrainz.domain.model.ReleaseGroup
 import app.mediabrainz.domain.repository.Resource.Status.*
 import app.mediabrainz.ui.R
 import app.mediabrainz.ui.viewmodel.ReleaseGroupCoverArtViewModel
-import kotlinx.android.synthetic.main.test_adapter_row.view.*
 
 
 class TestPagedAdapterWithCoverArts(private val fragment: Fragment) :
@@ -31,10 +31,12 @@ class TestPagedAdapterWithCoverArts(private val fragment: Fragment) :
 
     class BrowseViewHolder(itemView: View, private val fragment: Fragment) : RecyclerView.ViewHolder(itemView) {
 
+        val nameView: TextView = itemView.findViewById(R.id.nameView)
+
         fun bindTo(item: ReleaseGroup) {
             with(item) {
                 initCoverArt(mbid)
-                itemView.nameView.text = name
+                nameView.text = name
             }
         }
 
