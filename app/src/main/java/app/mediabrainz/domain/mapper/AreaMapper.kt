@@ -6,9 +6,10 @@ import app.mediabrainz.domain.model.Area
 
 class AreaMapper {
 
-    fun mapTo(response: AreaResponse) = with(response) {
-        val area = Area(id, name)
-        area
-    }
+    fun mapTo(response: AreaResponse) =
+        with(response) {
+            val area = Area(id, name)
+            area
+        }
 
 }

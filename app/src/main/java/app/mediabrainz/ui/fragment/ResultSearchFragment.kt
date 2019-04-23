@@ -180,7 +180,7 @@ class ResultSearchFragment : BaseDataSourceFragment() {
     private fun initArtistSearch(): BaseDataSourceViewModel<*> {
         val vm = getViewModel(PagedArtistSearchViewModel::class.java)
         vm.search(artistQuery)
-        val adapter = ArtistSearchAdapter()
+        val adapter = ArtistSearchAdapter(this)
         adapter.holderClickListener = {
             if (!isLoading && !isError) {
                 suggestionViewModel.insert(it.name, SuggestionField.ARTIST)

@@ -1,8 +1,9 @@
-package app.mediabrainz.ui
+package app.mediabrainz.ui.preference
 
 import android.content.Context
 import app.mediabrainz.domain.OAuthManager
 import app.mediabrainz.domain.model.AccessToken
+import app.mediabrainz.ui.App
 
 
 object OAuthPreferences : OAuthManager.OAuthStorageInterface {
@@ -14,7 +15,11 @@ object OAuthPreferences : OAuthManager.OAuthStorageInterface {
     }
 
     override fun read() =
-        if (isNotEmpty()) AccessToken(getAccessToken(), getExpiresIn(), getRefreshToken())
+        if (isNotEmpty()) AccessToken(
+            getAccessToken(),
+            getExpiresIn(),
+            getRefreshToken()
+        )
         else null
 
     private const val OAUTH_PREFERENCES = "oauth_preferences"

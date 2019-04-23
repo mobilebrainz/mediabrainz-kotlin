@@ -18,6 +18,7 @@ import app.mediabrainz.domain.model.getFrontCoverArtImage
 import app.mediabrainz.domain.repository.Resource.Status.*
 import app.mediabrainz.ui.R
 import app.mediabrainz.ui.extension.findViewById
+import app.mediabrainz.ui.extension.setEmptyVisibility
 import app.mediabrainz.ui.extension.show
 import app.mediabrainz.ui.viewmodel.ReleaseGroupCoverArtViewModel
 
@@ -49,15 +50,22 @@ class ReleaseGroupSearchAdapter(private val fragment: Fragment) :
         override fun bindTo(item: ReleaseGroup) {
             with(item) {
                 releaseNameView.text = name
+                releaseTypeView.text = item.getFirstType()
                 tagsView.text = getStringFromList(tags, ", ")
+
                 if (artistCredits.isNotEmpty()) {
                     val artist = artistCredits[0].artist
                     artistNameView.text = artist.name
                     if (tags.isEmpty()) {
                         tagsView.text = artist.disambiguation
                     }
+                } else {
+                    artistNameView.text = ""
                 }
-                releaseTypeView.text = item.getFirstType()
+
+                artistNameView.setEmptyVisibility()
+                tagsView.setEmptyVisibility()
+
                 initCoverArt(item.mbid)
             }
         }

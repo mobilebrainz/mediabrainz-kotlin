@@ -41,7 +41,7 @@ class ReleaseGroup(
         else getPrimaryTypeString()
     }
 
-    fun getAllType(): String {
+    fun getAllTypes(): String {
         val prType = getPrimaryTypeString()
         val secType = getFirstSecondaryTypeString()
 

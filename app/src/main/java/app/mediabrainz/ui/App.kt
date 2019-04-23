@@ -2,6 +2,7 @@ package app.mediabrainz.ui
 
 import android.app.Application
 import app.mediabrainz.domain.OAuthManager
+import app.mediabrainz.ui.preference.OAuthPreferences
 
 
 class App : Application() {

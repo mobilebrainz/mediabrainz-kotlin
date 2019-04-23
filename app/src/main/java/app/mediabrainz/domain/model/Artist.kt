@@ -11,7 +11,17 @@ class Artist(
     val disambiguation: String = "",
     val type: ArtistType,
     val country: String = "",
-    val gender: String = ""
+    val gender: String = "",
+    val area: Area?,
+    val beginArea: Area?,
+    val endArea: Area?,
+    val lifeSpan: LifeSpan,
+    val rating: Rating?,
+    val userRating: Rating?,
+    val tags: List<Tag> = ArrayList(),
+    val userTags: List<Tag> = ArrayList(),
+    val genres: List<Tag> = ArrayList(),
+    val userGenres: List<Tag> = ArrayList()
 ) : Entity()
 
 
