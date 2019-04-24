@@ -55,19 +55,10 @@
                 android:name="mbid"
                 app:argType="string"
                 app:nullable="false"/>
-        <!--
         <action
                 android:id="@+id/action_artistFragment_to_artistReleasesFragment"
-                app:destination="@id/artistReleasesFragment">
-            <argument
-                    android:name="artistMbid"
-                    app:argType="string"
-                    app:nullable="false"/>
-            <argument
-                    android:name="artistName"
-                    app:argType="string"
-                    app:nullable="false"/>
-        </action>
+                app:destination="@id/artistReleasesFragment"/>
+        <!--
         <action
                 android:id="@+id/action_artistFragment_to_artistRelationsFragment"
                 app:destination="@id/artistRelationsFragment"/>
@@ -75,6 +66,21 @@
                 android:id="@+id/action_artistFragment_to_artistTagsPagerFragment"
                 app:destination="@id/artistTagsPagerFragment"/>
         -->
+    </fragment>
+
+    <fragment
+            android:id="@+id/artistReleasesFragment"
+            android:name="app.mediabrainz.ui.fragment.ArtistReleasesFragment"
+            android:label="@string/artist_releases_fragment_label"
+            tools:layout="@layout/fragment_pager_without_icons">
+        <argument
+                android:name="artistMbid"
+                app:argType="string"
+                app:nullable="false"/>
+        <argument
+                android:name="artistName"
+                app:argType="string"
+                app:nullable="false"/>
     </fragment>
 
     <!--
@@ -170,22 +176,6 @@
     <action
         android:id="@+id/action_global_wikiFragment"
         app:destination="@id/wikiFragment"/>
-
-
-    <fragment
-        android:id="@+id/artistReleasesFragment"
-        android:name="app.mediabrainz.fragment.ArtistReleasesFragment"
-        android:label="@string/artist_releases_fragment_label"
-        tools:layout="@layout/fragment_pager_without_icons">
-        <argument
-            android:name="artistMbid"
-            app:argType="string"
-            app:nullable="false"/>
-        <argument
-            android:name="artistName"
-            app:argType="string"
-            app:nullable="false"/>
-    </fragment>
 
     <fragment
         android:id="@+id/artistRelationsFragment"

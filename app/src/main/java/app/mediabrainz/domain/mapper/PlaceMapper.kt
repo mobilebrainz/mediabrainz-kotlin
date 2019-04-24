@@ -6,9 +6,9 @@ import app.mediabrainz.domain.model.Place
 
 class PlaceMapper {
 
-    fun mapTo(response: PlaceResponse) = with(response) {
-        val place = Place(mbid, name)
-        place
-    }
+    fun mapTo(response: PlaceResponse): Place =
+        with(response) {
+            Place(mbid, name)
+        }
 
 }

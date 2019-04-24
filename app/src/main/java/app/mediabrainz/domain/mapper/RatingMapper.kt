@@ -5,7 +5,7 @@ import app.mediabrainz.domain.model.Rating
 
 
 class RatingMapper {
-    fun mapTo(response: RatingResponse?) =
+    fun mapTo(response: RatingResponse?): Rating =
         if (response == null) {
             Rating()
         } else {

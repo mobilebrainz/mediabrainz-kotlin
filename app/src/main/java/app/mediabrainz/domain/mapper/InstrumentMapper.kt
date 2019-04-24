@@ -6,9 +6,9 @@ import app.mediabrainz.domain.model.Instrument
 
 class InstrumentMapper {
 
-    fun mapTo(response: InstrumentResponse) = with(response) {
-        val instrument = Instrument(id, name)
-        instrument
-    }
+    fun mapTo(response: InstrumentResponse): Instrument =
+        with(response) {
+            Instrument(id, name)
+        }
 
 }

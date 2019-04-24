@@ -6,13 +6,12 @@ import app.mediabrainz.domain.model.AccessToken
 
 class AccessTokenMapper {
 
-    fun mapTo(response: AccessTokenResponse) = with(response) {
-        val token = AccessToken(
-            accessToken,
-            expiresIn * 1000 + System.currentTimeMillis(),
-            refreshToken
-        )
-        token
-    }
-
+    fun mapTo(response: AccessTokenResponse): AccessToken =
+        with(response) {
+            AccessToken(
+                accessToken,
+                expiresIn * 1000 + System.currentTimeMillis(),
+                refreshToken
+            )
+        }
 }

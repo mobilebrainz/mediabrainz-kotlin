@@ -43,7 +43,7 @@ class ArtistFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun observeArtistLookupViewModel(vm: ArtistLookupViewModel) {
-        artistLookupViewModel.result.observe(this, Observer {
+        vm.result.observe(this, Observer {
             it?.apply {
                 isError = false
                 dismissErrorSnackbar()
@@ -62,7 +62,7 @@ class ArtistFragment : BaseFragment(), View.OnClickListener {
                         showErrorSnackbar(
                             R.string.connection_error,
                             R.string.connection_error_retry,
-                            View.OnClickListener { artistLookupViewModel.lookup() })
+                            View.OnClickListener { vm.lookup() })
                     }
                 }
             }
@@ -101,17 +101,15 @@ class ArtistFragment : BaseFragment(), View.OnClickListener {
         if (v != null && !swipeRefreshLayout.isRefreshing && !isError) {
             when (v.id) {
                 R.id.releasesItem -> {
-                    /*
-                    if (artist.getReleaseGroups() != null && !artist.getReleaseGroups().isEmpty()) {
-                        val releasesAction = ArtistFragmentDirections.actionArtistFragmentToArtistReleasesFragment(
-                            artist.getId(),
-                            artist.getName()
+                    if (artist.releaseGroups.isNotEmpty()) {
+                        navigate(
+                            ArtistFragmentDirections.actionArtistFragmentToArtistReleasesFragment(
+                                artist.mbid, artist.name
+                            )
                         )
-                        navigate(releasesAction)
                     } else {
                         showInfoSnackbar(R.string.no_results)
                     }
-                    */
                 }
                 R.id.relationsItem -> {
                     /*

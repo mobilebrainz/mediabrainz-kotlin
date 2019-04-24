@@ -6,9 +6,9 @@ import app.mediabrainz.domain.model.TokenInfo
 
 class TokenInfoMapper {
 
-    fun mapTo(response: TokenInfoResponse) = with(response) {
-        val tokenInfo = TokenInfo()
-        tokenInfo
-    }
+    fun mapTo(response: TokenInfoResponse): TokenInfo =
+        with(response) {
+            TokenInfo()
+        }
 
 }

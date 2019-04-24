@@ -6,9 +6,9 @@ import app.mediabrainz.domain.model.ISRC
 
 class ISRCMapper {
 
-    fun mapTo(response: ISRCResponse) = with(response) {
-        val isrc = ISRC(id)
-        isrc
-    }
+    fun mapTo(response: ISRCResponse): ISRC =
+        with(response) {
+            ISRC(id)
+        }
 
 }

@@ -6,9 +6,9 @@ import app.mediabrainz.domain.model.UserInfo
 
 class UserInfoMapper {
 
-    fun mapTo(response: UserInfoResponse) = with(response) {
-        val userInfo = UserInfo()
-        userInfo
-    }
+    fun mapTo(response: UserInfoResponse): UserInfo =
+        with(response) {
+            UserInfo()
+        }
 
 }

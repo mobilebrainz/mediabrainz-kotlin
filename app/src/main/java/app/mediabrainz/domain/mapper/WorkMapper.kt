@@ -6,9 +6,9 @@ import app.mediabrainz.domain.model.Work
 
 class WorkMapper {
 
-    fun mapTo(response: WorkResponse) = with(response) {
-        val work = Work(mbid, title)
-        work
-    }
+    fun mapTo(response: WorkResponse): Work =
+        with(response) {
+            Work(mbid, title)
+        }
 
 }

@@ -6,9 +6,9 @@ import app.mediabrainz.domain.model.Tag
 
 class TagMapper {
 
-    fun mapTo(response: TagResponse) = with(response) {
-        val tag = Tag(name)
-        tag
-    }
+    fun mapTo(response: TagResponse): Tag =
+        with(response) {
+            Tag(name)
+        }
 
 }

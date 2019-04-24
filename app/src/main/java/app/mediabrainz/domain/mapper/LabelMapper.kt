@@ -6,9 +6,9 @@ import app.mediabrainz.domain.model.Label
 
 class LabelMapper {
 
-    fun mapTo(response: LabelResponse) = with(response) {
-        val label = Label(mbid, name)
-        label
-    }
+    fun mapTo(response: LabelResponse): Label =
+        with(response) {
+            Label(mbid, name)
+        }
 
 }

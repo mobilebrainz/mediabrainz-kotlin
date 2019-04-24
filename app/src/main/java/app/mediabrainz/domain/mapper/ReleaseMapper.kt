@@ -6,9 +6,9 @@ import app.mediabrainz.domain.model.Release
 
 class ReleaseMapper {
 
-    fun mapTo(response: ReleaseResponse) = with(response) {
-        val release = Release(mbid, title)
-        release
-    }
+    fun mapTo(response: ReleaseResponse): Release =
+        with(response) {
+            Release(mbid, title)
+        }
 
 }

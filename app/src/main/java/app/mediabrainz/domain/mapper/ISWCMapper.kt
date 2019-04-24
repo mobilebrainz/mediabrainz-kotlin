@@ -6,9 +6,9 @@ import app.mediabrainz.domain.model.ISWC
 
 class ISWCMapper {
 
-    fun mapTo(response: ISWCResponse) = with(response) {
-        val iswc = ISWC(id)
-        iswc
-    }
+    fun mapTo(response: ISWCResponse): ISWC =
+        with(response) {
+            ISWC(id)
+        }
 
 }

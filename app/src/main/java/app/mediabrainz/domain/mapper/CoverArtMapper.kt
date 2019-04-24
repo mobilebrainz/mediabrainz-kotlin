@@ -9,17 +9,17 @@ import app.mediabrainz.domain.model.Thumbnails
 
 class CoverArtMapper {
 
-    fun mapTo(response: CoverArtImageResponse) = with(response) {
-        val coverArt = CoverArt(
-            id,
-            image,
-            types ?: ArrayList(),
-            front ?: false,
-            back ?: false,
-            mapThumbnails(thumbnails)
-        )
-        coverArt
-    }
+    fun mapTo(response: CoverArtImageResponse): CoverArt =
+        with(response) {
+            CoverArt(
+                id,
+                image,
+                types ?: ArrayList(),
+                front ?: false,
+                back ?: false,
+                mapThumbnails(thumbnails)
+            )
+        }
 
     fun mapToList(response: ReleaseCoverArtResponse): List<CoverArt> {
         val items = ArrayList<CoverArt>()

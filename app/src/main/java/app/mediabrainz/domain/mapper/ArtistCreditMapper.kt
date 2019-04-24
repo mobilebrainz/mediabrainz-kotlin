@@ -6,7 +6,7 @@ import app.mediabrainz.domain.model.ArtistCredit
 
 class ArtistCreditMapper {
 
-    fun mapTo(response: ArtistCreditResponse) =
+    fun mapTo(response: ArtistCreditResponse): ArtistCredit =
         with(response) {
             ArtistCredit(
                 ArtistMapper().mapTo(artist),

@@ -2,6 +2,7 @@ package app.mediabrainz.domain.model
 
 import androidx.annotation.StringRes
 import app.mediabrainz.api.response.ArtistTypeResponse
+import app.mediabrainz.api.response.ReleaseGroupResponse
 import app.mediabrainz.ui.R
 
 
@@ -21,7 +22,8 @@ class Artist(
     val tags: List<Tag> = ArrayList(),
     val userTags: List<Tag> = ArrayList(),
     val genres: List<Tag> = ArrayList(),
-    val userGenres: List<Tag> = ArrayList()
+    val userGenres: List<Tag> = ArrayList(),
+    val releaseGroups: List<ReleaseGroup> = ArrayList()
 ) : Entity()
 
 

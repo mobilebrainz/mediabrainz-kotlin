@@ -6,9 +6,9 @@ import app.mediabrainz.domain.model.Collection
 
 class CollectionMapper {
 
-    fun mapTo(response: CollectionResponse) = with(response) {
-        val collection = Collection(id, name)
-        collection
-    }
+    fun mapTo(response: CollectionResponse): Collection =
+        with(response) {
+            Collection(id, name)
+        }
 
 }

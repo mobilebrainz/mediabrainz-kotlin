@@ -6,9 +6,9 @@ import app.mediabrainz.domain.model.Recording
 
 class RecordingMapper {
 
-    fun mapTo(response: RecordingResponse) = with(response) {
-        val recording = Recording(mbid, title)
-        recording
-    }
+    fun mapTo(response: RecordingResponse): Recording =
+        with(response) {
+            Recording(mbid, title)
+        }
 
 }
