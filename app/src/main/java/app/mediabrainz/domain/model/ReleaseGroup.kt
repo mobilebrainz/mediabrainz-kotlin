@@ -53,8 +53,11 @@ class ReleaseGroup(
 
 }
 
+interface RGType {
+    val id: Int
+}
 
-enum class RGPrimaryType(val type: ReleaseGroupPrimaryType, @StringRes val id: Int) {
+enum class RGPrimaryType(val type: ReleaseGroupPrimaryType, @StringRes override val id: Int) : RGType {
 
     ALBUM(ReleaseGroupPrimaryType.ALBUM, R.string.rt_album),
     SINGLE(ReleaseGroupPrimaryType.SINGLE, R.string.rt_single),
@@ -76,7 +79,7 @@ enum class RGPrimaryType(val type: ReleaseGroupPrimaryType, @StringRes val id: I
     }
 }
 
-enum class RGSecondaryType(val type: ReleaseGroupSecondaryType, @StringRes val id: Int) {
+enum class RGSecondaryType(val type: ReleaseGroupSecondaryType, @StringRes override val id: Int) : RGType {
 
     COMPILATION(ReleaseGroupSecondaryType.COMPILATION, R.string.rt_compilation),
     SOUNDTRACK(ReleaseGroupSecondaryType.SOUNDTRACK, R.string.rt_soundtrack),

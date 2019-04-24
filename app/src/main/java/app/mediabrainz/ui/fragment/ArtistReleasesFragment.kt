@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
 import app.mediabrainz.ui.R
+import app.mediabrainz.ui.adapter.pager.ReleaseGroupsPagerAdapter
 import com.google.android.material.tabs.TabLayout
 
 
@@ -49,16 +50,12 @@ class ArtistReleasesFragment : BaseFragment() {
 
     }
 
-    protected fun show(artistMbid: String) {
-
-        /*
-        val pagerAdapter = ReleaseGroupsPagerAdapter(childFragmentManager, artistMbid)
+    private fun show(artistMbid: String) {
+        val pagerAdapter = ReleaseGroupsPagerAdapter(childFragmentManager, resources, artistMbid)
         pagerView.adapter = pagerAdapter
-        pagerView.offscreenPageLimit = pagerAdapter.getCount()
+        pagerView.offscreenPageLimit = pagerAdapter.count
         pagerView.currentItem = releaseTab
         tabsView.setupWithViewPager(pagerView)
         pagerAdapter.setupTabViews(tabsView)
-        */
     }
-
 }
