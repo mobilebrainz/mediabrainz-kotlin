@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import app.mediabrainz.db.entity.SuggestionField
 import app.mediabrainz.domain.OAuthManager.isError
+import app.mediabrainz.ui.NavGraphDirections
 import app.mediabrainz.ui.R
 import app.mediabrainz.ui.adapter.*
 import app.mediabrainz.ui.fragment.SearchType.*
@@ -184,8 +185,7 @@ class ResultSearchFragment : BaseDataSourceFragment() {
         adapter.holderClickListener = {
             if (!isLoading && !isError) {
                 suggestionViewModel.insert(it.name, SuggestionField.ARTIST)
-                //val action = NavGraphDirections.actionGlobalArtistFragment(it.mbid)
-                //navigate(action)
+                navigate(NavGraphDirections.actionGlobalArtistFragment(it.mbid))
             }
         }
         vm.pagedItems.observe(this, Observer { adapter.submitList(it) })

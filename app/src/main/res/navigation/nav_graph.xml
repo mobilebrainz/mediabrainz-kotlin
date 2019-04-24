@@ -6,10 +6,10 @@
             app:startDestination="@id/startFragment">
 
     <fragment
-        android:id="@+id/startFragment"
-        android:name="app.mediabrainz.ui.fragment.StartFragment"
-        android:label="@string/start_fragment_label"
-        tools:layout="@layout/start_fragment"/>
+            android:id="@+id/startFragment"
+            android:name="app.mediabrainz.ui.fragment.StartFragment"
+            android:label="@string/start_fragment_label"
+            tools:layout="@layout/start_fragment"/>
 
     <fragment
             android:id="@+id/searchFragment"
@@ -41,6 +41,40 @@
         <argument
                 android:name="searchType"
                 app:argType="integer"/>
+    </fragment>
+
+    <action android:id="@+id/action_global_artistFragment"
+            app:destination="@id/artistFragment"/>
+
+    <fragment
+            android:id="@+id/artistFragment"
+            android:name="app.mediabrainz.ui.fragment.ArtistFragment"
+            android:label="@string/artist_fragment_label"
+            tools:layout="@layout/artist_fragment">
+        <argument
+                android:name="mbid"
+                app:argType="string"
+                app:nullable="false"/>
+        <!--
+        <action
+                android:id="@+id/action_artistFragment_to_artistReleasesFragment"
+                app:destination="@id/artistReleasesFragment">
+            <argument
+                    android:name="artistMbid"
+                    app:argType="string"
+                    app:nullable="false"/>
+            <argument
+                    android:name="artistName"
+                    app:argType="string"
+                    app:nullable="false"/>
+        </action>
+        <action
+                android:id="@+id/action_artistFragment_to_artistRelationsFragment"
+                app:destination="@id/artistRelationsFragment"/>
+        <action
+                android:id="@+id/action_artistFragment_to_artistTagsPagerFragment"
+                app:destination="@id/artistTagsPagerFragment"/>
+        -->
     </fragment>
 
     <!--
@@ -137,43 +171,6 @@
         android:id="@+id/action_global_wikiFragment"
         app:destination="@id/wikiFragment"/>
 
-    <action
-        android:id="@+id/action_global_artistFragment"
-        app:destination="@id/artistFragment">
-        <argument
-            android:name="mbid"
-            app:argType="string"
-            app:nullable="false"/>
-    </action>
-
-    <fragment
-        android:id="@+id/artistFragment"
-        android:name="app.mediabrainz.fragment.ArtistFragment"
-        android:label="@string/artist_fragment_label"
-        tools:layout="@layout/artist_fragment">
-        <action
-            android:id="@+id/action_artistFragment_to_artistReleasesFragment"
-            app:destination="@id/artistReleasesFragment">
-            <argument
-                android:name="artistMbid"
-                app:argType="string"
-                app:nullable="false"/>
-            <argument
-                android:name="artistName"
-                app:argType="string"
-                app:nullable="false"/>
-        </action>
-        <action
-            android:id="@+id/action_artistFragment_to_artistRelationsFragment"
-            app:destination="@id/artistRelationsFragment"/>
-        <action
-            android:id="@+id/action_artistFragment_to_artistTagsPagerFragment"
-            app:destination="@id/artistTagsPagerFragment"/>
-        <argument
-            android:name="mbid"
-            app:argType="string"
-            app:nullable="false"/>
-    </fragment>
 
     <fragment
         android:id="@+id/artistReleasesFragment"
