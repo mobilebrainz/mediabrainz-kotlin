@@ -17,6 +17,7 @@ class TestMainActivity : AppCompatActivity() {
         setContentView(R.layout.test_activity_main)
 
 
+        /*
         val vm = ViewModelProviders.of(this).get(ReleaseGroupLookupViewModel::class.java)
         vm.result.observe(this, Observer {
             it?.apply {
@@ -32,6 +33,7 @@ class TestMainActivity : AppCompatActivity() {
             }
         })
         vm.authLookup("b00fbf7c-ebaf-3ec0-91d6-5eaad124d58f")
+        */
 
         /*
         //ArtistLookupViewModel:

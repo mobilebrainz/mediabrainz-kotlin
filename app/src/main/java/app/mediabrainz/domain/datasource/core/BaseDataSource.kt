@@ -81,6 +81,9 @@ abstract class BaseDataSource<IN, OUT, T : BaseItemsResponse<IN>> :
     ) {
         scope.launch {
             try {
+                retryAction = { call(loadInitialCallback, loadCallback, loadSize, offset) }
+                var httpError = true
+
                 if (isAuthorized()) {
                     OAuthManager.refreshToken()
                     if (OAuthManager.isError) {
@@ -88,7 +91,6 @@ abstract class BaseDataSource<IN, OUT, T : BaseItemsResponse<IN>> :
                         return@launch
                     }
                 }
-                var httpError = true
                 val response = request(loadSize, offset).await()
                 when (response.code()) {
                     200 -> {
@@ -116,16 +118,17 @@ abstract class BaseDataSource<IN, OUT, T : BaseItemsResponse<IN>> :
                             call(loadInitialCallback, loadCallback, loadSize, offset)
                         }
                     }
+                    401 -> {
+                        httpError = false
+                        postError(R.string.auth_access_error)
+                    }
                 }
                 if (httpError) {
-                    retryAction = { call(loadInitialCallback, loadCallback, loadSize, offset) }
                     postError(R.string.http_error)
                 }
             } catch (e: HttpException) {
-                retryAction = { call(loadInitialCallback, loadCallback, loadSize, offset) }
                 postError(R.string.http_error)
             } catch (e: Throwable) {
-                retryAction = { call(loadInitialCallback, loadCallback, loadSize, offset) }
                 postError(R.string.app_error)
             }
         }

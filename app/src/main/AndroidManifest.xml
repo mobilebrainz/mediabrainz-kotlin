@@ -27,7 +27,6 @@
                 android:label="@string/app_name"/>
 
 
-
         <!-- ////////////////////////// Test /////////////////////// -->
 
         <activity android:name="app.mediabrainz.ui.activity.TestMainActivity">
