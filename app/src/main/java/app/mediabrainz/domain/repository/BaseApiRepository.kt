@@ -1,6 +1,5 @@
 package app.mediabrainz.domain.repository
 
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import app.mediabrainz.domain.OAuthManager
@@ -48,10 +47,9 @@ abstract class BaseApiRepository {
                 }
                 var httpError = true
                 val response = deferred.invoke().await()
-                //Log.i("", "")
-                when(response.code()) {
+                when (response.code()) {
                     200 -> {
-                        response.body()?.let{
+                        response.body()?.let {
                             httpError = false
                             postSuccess(mutableLiveData, map.invoke(it))
                         }
@@ -63,6 +61,10 @@ abstract class BaseApiRepository {
                             delay(retryAfter.toLong() * 1000 + extraTimeout)
                             launch(mutableLiveData, deferred, map, authorize)
                         }
+                    }
+                    401 -> {
+                        httpError = false
+                        postError(mutableLiveData, R.string.auth_access_error)
                     }
                 }
                 if (httpError) {

@@ -66,7 +66,7 @@ abstract class BaseSearchRequest<R, P> : SearchRequestInterface<R, P>
         return map
     }
 
-    protected fun createJsonRetrofitService() = WebService
-        .createJsonRetrofitService(SearchRequestService::class.java, Config.WEB_SERVICE)
+    protected fun createJsonRetrofitService(webServiceUrl: String = Config.WEB_SERVICE) =
+        WebService.createJsonRetrofitService(SearchRequestService::class.java, webServiceUrl)
 
 }

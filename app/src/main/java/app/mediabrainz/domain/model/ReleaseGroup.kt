@@ -3,6 +3,7 @@ package app.mediabrainz.domain.model
 import androidx.annotation.StringRes
 import app.mediabrainz.api.response.ReleaseGroupPrimaryType
 import app.mediabrainz.api.response.ReleaseGroupSecondaryType
+import app.mediabrainz.api.response.ReleaseGroupType
 import app.mediabrainz.ui.R
 import app.mediabrainz.ui.extension.getString
 
@@ -54,10 +55,14 @@ class ReleaseGroup(
 }
 
 interface RGType {
+    val type: ReleaseGroupType
     val id: Int
 }
 
-enum class RGPrimaryType(val type: ReleaseGroupPrimaryType, @StringRes override val id: Int) : RGType {
+enum class RGPrimaryType(
+    override val type: ReleaseGroupPrimaryType,
+    @StringRes override val id: Int
+) : RGType {
 
     ALBUM(ReleaseGroupPrimaryType.ALBUM, R.string.rt_album),
     SINGLE(ReleaseGroupPrimaryType.SINGLE, R.string.rt_single),
@@ -79,7 +84,10 @@ enum class RGPrimaryType(val type: ReleaseGroupPrimaryType, @StringRes override 
     }
 }
 
-enum class RGSecondaryType(val type: ReleaseGroupSecondaryType, @StringRes override val id: Int) : RGType {
+enum class RGSecondaryType(
+    override val type: ReleaseGroupSecondaryType,
+    @StringRes override val id: Int
+) : RGType {
 
     COMPILATION(ReleaseGroupSecondaryType.COMPILATION, R.string.rt_compilation),
     SOUNDTRACK(ReleaseGroupSecondaryType.SOUNDTRACK, R.string.rt_soundtrack),

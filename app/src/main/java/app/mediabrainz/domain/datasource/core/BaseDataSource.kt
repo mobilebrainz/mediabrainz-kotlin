@@ -35,6 +35,8 @@ abstract class BaseDataSource<IN, OUT, T : BaseItemsResponse<IN>> :
 
     open fun isAuthorized() = false
 
+    open fun filter(items: List<OUT>): List<OUT> = items
+
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, OUT>) {
         isInitialLoad = true
         postLoading()
@@ -100,11 +102,12 @@ abstract class BaseDataSource<IN, OUT, T : BaseItemsResponse<IN>> :
                             val entities = PageMapper(map()).mapTo(it)
                             val nextOffset = entities.offset + loadSize
                             val nextPageKey = if (entities.count > nextOffset) nextOffset else null
+                            val filerItems = filter(entities.items)
 
                             if (loadInitialCallback != null) {
-                                loadInitialCallback.onResult(entities.items, null, nextPageKey)
+                                loadInitialCallback.onResult(filerItems, null, nextPageKey)
                             } else {
-                                loadCallback?.onResult(entities.items, nextPageKey)
+                                loadCallback?.onResult(filerItems, nextPageKey)
                             }
                             postSuccess()
                         }

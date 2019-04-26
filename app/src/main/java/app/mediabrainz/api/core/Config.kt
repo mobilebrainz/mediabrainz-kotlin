@@ -2,8 +2,7 @@ package app.mediabrainz.api.core
 
 
 object Config {
-    //const val WEB_SERVICE = "https://musicbrainz.org"
-    const val WEB_SERVICE = "https://test.musicbrainz.org"
+    const val WEB_SERVICE = "https://musicbrainz.org"
     const val TEST_WEB_SERVICE = "https://test.musicbrainz.org"
     const val WEB_SERVICE_PREFIX = "/ws/2/"
     const val FORMAT_JSON = "json"
