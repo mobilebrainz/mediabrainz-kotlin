@@ -18,6 +18,9 @@ import app.mediabrainz.ui.viewmodel.BaseDataSourceViewModel
 abstract class BaseDataSourceFragment : BaseFragment() {
 
     protected var isLoading: Boolean = false
+    protected var isError: Boolean = false
+    @StringRes
+    protected var errorMessageResId = -1
 
     protected lateinit var recyclerView: RecyclerView
     protected lateinit var swipeRefreshLayout: SwipeRefreshLayout
@@ -31,7 +34,7 @@ abstract class BaseDataSourceFragment : BaseFragment() {
         return view
     }
 
-    protected fun initRecycler() {
+    protected open fun initRecycler() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.isNestedScrollingEnabled = true
         //recyclerView.setItemViewCacheSize(10)
@@ -42,13 +45,19 @@ abstract class BaseDataSourceFragment : BaseFragment() {
         viewModel.getInitialLoadState().observe(this, Observer {
             isLoading = it.status == LOADING
             swipeRefreshLayout.isRefreshing = isLoading
-            showError(it.status == ERROR, it.messageResId)
+
+            isError = it.status == ERROR
+            errorMessageResId = it.messageResId
+            showError(true)
         })
 
         viewModel.getAfterLoadState().observe(this, Observer {
             isLoading = it.status == LOADING
             swipeRefreshLayout.isRefreshing = isLoading
-            showError(it.status == ERROR, it.messageResId)
+
+            isError = it.status == ERROR
+            errorMessageResId = it.messageResId
+            showError(true)
         })
 
         swipeRefreshLayout.setOnRefreshListener {
@@ -59,9 +68,9 @@ abstract class BaseDataSourceFragment : BaseFragment() {
         }
     }
 
-    protected fun showError(show: Boolean, @StringRes messageResId: Int) {
-        if (show) {
-            showErrorSnackbar(messageResId, R.string.retry, View.OnClickListener { retry() })
+    protected fun showError(isVisibleToUser: Boolean, listener: View.OnClickListener = View.OnClickListener { retry() }) {
+        if (isVisibleToUser && isError) {
+            showErrorSnackbar(errorMessageResId, R.string.retry, listener)
         } else {
             dismissErrorSnackbar()
         }

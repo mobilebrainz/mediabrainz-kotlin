@@ -1,27 +1,18 @@
 package app.mediabrainz.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import app.mediabrainz.domain.datasource.browseDataSource.ReleaseGroupsByArtistAndTypeDataSource
-import app.mediabrainz.domain.datasource.core.NetworkState
 import app.mediabrainz.domain.repository.Resource
-import app.mediabrainz.ui.R
 import app.mediabrainz.ui.adapter.TestPagedAdapter
 import app.mediabrainz.ui.adapter.pager.ReleaseGroupsPagerAdapter
-import app.mediabrainz.ui.core.fragment.LazyFragment
-import app.mediabrainz.ui.viewmodel.BaseDataSourceViewModel
 import app.mediabrainz.ui.viewmodel.browseDataSource.PagedReleaseGroupsByArtistAndTypeViewModel
 import app.mediabrainz.ui.viewmodel.searchRepository.ReleaseGroupSearchViewModel
 
 
-class ReleaseGroupsTabFragment : LazyFragment() {
+class ReleaseGroupsTabFragment : BaseLazyDataSourceFragment() {
 
     companion object {
         private const val RELEASES_TAB = "ReleaseGroupsTabFragment.RELEASES_TAB"
@@ -39,22 +30,8 @@ class ReleaseGroupsTabFragment : LazyFragment() {
 
     val TAG = "ReleaseGroupsTabF"
 
-    private var isError: Boolean = false
-    private var isLoading: Boolean = false
     private var artistMbid: String? = null
     private var releaseGroupType: ReleaseGroupsPagerAdapter.ReleaseTab? = null
-
-    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    private lateinit var recyclerView: RecyclerView
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val layout = inflate(R.layout.paged_recycler_fragment, container)
-
-        recyclerView = layout.findViewById(R.id.recyclerView)
-        swipeRefreshLayout = layout.findViewById(R.id.swipeRefreshLayout)
-
-        return layout
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -65,7 +42,13 @@ class ReleaseGroupsTabFragment : LazyFragment() {
         }
     }
 
-    //https://test.musicbrainz.org/ws/2/release-group?query=primarytype:album AND secondarytype:(-*) AND status:official AND arid:5182c1d9-c7d2-4dad-afa0-ccfeada921a8&fmt=json&limit=100&offset=0
+    override fun initRecycler() {
+        recyclerView.layoutManager = GridLayoutManager(context, 2)
+        recyclerView.isNestedScrollingEnabled = true
+        //recyclerView.setItemViewCacheSize(10)
+        recyclerView.setHasFixedSize(true)
+    }
+
     override fun lazyLoad() {
         val rgSearchViewModel: ReleaseGroupSearchViewModel = getViewModel(ReleaseGroupSearchViewModel::class.java)
         rgSearchViewModel.result.observe(this, Observer {
@@ -74,11 +57,13 @@ class ReleaseGroupsTabFragment : LazyFragment() {
                 swipeRefreshLayout.isRefreshing = isLoading
 
                 isError = status == Resource.Status.ERROR
-                showError(true)
+                errorMessageResId = messageResId
+                showError(true,
+                    View.OnClickListener { rgSearchViewModel.searchOfficialReleaseGroups() })
 
                 if (status == Resource.Status.SUCCESS) {
                     data?.apply {
-                        //Log.i("", "")
+                        //todo: filter(it)
                         initDataSource()
                     }
                 }
@@ -90,59 +75,22 @@ class ReleaseGroupsTabFragment : LazyFragment() {
 
     }
 
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        showError(isVisibleToUser)
-    }
-
-    private fun showError(isVisibleToUser: Boolean) {
-        if (isVisibleToUser && isError) {
-            showErrorSnackbar(R.string.connection_error, R.string.connection_error_retry, View.OnClickListener { lazyLoad() })
-        } else {
-            dismissErrorSnackbar()
-        }
-    }
-
-    ///////////////////////////
-
-    protected lateinit var viewModel: BaseDataSourceViewModel<*>
-
     private fun initDataSource() {
         val vm = getViewModel(PagedReleaseGroupsByArtistAndTypeViewModel::class.java)
         vm.browse(artistMbid!!, releaseGroupType!!.type, false)
         viewModel = vm
 
         val adapter = TestPagedAdapter()
-        vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
+        /*
+        adapter.holderClickListener = {
+            if (!isLoading && !isError) {
 
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.isNestedScrollingEnabled = true
-        //recyclerView.setItemViewCacheSize(10)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.adapter = adapter
-
-        initSwipeToRefresh()
-    }
-
-    protected fun initSwipeToRefresh() {
-        viewModel.getInitialLoadState().observe(this, Observer {
-            isLoading = it.status == NetworkState.Status.LOADING
-            swipeRefreshLayout.isRefreshing = isLoading
-            //showError(it.status == NetworkState.Status.ERROR, it.messageResId)
-        })
-
-        viewModel.getAfterLoadState().observe(this, Observer {
-            isLoading = it.status == NetworkState.Status.LOADING
-            swipeRefreshLayout.isRefreshing = isLoading
-            //showError(it.status == NetworkState.Status.ERROR, it.messageResId)
-        })
-
-        swipeRefreshLayout.setOnRefreshListener {
-            if (!isLoading) {
-                viewModel.refresh()
-                recyclerView.scrollToPosition(0)
             }
         }
+        */
+        vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
+        recyclerView.adapter = adapter
+        initSwipeToRefresh()
     }
 
 }
