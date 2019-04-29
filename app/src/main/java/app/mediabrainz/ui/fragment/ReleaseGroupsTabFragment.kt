@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import app.mediabrainz.domain.model.ReleaseGroup
 import app.mediabrainz.domain.repository.Resource
-import app.mediabrainz.ui.adapter.TestPagedAdapter
+import app.mediabrainz.ui.adapter.pager.ReleaseGroupAdapter
 import app.mediabrainz.ui.adapter.pager.ReleaseGroupsPagerAdapter
 import app.mediabrainz.ui.viewmodel.browseDataSource.PagedReleaseGroupsByArtistAndTypeViewModel
 import app.mediabrainz.ui.viewmodel.searchRepository.ReleaseGroupSearchViewModel
@@ -51,6 +50,8 @@ class ReleaseGroupsTabFragment : BaseLazyDataSourceFragment() {
     }
 
     override fun lazyLoad() {
+        viewModel = getViewModel(PagedReleaseGroupsByArtistAndTypeViewModel::class.java)
+
         //todo: make official
         var isOfficial = true
 
@@ -61,10 +62,11 @@ class ReleaseGroupsTabFragment : BaseLazyDataSourceFragment() {
                     isLoading = status == Resource.Status.LOADING
                     swipeRefreshLayout.isRefreshing = isLoading
 
+                    //todo: errorMessageResId, errorListener
                     isError = status == Resource.Status.ERROR
                     errorMessageResId = messageResId
-                    showError(true,
-                        View.OnClickListener { rgSearchViewModel.searchOfficialReleaseGroups() })
+                    errorListener = View.OnClickListener { rgSearchViewModel.searchOfficialReleaseGroups() }
+                    showError(true)
 
                     if (status == Resource.Status.SUCCESS) {
                         data?.apply {
@@ -82,18 +84,15 @@ class ReleaseGroupsTabFragment : BaseLazyDataSourceFragment() {
 
     private fun initDataSource(releaseGroups: List<ReleaseGroup>?) {
         if (artistMbid != null && releaseGroupType != null) {
-            val vm = getViewModel(PagedReleaseGroupsByArtistAndTypeViewModel::class.java)
+            val vm = viewModel as PagedReleaseGroupsByArtistAndTypeViewModel
             vm.browse(artistMbid!!, releaseGroupType!!.type, releaseGroups, false)
-            viewModel = vm
 
-            val adapter = TestPagedAdapter()
-            /*
-        adapter.holderClickListener = {
-            if (!isLoading && !isError) {
+            val adapter = ReleaseGroupAdapter(this)
+            adapter.holderClickListener = {
+                if (!isLoading && !isError) {
 
+                }
             }
-        }
-        */
             vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
             recyclerView.adapter = adapter
             initSwipeToRefresh()

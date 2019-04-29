@@ -13,6 +13,7 @@ abstract class BaseLazyDataSourceFragment : BaseDataSourceFragment() {
             lazyLoad()
             isLoaded = true
         }
+        //todo: errorMessageResId, errorListener
         showError(isVisibleToUser)
     }
 
