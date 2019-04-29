@@ -19,7 +19,6 @@ abstract class BaseDataSourceFragment : BaseFragment() {
 
     protected var isLoading: Boolean = false
     protected var isError: Boolean = false
-    //todo: errorMessageResId, errorListener
     @StringRes
     protected var errorMessageResId = -1
     protected var errorListener: View.OnClickListener = View.OnClickListener { retry() }
@@ -49,10 +48,7 @@ abstract class BaseDataSourceFragment : BaseFragment() {
             swipeRefreshLayout.isRefreshing = isLoading
 
             isError = it.status == ERROR
-            //todo: errorMessageResId, errorListener
-            errorMessageResId = it.messageResId
-            errorListener = View.OnClickListener { retry() }
-            showError(true)
+            showError(true, it.messageResId)
         })
 
         viewModel.getAfterLoadState().observe(this, Observer {
@@ -60,10 +56,7 @@ abstract class BaseDataSourceFragment : BaseFragment() {
             swipeRefreshLayout.isRefreshing = isLoading
 
             isError = it.status == ERROR
-            //todo: errorMessageResId, errorListener
-            errorMessageResId = it.messageResId
-            errorListener = View.OnClickListener { retry() }
-            showError(true)
+            showError(true, it.messageResId)
         })
 
         swipeRefreshLayout.setOnRefreshListener {
@@ -75,6 +68,18 @@ abstract class BaseDataSourceFragment : BaseFragment() {
     }
 
     protected fun showError(isVisibleToUser: Boolean) {
+        if (errorMessageResId != -1) {
+            showError(isVisibleToUser, errorMessageResId, errorListener)
+        }
+    }
+
+    protected fun showError(
+        isVisibleToUser: Boolean,
+        @StringRes messageResId: Int,
+        listener: View.OnClickListener = View.OnClickListener { retry() }
+    ) {
+        errorMessageResId = messageResId
+        errorListener = listener
         if (isVisibleToUser && isError) {
             showErrorSnackbar(errorMessageResId, R.string.retry, errorListener)
         } else {

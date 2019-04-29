@@ -50,8 +50,6 @@ class ReleaseGroupsTabFragment : BaseLazyDataSourceFragment() {
     }
 
     override fun lazyLoad() {
-        viewModel = getViewModel(PagedReleaseGroupsByArtistAndTypeViewModel::class.java)
-
         //todo: make official
         var isOfficial = true
 
@@ -62,11 +60,9 @@ class ReleaseGroupsTabFragment : BaseLazyDataSourceFragment() {
                     isLoading = status == Resource.Status.LOADING
                     swipeRefreshLayout.isRefreshing = isLoading
 
-                    //todo: errorMessageResId, errorListener
                     isError = status == Resource.Status.ERROR
-                    errorMessageResId = messageResId
-                    errorListener = View.OnClickListener { rgSearchViewModel.searchOfficialReleaseGroups() }
-                    showError(true)
+                    showError(true, messageResId,
+                        View.OnClickListener { rgSearchViewModel.searchOfficialReleaseGroups() })
 
                     if (status == Resource.Status.SUCCESS) {
                         data?.apply {
@@ -84,13 +80,14 @@ class ReleaseGroupsTabFragment : BaseLazyDataSourceFragment() {
 
     private fun initDataSource(releaseGroups: List<ReleaseGroup>?) {
         if (artistMbid != null && releaseGroupType != null) {
-            val vm = viewModel as PagedReleaseGroupsByArtistAndTypeViewModel
+            val vm = getViewModel(PagedReleaseGroupsByArtistAndTypeViewModel::class.java)
             vm.browse(artistMbid!!, releaseGroupType!!.type, releaseGroups, false)
+            viewModel = vm
 
             val adapter = ReleaseGroupAdapter(this)
             adapter.holderClickListener = {
                 if (!isLoading && !isError) {
-
+                    //navigate(NavGraphDirections.actionGlobalArtistFragment(it.mbid))
                 }
             }
             vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
