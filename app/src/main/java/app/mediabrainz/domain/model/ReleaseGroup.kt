@@ -52,6 +52,23 @@ class ReleaseGroup(
         else getString(R.string.rt_unknown)
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as ReleaseGroup
+
+        if (mbid != other.mbid) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return mbid.hashCode()
+    }
+
+    fun getYear() =
+        if (firstReleaseDate.isEmpty()) 0 else Integer.valueOf(firstReleaseDate.substring(0, 4))
 }
 
 interface RGType {

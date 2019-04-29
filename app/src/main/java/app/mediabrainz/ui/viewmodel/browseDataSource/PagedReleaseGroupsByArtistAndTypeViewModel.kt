@@ -11,8 +11,8 @@ class PagedReleaseGroupsByArtistAndTypeViewModel : BaseDataSourceViewModel<Relea
     private val initialLoadSize = 25
     private val loadSize = 25
 
-    fun browse(artistMbid: String, rgType: RGType, authorized: Boolean = false) {
-        val factory = ReleaseGroupsByArtistAndTypeDataSource.Factory(artistMbid, rgType, authorized)
+    fun browse(artistMbid: String, rgType: RGType, releaseGroups: List<ReleaseGroup>?, authorized: Boolean = false) {
+        val factory = ReleaseGroupsByArtistAndTypeDataSource.Factory(artistMbid, rgType, releaseGroups, authorized)
         val config = buildPagedListConfig(loadSize, initialLoadSize)
         initPagedItems(config, factory)
     }

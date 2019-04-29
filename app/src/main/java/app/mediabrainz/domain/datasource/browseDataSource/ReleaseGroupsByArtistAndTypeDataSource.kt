@@ -13,11 +13,13 @@ import app.mediabrainz.domain.datasource.core.DataSourceFactory
 import app.mediabrainz.domain.mapper.ReleaseGroupMapper
 import app.mediabrainz.domain.model.RGType
 import app.mediabrainz.domain.model.ReleaseGroup
+import java.util.*
 
 
 class ReleaseGroupsByArtistAndTypeDataSource(
     val artistMbid: String,
     val rgType: RGType,
+    val releaseGroups: List<ReleaseGroup>?,
     val authorized: Boolean
 ) : BaseDataSource<ReleaseGroupResponse, ReleaseGroup, ReleaseGroupBrowseResponse>() {
 
@@ -40,16 +42,31 @@ class ReleaseGroupsByArtistAndTypeDataSource(
     override fun isAuthorized() = authorized
 
     override fun filter(items: List<ReleaseGroup>): List<ReleaseGroup> {
-        return super.filter(items)
+        Collections.sort(items) { rg1, rg2 -> rg1.getYear() - rg2.getYear() }
+        return if (releaseGroups != null) {
+            val rgs = ArrayList<ReleaseGroup>()
+            for (item in items) {
+                if (releaseGroups.contains(item)) {
+                    rgs.add(item)
+                }
+            }
+            rgs
+        } else items
     }
 
-    class Factory(val mbid: String, val rgType: RGType, val authorized: Boolean = false) :
+    class Factory(
+        val mbid: String,
+        val rgType: RGType,
+        val releaseGroups: List<ReleaseGroup>?,
+        val authorized: Boolean = false
+    ) :
         DataSourceFactory<ReleaseGroup>() {
 
         override fun create(): PageKeyedDataSource<Int, ReleaseGroup> {
             val dataSource = ReleaseGroupsByArtistAndTypeDataSource(
                 mbid,
                 rgType,
+                releaseGroups,
                 authorized
             )
             setDataSource(dataSource)

@@ -5,6 +5,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import app.mediabrainz.domain.model.ReleaseGroup
 import app.mediabrainz.domain.repository.Resource
 import app.mediabrainz.ui.adapter.TestPagedAdapter
 import app.mediabrainz.ui.adapter.pager.ReleaseGroupsPagerAdapter
@@ -50,47 +51,53 @@ class ReleaseGroupsTabFragment : BaseLazyDataSourceFragment() {
     }
 
     override fun lazyLoad() {
-        val rgSearchViewModel: ReleaseGroupSearchViewModel = getViewModel(ReleaseGroupSearchViewModel::class.java)
-        rgSearchViewModel.result.observe(this, Observer {
-            it?.apply {
-                isLoading = status == Resource.Status.LOADING
-                swipeRefreshLayout.isRefreshing = isLoading
+        //todo: make official
+        var isOfficial = true
 
-                isError = status == Resource.Status.ERROR
-                errorMessageResId = messageResId
-                showError(true,
-                    View.OnClickListener { rgSearchViewModel.searchOfficialReleaseGroups() })
+        if (isOfficial) {
+            val rgSearchViewModel: ReleaseGroupSearchViewModel = getViewModel(ReleaseGroupSearchViewModel::class.java)
+            rgSearchViewModel.result.observe(this, Observer {
+                it?.apply {
+                    isLoading = status == Resource.Status.LOADING
+                    swipeRefreshLayout.isRefreshing = isLoading
 
-                if (status == Resource.Status.SUCCESS) {
-                    data?.apply {
-                        //todo: filter(it)
-                        initDataSource()
+                    isError = status == Resource.Status.ERROR
+                    errorMessageResId = messageResId
+                    showError(true,
+                        View.OnClickListener { rgSearchViewModel.searchOfficialReleaseGroups() })
+
+                    if (status == Resource.Status.SUCCESS) {
+                        data?.apply {
+                            initDataSource(this)
+                        }
                     }
                 }
+            })
+            if (artistMbid != null && releaseGroupType != null) {
+                rgSearchViewModel.searchOfficialReleaseGroups(artistMbid!!, releaseGroupType!!.type, 0, 100)
             }
-        })
-        if (artistMbid != null && releaseGroupType != null) {
-            rgSearchViewModel.searchOfficialReleaseGroups(artistMbid!!, releaseGroupType!!.type, 0, 100)
-        }
+        } else initDataSource(null)
 
     }
 
-    private fun initDataSource() {
-        val vm = getViewModel(PagedReleaseGroupsByArtistAndTypeViewModel::class.java)
-        vm.browse(artistMbid!!, releaseGroupType!!.type, false)
-        viewModel = vm
+    private fun initDataSource(releaseGroups: List<ReleaseGroup>?) {
+        if (artistMbid != null && releaseGroupType != null) {
+            val vm = getViewModel(PagedReleaseGroupsByArtistAndTypeViewModel::class.java)
+            vm.browse(artistMbid!!, releaseGroupType!!.type, releaseGroups, false)
+            viewModel = vm
 
-        val adapter = TestPagedAdapter()
-        /*
+            val adapter = TestPagedAdapter()
+            /*
         adapter.holderClickListener = {
             if (!isLoading && !isError) {
 
             }
         }
         */
-        vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
-        recyclerView.adapter = adapter
-        initSwipeToRefresh()
+            vm.pagedItems.observe(this, Observer { adapter.submitList(it) })
+            recyclerView.adapter = adapter
+            initSwipeToRefresh()
+        }
     }
 
 }
