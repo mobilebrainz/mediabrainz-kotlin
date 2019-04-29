@@ -39,7 +39,7 @@ object GlobalPreferences {
     }
 
     fun isReleaseGroupOfficial() =
-        getPreferences().getBoolean(RELEASE_GROUP_OFFICIAL, false)
+        getPreferences().getBoolean(RELEASE_GROUP_OFFICIAL, true)
 
     fun setPropagateArtistTags(enabled: Boolean) {
         getPreferences().edit().putBoolean(PROPAGATE_ARTIST_TAGS, enabled).apply()

@@ -8,6 +8,7 @@ import app.mediabrainz.domain.model.ReleaseGroup
 import app.mediabrainz.domain.repository.Resource
 import app.mediabrainz.ui.adapter.pager.ReleaseGroupAdapter
 import app.mediabrainz.ui.adapter.pager.ReleaseGroupsPagerAdapter
+import app.mediabrainz.ui.preference.GlobalPreferences
 import app.mediabrainz.ui.preference.OAuthPreferences
 import app.mediabrainz.ui.viewmodel.browseDataSource.PagedReleaseGroupsByArtistAndTypeViewModel
 import app.mediabrainz.ui.viewmodel.searchRepository.ReleaseGroupSearchViewModel
@@ -51,10 +52,7 @@ class ReleaseGroupsTabFragment : BaseLazyDataSourceFragment() {
     }
 
     override fun lazyLoad() {
-        //todo: make official
-        var isOfficial = true
-
-        if (isOfficial) {
+        if (GlobalPreferences.isReleaseGroupOfficial()) {
             val rgSearchViewModel: ReleaseGroupSearchViewModel = getViewModel(ReleaseGroupSearchViewModel::class.java)
             rgSearchViewModel.result.observe(this, Observer {
                 it?.apply {

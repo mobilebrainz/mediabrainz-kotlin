@@ -15,6 +15,7 @@ import app.mediabrainz.ui.R
 import app.mediabrainz.ui.adapter.SuggestionListAdapter
 import app.mediabrainz.ui.extension.hideKeyboard
 import app.mediabrainz.ui.extension.trim
+import app.mediabrainz.ui.preference.GlobalPreferences
 import java.util.*
 
 
@@ -157,15 +158,15 @@ class SearchFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         context?.let {
-            //if (MediaBrainzApp.getPreferences().isSearchSuggestionsEnabled()) {
-            artistFieldView.setAdapter(SuggestionListAdapter(it, ARTIST))
-            albumFieldView.setAdapter(SuggestionListAdapter(it, RELEASE_GROUP))
-            trackFieldView.setAdapter(SuggestionListAdapter(it, RECORDING))
-            //} else {
-            //artistFieldView.setAdapter(ArrayAdapter(context, R.layout.layout_dropdown_item, arrayOf<String>()))
-            //albumFieldView.setAdapter(ArrayAdapter(context, R.layout.layout_dropdown_item, arrayOf<String>()))
-            //trackFieldView.setAdapter(ArrayAdapter(context, R.layout.layout_dropdown_item, arrayOf<String>()))
-            //}
+            if (GlobalPreferences.isSearchSuggestionsEnabled()) {
+                artistFieldView.setAdapter(SuggestionListAdapter(it, ARTIST))
+                albumFieldView.setAdapter(SuggestionListAdapter(it, RELEASE_GROUP))
+                trackFieldView.setAdapter(SuggestionListAdapter(it, RECORDING))
+            } else {
+                artistFieldView.setAdapter(ArrayAdapter(it, R.layout.layout_dropdown_item, arrayOf<String>()))
+                albumFieldView.setAdapter(ArrayAdapter(it, R.layout.layout_dropdown_item, arrayOf<String>()))
+                trackFieldView.setAdapter(ArrayAdapter(it, R.layout.layout_dropdown_item, arrayOf<String>()))
+            }
         }
     }
 
