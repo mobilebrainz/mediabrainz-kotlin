@@ -17,6 +17,7 @@ import app.mediabrainz.ui.R
 import app.mediabrainz.ui.adapter.BasePagedListAdapter
 import app.mediabrainz.ui.extension.findViewById
 import app.mediabrainz.ui.extension.show
+import app.mediabrainz.ui.preference.GlobalPreferences
 import app.mediabrainz.ui.viewmodel.ReleaseGroupCoverArtViewModel
 
 
@@ -57,7 +58,11 @@ class ReleaseGroupAdapter(private val fragment: Fragment) :
                 setAllRating(item)
                 setUserRating(item)
 
-                initCoverArt(item.mbid)
+                if (GlobalPreferences.isLoadImagesEnabled()) {
+                    initCoverArt(item.mbid)
+                } else {
+                    releaseImageView.visibility = VISIBLE
+                }
             }
         }
 
