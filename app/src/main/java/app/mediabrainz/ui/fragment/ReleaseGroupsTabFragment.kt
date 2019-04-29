@@ -8,6 +8,7 @@ import app.mediabrainz.domain.model.ReleaseGroup
 import app.mediabrainz.domain.repository.Resource
 import app.mediabrainz.ui.adapter.pager.ReleaseGroupAdapter
 import app.mediabrainz.ui.adapter.pager.ReleaseGroupsPagerAdapter
+import app.mediabrainz.ui.preference.OAuthPreferences
 import app.mediabrainz.ui.viewmodel.browseDataSource.PagedReleaseGroupsByArtistAndTypeViewModel
 import app.mediabrainz.ui.viewmodel.searchRepository.ReleaseGroupSearchViewModel
 
@@ -81,7 +82,7 @@ class ReleaseGroupsTabFragment : BaseLazyDataSourceFragment() {
     private fun initDataSource(releaseGroups: List<ReleaseGroup>?) {
         if (artistMbid != null && releaseGroupType != null) {
             val vm = getViewModel(PagedReleaseGroupsByArtistAndTypeViewModel::class.java)
-            vm.browse(artistMbid!!, releaseGroupType!!.type, releaseGroups, false)
+            vm.browse(artistMbid!!, releaseGroupType!!.type, releaseGroups, OAuthPreferences.isNotEmpty())
             viewModel = vm
 
             val adapter = ReleaseGroupAdapter(this)
