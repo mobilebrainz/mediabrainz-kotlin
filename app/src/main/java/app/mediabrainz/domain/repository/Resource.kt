@@ -4,13 +4,13 @@ import androidx.annotation.StringRes
 
 
 class Resource<T> private constructor(
-    val status: Status,
+    var status: Status,
     val data: T?,
     @StringRes val messageResId: Int = -1
 ) {
 
     enum class Status {
-        SUCCESS, ERROR, LOADING
+        SUCCESS, ERROR, LOADING, INVALID
     }
 
     companion object {

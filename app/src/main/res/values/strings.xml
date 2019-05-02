@@ -29,6 +29,7 @@
     <!-- labels of menu actions -->
     <string name="scan_barcode_action_label">Scan barcode</string>
     <string name="feedback_action_label">Feedback</string>
+    <string name="login_action_label">Log In</string>
     <string name="logout_action_label">Log Out</string>
 
     <!-- menu items -->

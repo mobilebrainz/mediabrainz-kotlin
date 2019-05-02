@@ -11,11 +11,13 @@ import app.mediabrainz.domain.OAuthManager.OAUTH_REDIRECT_URI
 import app.mediabrainz.domain.OAuthManager.OAUTH_REFRESH_GRANT_TYPE
 import app.mediabrainz.domain.OAuthManager.OAUTH_RESPONSE_TYPE
 import app.mediabrainz.domain.OAuthManager.OAUTH_SCOPE
+import app.mediabrainz.domain.OAuthManager.accessToken
 import app.mediabrainz.domain.model.AccessToken
 import app.mediabrainz.domain.model.TokenInfo
 import app.mediabrainz.domain.model.UserInfo
 import app.mediabrainz.domain.repository.OAuthRepository
 import app.mediabrainz.domain.repository.Resource
+import app.mediabrainz.ui.core.viewmodel.SingleLiveEvent
 
 
 class OAuthViewModel : ViewModel() {

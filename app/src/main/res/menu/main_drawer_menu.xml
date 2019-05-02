@@ -22,6 +22,7 @@
                     android:icon="@drawable/ic_login_24"
                     android:orderInCategory="3"
                     android:title="@string/login_fragment_label"/>
+
                 <item
                     android:id="@+id/aboutFragment"
                     android:icon="@drawable/ic_info_24"
@@ -37,10 +38,11 @@
         </menu>
     </item>
 
-    <!--
+
     <item android:title="@string/drawer_item_actions">
         <menu>
             <group android:checkableBehavior="single">
+                <!--
                 <item
                     android:id="@+id/scanBarcodeAction"
                     android:icon="@drawable/ic_barcode_scan_24"
@@ -49,6 +51,12 @@
                     android:id="@+id/feedbackAction"
                     android:icon="@drawable/ic_email_24"
                     android:title="@string/feedback_action_label"/>
+                -->
+                <item
+                        android:id="@+id/loginAction"
+                        android:icon="@drawable/ic_login_24"
+                        android:title="@string/login_action_label"/>
+
                 <item
                     android:id="@+id/logoutAction"
                     android:icon="@drawable/ic_logout_24"
@@ -56,6 +64,6 @@
             </group>
         </menu>
     </item>
-    -->
+
 
 </menu>
