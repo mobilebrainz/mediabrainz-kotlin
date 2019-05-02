@@ -1,5 +1,6 @@
 package app.mediabrainz.ui.fragment
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -9,12 +10,15 @@ import app.mediabrainz.domain.repository.Resource
 import app.mediabrainz.ui.adapter.pager.ReleaseGroupAdapter
 import app.mediabrainz.ui.adapter.pager.ReleaseGroupsPagerAdapter
 import app.mediabrainz.ui.preference.GlobalPreferences
+import app.mediabrainz.ui.preference.GlobalPreferences.RELEASE_GROUP_OFFICIAL
 import app.mediabrainz.ui.preference.OAuthPreferences
 import app.mediabrainz.ui.viewmodel.browseDataSource.PagedReleaseGroupsByArtistAndTypeViewModel
 import app.mediabrainz.ui.viewmodel.searchRepository.ReleaseGroupSearchViewModel
 
 
-class ReleaseGroupsTabFragment : BaseLazyDataSourceFragment() {
+class ReleaseGroupsTabFragment :
+    BaseLazyDataSourceFragment(),
+    SharedPreferences.OnSharedPreferenceChangeListener {
 
     companion object {
         private const val RELEASES_TAB = "ReleaseGroupsTabFragment.RELEASES_TAB"
@@ -93,6 +97,31 @@ class ReleaseGroupsTabFragment : BaseLazyDataSourceFragment() {
             recyclerView.adapter = adapter
             initSwipeToRefresh()
         }
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+        if (key == RELEASE_GROUP_OFFICIAL) {
+            if (!loadView()) {
+                recyclerView.adapter = null
+                isLoaded = false
+            }
+            /*
+            if (getUserVisibleHint()) {
+                mutableIsOfficial.setValue(MediaBrainzApp.getPreferences().isReleaseGroupOfficial());
+                releaseGroupsVM.refresh();
+                swipeRefreshLayout.setRefreshing(false);
+                pagedRecycler.scrollToPosition(0);
+            } else {
+                pagedRecycler.setAdapter(null);
+                setLoaded(false);
+            }
+            */
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        GlobalPreferences.unregisterOnSharedPreferenceChangeListener(this)
     }
 
 }

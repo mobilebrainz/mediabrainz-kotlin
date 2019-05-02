@@ -83,17 +83,17 @@
                 app:nullable="false"/>
     </fragment>
 
+    <fragment
+            android:id="@+id/settingsFragment"
+            android:name="app.mediabrainz.ui.fragment.SettingsFragment"
+            android:label="@string/settings_fragment_label"/>
+
     <!--
     <fragment
         android:id="@+id/aboutFragment"
         android:name="app.mediabrainz.fragment.AboutFragment"
         android:label="@string/about_fragment_label"
         tools:layout="@layout/about_fragment"/>
-
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="app.mediabrainz.fragment.SettingsFragment"
-        android:label="@string/settings_fragment_label"/>
 
     <fragment
         android:id="@+id/loginFragment"

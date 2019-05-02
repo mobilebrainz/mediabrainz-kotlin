@@ -31,7 +31,6 @@ class SearchFragment : BaseFragment() {
     private lateinit var trackFieldView: AutoCompleteTextView
     private lateinit var queryInputView: AutoCompleteTextView
     private lateinit var searchSpinner: Spinner
-    private lateinit var adapter: ArrayAdapter<String>
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
