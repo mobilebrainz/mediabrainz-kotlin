@@ -73,7 +73,7 @@ class ReleaseGroupAdapter(private val fragment: Fragment) :
                     when (status) {
                         LOADING -> showImageProgress(true)
                         SUCCESS -> {
-                            val coverArt = if (data != null) getFrontCoverArtImage(data!!) else ""
+                            val coverArt = if (data != null) getFrontCoverArtImage(data) else ""
                             if (coverArt.isNotEmpty()) {
                                 releaseImageView.show(coverArt, { showImageProgress(false) }, { showError() })
                             } else showError()
