@@ -1,4 +1,4 @@
-package app.mediabrainz.ui.adapter.pager
+package app.mediabrainz.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +14,6 @@ import app.mediabrainz.domain.model.ReleaseGroup
 import app.mediabrainz.domain.model.getFrontCoverArtImage
 import app.mediabrainz.domain.repository.Resource.Status.*
 import app.mediabrainz.ui.R
-import app.mediabrainz.ui.adapter.BasePagedListAdapter
 import app.mediabrainz.ui.extension.findViewById
 import app.mediabrainz.ui.extension.show
 import app.mediabrainz.ui.preference.GlobalPreferences
@@ -24,7 +23,8 @@ import app.mediabrainz.ui.viewmodel.ReleaseGroupCoverArtViewModel
 class ReleaseGroupAdapter(private val fragment: Fragment) :
     BasePagedListAdapter<ReleaseGroup>(DiffUtilCallBack()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.create(parent, fragment)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ViewHolder.create(parent, fragment)
 
     class ViewHolder(itemView: View, private val fragment: Fragment) : BaseViewHolder<ReleaseGroup>(itemView) {
 
@@ -55,11 +55,11 @@ class ReleaseGroupAdapter(private val fragment: Fragment) :
                 val type = getAllTypes()
                 releaseTypeYearView.text = "$year ($type)"
 
-                setAllRating(item)
-                setUserRating(item)
+                setAllRating(this)
+                setUserRating(this)
 
                 if (GlobalPreferences.isLoadImagesEnabled()) {
-                    initCoverArt(item.mbid)
+                    initCoverArt(mbid)
                 } else {
                     releaseImageView.visibility = VISIBLE
                 }

@@ -2,6 +2,7 @@ package app.mediabrainz.ui.fragment
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
+import app.mediabrainz.api.browserequest.ReleaseBrowseEntityType
 import app.mediabrainz.db.entity.SuggestionField
 import app.mediabrainz.domain.OAuthManager.isError
 import app.mediabrainz.ui.NavGraphDirections
@@ -162,15 +163,15 @@ class ResultSearchFragment : BaseDataSourceFragment() {
         adapter.holderClickListener = {
             if (!isLoading && !isError) {
                 suggestionViewModel.insert(it.name, SuggestionField.RELEASE_GROUP)
-                /*
-                val artists = releaseGroup.getArtistCredits()
-                if (artists != null && !artists!!.isEmpty()) {
-                    suggestionViewModel.insert(artists!!.get(0).getArtist().name, SuggestionField.ARTIST)
+
+                val artists = it.artistCredits
+                if (artists.isNotEmpty()) {
+                    suggestionViewModel.insert(artists[0].artist.name, SuggestionField.ARTIST)
                 }
-                val type = ReleaseBrowseService.ReleaseBrowseEntityType.RELEASE_GROUP.ordinal()
-                val action = NavGraphDirections.actionGlobalReleasesFragment(type, releaseGroup.mbid, null)
+
+                val type = ReleaseBrowseEntityType.RELEASE_GROUP.ordinal
+                val action = NavGraphDirections.actionGlobalReleasesFragment(type, it.mbid, null)
                 navigate(action)
-                */
             }
         }
         vm.pagedItems.observe(this, Observer { adapter.submitList(it) })

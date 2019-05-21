@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import app.mediabrainz.api.browserequest.ReleaseBrowseEntityType
 import app.mediabrainz.domain.model.ReleaseGroup
 import app.mediabrainz.domain.repository.Resource
-import app.mediabrainz.ui.adapter.pager.ReleaseGroupAdapter
+import app.mediabrainz.ui.NavGraphDirections
+import app.mediabrainz.ui.adapter.ReleaseGroupAdapter
 import app.mediabrainz.ui.adapter.pager.ReleaseGroupsPagerAdapter
 import app.mediabrainz.ui.preference.GlobalPreferences
 import app.mediabrainz.ui.preference.GlobalPreferences.RELEASE_GROUP_OFFICIAL
@@ -90,7 +92,9 @@ class ReleaseGroupsTabFragment :
             val adapter = ReleaseGroupAdapter(this)
             adapter.holderClickListener = {
                 if (!isLoading && !isError) {
-                    //navigate(NavGraphDirections.actionGlobalArtistFragment(it.mbid))
+                    val type = ReleaseBrowseEntityType.RELEASE_GROUP.ordinal
+                    val action = NavGraphDirections.actionGlobalReleasesFragment(type, it.mbid, null)
+                    navigate(action)
                 }
             }
             vm.pagedItems.observe(this, Observer { adapter.submitList(it) })

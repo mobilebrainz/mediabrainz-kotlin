@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "app.mediabrainz"
         minSdkVersion 23
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "0.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
