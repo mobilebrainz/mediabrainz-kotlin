@@ -103,11 +103,12 @@ data class ReleaseEventResponse(
     @field:Json(name = "area") val area: AreaResponse?
 )
 
-enum class ReleaseStatus(val status: String) {
+enum class ReleaseStatusResponse(val status: String) {
     OFFICIAL("official"),
     PROMOTIONAL("promotional"),
     BOOTLEG("bootleg"),
-    PSEUDO_RELEASE("pseudo-release");
+    PSEUDO_RELEASE("pseudo-release"),
+    EMPTY("");
 
     override fun toString() = status
 }

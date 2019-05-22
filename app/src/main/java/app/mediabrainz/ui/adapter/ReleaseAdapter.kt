@@ -5,21 +5,23 @@ import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DiffUtil
 import app.mediabrainz.domain.model.Release
-import app.mediabrainz.domain.model.ReleaseGroup
+import app.mediabrainz.domain.model.ReleaseStatus
 import app.mediabrainz.domain.model.getFrontCoverArtImage
 import app.mediabrainz.domain.repository.Resource.Status.*
 import app.mediabrainz.ui.R
 import app.mediabrainz.ui.extension.findViewById
+import app.mediabrainz.ui.extension.getStringFromRes
 import app.mediabrainz.ui.extension.show
 import app.mediabrainz.ui.preference.GlobalPreferences
 import app.mediabrainz.ui.viewmodel.ReleaseCoverArtViewModel
-import app.mediabrainz.ui.viewmodel.ReleaseGroupCoverArtViewModel
 
 
 class ReleaseAdapter(private val fragment: Fragment) :
@@ -52,8 +54,20 @@ class ReleaseAdapter(private val fragment: Fragment) :
 
         override fun bindTo(item: Release) {
             with(item) {
-                //dateView.text = date
                 releaseNameView.text = name
+                dateView.text = date
+
+                if (barcode.isNotEmpty()) {
+                    barcodeView.text = itemView.resources.getString(R.string.r_barcode, barcode)
+                } else {
+                    barcodeView.visibility = View.GONE
+                }
+
+                if (status != ReleaseStatus.EMPTY) {
+                    statusView.text = itemView.resources.getString(R.string.r_status, getStringFromRes(status.id))
+                } else {
+                    statusView.visibility = View.GONE
+                }
 
                 if (GlobalPreferences.isLoadImagesEnabled()) {
                     initCoverArt(mbid)
@@ -70,7 +84,7 @@ class ReleaseAdapter(private val fragment: Fragment) :
                     when (status) {
                         LOADING -> showImageProgress(true)
                         SUCCESS -> {
-                            val coverArt = if (data != null) getFrontCoverArtImage(data) else ""
+                            val coverArt = if (data != null) getFrontCoverArtImage(data!!) else ""
                             if (coverArt.isNotEmpty()) {
                                 coverartView.show(coverArt, { showImageProgress(false) }, { showError() })
                             } else showError()

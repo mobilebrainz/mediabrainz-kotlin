@@ -12,7 +12,7 @@ import app.mediabrainz.api.lookupbrowse.LookupIncTypeInterface
 import app.mediabrainz.api.lookupbrowse.LookupParamType
 import app.mediabrainz.api.response.LabelResponse
 import app.mediabrainz.api.response.ReleaseGroupType
-import app.mediabrainz.api.response.ReleaseStatus
+import app.mediabrainz.api.response.ReleaseStatusResponse
 
 
 class LabelLookupRequest(mbid: String) : BaseLookupRequest<LabelResponse, LabelLookupIncType>(mbid) {
@@ -24,7 +24,7 @@ class LabelLookupRequest(mbid: String) : BaseLookupRequest<LabelResponse, LabelL
         return this
     }
 
-    fun addReleaseStatus(status: ReleaseStatus): LabelLookupRequest {
+    fun addReleaseStatus(status: ReleaseStatusResponse): LabelLookupRequest {
         addParam(LookupParamType.STATUS, status.status)
         return this
     }

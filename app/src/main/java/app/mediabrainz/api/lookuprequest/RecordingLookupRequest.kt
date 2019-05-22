@@ -17,7 +17,7 @@ import app.mediabrainz.api.lookupbrowse.LookupIncTypeInterface
 import app.mediabrainz.api.lookupbrowse.LookupParamType
 import app.mediabrainz.api.response.RecordingResponse
 import app.mediabrainz.api.response.ReleaseGroupType
-import app.mediabrainz.api.response.ReleaseStatus
+import app.mediabrainz.api.response.ReleaseStatusResponse
 
 
 class RecordingLookupRequest(mbid: String) : BaseLookupRequest<RecordingResponse, RecordingLookupIncType>(mbid) {
@@ -29,7 +29,7 @@ class RecordingLookupRequest(mbid: String) : BaseLookupRequest<RecordingResponse
         return this
     }
 
-    fun addReleaseStatus(status: ReleaseStatus): RecordingLookupRequest {
+    fun addReleaseStatus(status: ReleaseStatusResponse): RecordingLookupRequest {
         addParam(LookupParamType.STATUS, status.status)
         return this
     }

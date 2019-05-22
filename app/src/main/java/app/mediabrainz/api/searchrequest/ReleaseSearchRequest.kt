@@ -1,11 +1,8 @@
 package app.mediabrainz.api.searchrequest
 
-import app.mediabrainz.api.core.Config
-import app.mediabrainz.api.core.WebService
 import app.mediabrainz.api.response.MediaFormatType
 import app.mediabrainz.api.response.ReleaseSearchResponse
-import app.mediabrainz.api.response.ReleaseStatus
-import app.mediabrainz.api.retrofit.SearchRequestService
+import app.mediabrainz.api.response.ReleaseStatusResponse
 import app.mediabrainz.api.search.BaseSearchRequest
 import app.mediabrainz.api.search.LuceneOperator
 import app.mediabrainz.api.search.SearchFieldInterface
@@ -23,7 +20,7 @@ class ReleaseSearchRequest :
 
     override fun search() = createJsonRetrofitService().searchRelease(buildParams())
 
-    fun addStatus(status: ReleaseStatus): ReleaseSearchRequest {
+    fun addStatus(status: ReleaseStatusResponse): ReleaseSearchRequest {
         add(STATUS, status.status)
         return this
     }

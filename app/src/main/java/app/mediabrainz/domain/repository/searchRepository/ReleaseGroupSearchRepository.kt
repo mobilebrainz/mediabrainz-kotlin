@@ -5,7 +5,7 @@ import app.mediabrainz.api.ApiRequestProvider
 import app.mediabrainz.api.response.ReleaseGroupPrimaryType
 import app.mediabrainz.api.response.ReleaseGroupResponse
 import app.mediabrainz.api.response.ReleaseGroupSecondaryType
-import app.mediabrainz.api.response.ReleaseStatus
+import app.mediabrainz.api.response.ReleaseStatusResponse
 import app.mediabrainz.api.searchrequest.ReleaseGroupSearchField
 import app.mediabrainz.api.searchrequest.ReleaseGroupSearchField.ARTIST
 import app.mediabrainz.api.searchrequest.ReleaseGroupSearchField.RELEASE_GROUP
@@ -83,7 +83,7 @@ class ReleaseGroupSearchRepository : BaseSearchRepository<ReleaseGroup>() {
                     ApiRequestProvider.createReleaseGroupSearchRequest()
                         .addPrimaryType(primaryType)
                         .addSecondaryType(secondaryType)
-                        .add(ReleaseGroupSearchField.STATUS, ReleaseStatus.OFFICIAL.status)
+                        .add(ReleaseGroupSearchField.STATUS, ReleaseStatusResponse.OFFICIAL.status)
                         .add(ReleaseGroupSearchField.ARID, artistMbid)
                         .search(limit, offset)
                 },

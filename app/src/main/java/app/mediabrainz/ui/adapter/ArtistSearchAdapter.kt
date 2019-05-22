@@ -2,8 +2,6 @@ package app.mediabrainz.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -14,9 +12,8 @@ import app.mediabrainz.api.core.getStringFromList
 import app.mediabrainz.domain.model.Artist
 import app.mediabrainz.ui.R
 import app.mediabrainz.ui.extension.findViewById
-import app.mediabrainz.ui.extension.getString
+import app.mediabrainz.ui.extension.getStringFromRes
 import app.mediabrainz.ui.extension.setEmptyText
-import app.mediabrainz.ui.extension.setEmptyVisibility
 
 
 class ArtistSearchAdapter(private val fragment: Fragment) :
@@ -47,7 +44,7 @@ class ArtistSearchAdapter(private val fragment: Fragment) :
         override fun bindTo(item: Artist) {
             with(item) {
                 artistNameView.text = name
-                artistTypeView.text = getString(type.id)
+                artistTypeView.text = getStringFromRes(type.id)
 
                 var areaStr = area?.name ?: ""
                 var foundedstr = lifeSpan.begin

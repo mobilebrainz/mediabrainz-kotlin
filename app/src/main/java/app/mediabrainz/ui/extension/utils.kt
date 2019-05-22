@@ -4,6 +4,6 @@ import androidx.annotation.StringRes
 import app.mediabrainz.ui.App
 
 
-fun getString(@StringRes id: Int) = App.instance.resources.getString(id)
+fun getStringFromRes(@StringRes id: Int) = App.instance.resources.getString(id)
 
 fun getResources() = App.instance.resources

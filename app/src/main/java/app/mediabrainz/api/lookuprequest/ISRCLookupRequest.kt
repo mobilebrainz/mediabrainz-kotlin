@@ -4,7 +4,7 @@ import app.mediabrainz.api.lookupbrowse.BaseLookupRequest
 import app.mediabrainz.api.lookupbrowse.LookupParamType
 import app.mediabrainz.api.response.ISRCResponse
 import app.mediabrainz.api.response.ReleaseGroupType
-import app.mediabrainz.api.response.ReleaseStatus
+import app.mediabrainz.api.response.ReleaseStatusResponse
 
 
 class ISRCLookupRequest(mbid: String) : BaseLookupRequest<ISRCResponse, RecordingLookupIncType>(mbid) {
@@ -16,7 +16,7 @@ class ISRCLookupRequest(mbid: String) : BaseLookupRequest<ISRCResponse, Recordin
         return this
     }
 
-    fun addReleaseStatus(status: ReleaseStatus): ISRCLookupRequest {
+    fun addReleaseStatus(status: ReleaseStatusResponse): ISRCLookupRequest {
         addParam(LookupParamType.STATUS, status.status)
         return this
     }

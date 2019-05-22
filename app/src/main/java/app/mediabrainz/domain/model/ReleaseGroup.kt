@@ -5,7 +5,7 @@ import app.mediabrainz.api.response.ReleaseGroupPrimaryType
 import app.mediabrainz.api.response.ReleaseGroupSecondaryType
 import app.mediabrainz.api.response.ReleaseGroupType
 import app.mediabrainz.ui.R
-import app.mediabrainz.ui.extension.getString
+import app.mediabrainz.ui.extension.getStringFromRes
 
 
 class ReleaseGroup(
@@ -27,12 +27,12 @@ class ReleaseGroup(
 ) : Entity() {
 
     fun getPrimaryTypeString() =
-        if (primaryType != null) getString(primaryType.id) else ""
+        if (primaryType != null) getStringFromRes(primaryType.id) else ""
 
 
     fun getFirstSecondaryTypeString() =
         if (secondaryTypes.isNotEmpty()) {
-            getString(secondaryTypes[0].id)
+            getStringFromRes(secondaryTypes[0].id)
         } else ""
 
 
@@ -49,7 +49,7 @@ class ReleaseGroup(
         return if (prType.isNotEmpty() && secType.isNotEmpty()) "$prType/$secType"
         else if (prType.isNotEmpty() && secType.isEmpty()) prType
         else if (prType.isEmpty() && secType.isNotEmpty()) secType
-        else getString(R.string.rt_unknown)
+        else getStringFromRes(R.string.rt_unknown)
     }
 
     override fun equals(other: Any?): Boolean {

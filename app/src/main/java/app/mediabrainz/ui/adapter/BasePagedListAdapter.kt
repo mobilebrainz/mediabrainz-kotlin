@@ -23,6 +23,7 @@ abstract class BasePagedListAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>) :
     abstract class BaseViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         abstract fun bindTo(item: T)
+
     }
 }
 

@@ -23,7 +23,7 @@ import app.mediabrainz.api.lookupbrowse.IncType.RECORDINGS_INC
 import app.mediabrainz.api.lookupbrowse.IncType.RELEASE_GROUPS_INC
 import app.mediabrainz.api.response.ReleaseBrowseResponse
 import app.mediabrainz.api.response.ReleaseGroupType
-import app.mediabrainz.api.response.ReleaseStatus
+import app.mediabrainz.api.response.ReleaseStatusResponse
 
 
 class ReleaseBrowseRequest(entityType: ReleaseBrowseEntityType, mbid: String) :
@@ -36,7 +36,7 @@ class ReleaseBrowseRequest(entityType: ReleaseBrowseEntityType, mbid: String) :
         return this
     }
 
-    fun addStatus(status: ReleaseStatus): ReleaseBrowseRequest {
+    fun addStatus(status: ReleaseStatusResponse): ReleaseBrowseRequest {
         addParam(BrowseParamType.STATUS, status.status)
         return this
     }

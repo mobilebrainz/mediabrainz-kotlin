@@ -16,7 +16,7 @@ import app.mediabrainz.api.lookupbrowse.LookupIncTypeInterface
 import app.mediabrainz.api.lookupbrowse.LookupParamType
 import app.mediabrainz.api.response.ReleaseGroupResponse
 import app.mediabrainz.api.response.ReleaseGroupType
-import app.mediabrainz.api.response.ReleaseStatus
+import app.mediabrainz.api.response.ReleaseStatusResponse
 
 
 class ReleaseGroupLookupRequest(mbid: String) :
@@ -29,7 +29,7 @@ class ReleaseGroupLookupRequest(mbid: String) :
         return this
     }
 
-    fun addReleaseStatus(status: ReleaseStatus): ReleaseGroupLookupRequest {
+    fun addReleaseStatus(status: ReleaseStatusResponse): ReleaseGroupLookupRequest {
         addParam(LookupParamType.STATUS, status.status)
         return this
     }

@@ -17,7 +17,7 @@ import app.mediabrainz.api.lookupbrowse.LookupIncTypeInterface
 import app.mediabrainz.api.lookupbrowse.LookupParamType
 import app.mediabrainz.api.response.ArtistResponse
 import app.mediabrainz.api.response.ReleaseGroupType
-import app.mediabrainz.api.response.ReleaseStatus
+import app.mediabrainz.api.response.ReleaseStatusResponse
 
 
 class ArtistLookupRequest(mbid: String) : BaseLookupRequest<ArtistResponse, ArtistLookupIncType>(mbid) {
@@ -29,7 +29,7 @@ class ArtistLookupRequest(mbid: String) : BaseLookupRequest<ArtistResponse, Arti
         return this
     }
 
-    fun addReleaseStatus(status: ReleaseStatus): ArtistLookupRequest {
+    fun addReleaseStatus(status: ReleaseStatusResponse): ArtistLookupRequest {
         addParam(LookupParamType.STATUS, status.status)
         return this
     }
