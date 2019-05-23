@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DiffUtil
+import app.mediabrainz.domain.model.Media
 import app.mediabrainz.domain.model.Release
 import app.mediabrainz.domain.model.ReleaseStatus
 import app.mediabrainz.domain.model.getFrontCoverArtImage
@@ -68,6 +69,31 @@ class ReleaseAdapter(private val fragment: Fragment) :
                 } else {
                     statusView.visibility = View.GONE
                 }
+
+                var labelName = ""
+                if (labels.isNotEmpty()) {
+                    labelName = labels[0].label.name
+                    val labelCatalog = labels[0].catalogNumber
+                    if (labelCatalog.isNotEmpty()) {
+                        catalogView.text = itemView.resources.getString(R.string.r_catalog, labelCatalog)
+                    } else {
+                        catalogView.visibility = View.GONE
+                    }
+                }
+
+                val countryLabel = "$country $labelName".trim()
+                if (countryLabel.isNotEmpty()) {
+                    countryLabelView.text = countryLabel
+                } else {
+                    countryLabelView.visibility = View.GONE
+                }
+
+                var trackCount = 0
+                for (mediaItem in media) {
+                    trackCount += mediaItem.trackCount
+                }
+                val f = Media.buildReleaseFormatsString(itemView.context, media)
+                formatView.text = itemView.resources.getString(R.string.r_tracks, f, trackCount)
 
                 if (GlobalPreferences.isLoadImagesEnabled()) {
                     initCoverArt(mbid)

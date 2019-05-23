@@ -28,7 +28,7 @@ class ReleaseGroupSearchViewModel(val repo: ReleaseGroupSearchRepository = Relea
     }
 
 
-    /////////////////////////////
+    //todo: make distinct OfficialReleaseGroupSearchViewModel
 
     private var artistMbid: String? = null
     private var rgType: RGType? = null

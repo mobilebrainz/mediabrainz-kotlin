@@ -1,6 +1,6 @@
 package app.mediabrainz.api.searchrequest
 
-import app.mediabrainz.api.response.MediaFormatType
+import app.mediabrainz.api.response.MediaFormatTypeResponse
 import app.mediabrainz.api.response.ReleaseSearchResponse
 import app.mediabrainz.api.response.ReleaseStatusResponse
 import app.mediabrainz.api.search.BaseSearchRequest
@@ -25,7 +25,7 @@ class ReleaseSearchRequest :
         return this
     }
 
-    fun addFormat(format: MediaFormatType): ReleaseSearchRequest {
+    fun addFormat(format: MediaFormatTypeResponse): ReleaseSearchRequest {
         add(FORMAT, format.format)
         return this
     }

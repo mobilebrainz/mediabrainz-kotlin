@@ -9,7 +9,10 @@ class Release(
     val name: String,
     val status: ReleaseStatus,
     val date: String = "",
-    val barcode: String = ""
+    val barcode: String = "",
+    val country: String = "",
+    val labels: List<LabelInfo> = ArrayList(),
+    val media: List<Media> = ArrayList()
 
 ) : Entity() {
 

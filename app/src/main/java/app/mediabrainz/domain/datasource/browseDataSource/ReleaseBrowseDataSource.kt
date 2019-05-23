@@ -3,6 +3,7 @@ package app.mediabrainz.domain.datasource.browseDataSource
 import androidx.paging.PageKeyedDataSource
 import app.mediabrainz.api.ApiRequestProvider
 import app.mediabrainz.api.browserequest.ReleaseBrowseEntityType
+import app.mediabrainz.api.browserequest.ReleaseBrowseIncType
 import app.mediabrainz.api.response.ReleaseBrowseResponse
 import app.mediabrainz.api.response.ReleaseResponse
 import app.mediabrainz.domain.datasource.core.BaseDataSource
@@ -16,6 +17,12 @@ class ReleaseBrowseDataSource(val entityType: ReleaseBrowseEntityType, val mbid:
 
     override fun request(loadSize: Int, offset: Int) =
         ApiRequestProvider.createReleaseBrowseRequest(entityType, mbid)
+            .addIncs(
+                ReleaseBrowseIncType.ARTIST_CREDITS,
+                ReleaseBrowseIncType.LABELS,
+                ReleaseBrowseIncType.MEDIA,
+                ReleaseBrowseIncType.RELEASE_GROUPS
+            )
             .browse(loadSize, offset)
 
     override fun map() = ReleaseMapper()::mapTo

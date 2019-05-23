@@ -187,6 +187,7 @@
     <string name="fm_ld">LaserDisc</string>
     <string name="fm_md">MiniDisc</string>
     <string name="fm_vinyl">Vinyl</string>
+    <string name="fm_vinyl_12">12\"Vinyl</string>
     <string name="fm_cassette">Cassette</string>
     <string name="fm_cartridge">Cartridge</string>
     <string name="fm_rtr">Reel-to-reel</string>

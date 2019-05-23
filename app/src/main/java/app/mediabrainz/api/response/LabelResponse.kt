@@ -72,7 +72,7 @@ class LabelBrowseResponse : BaseItemsResponse<LabelResponse>(), BrowseResponseIn
 
 data class LabelInfoResponse(
     @field:Json(name = "catalog-number") val catalogNumber: String?,
-    @field:Json(name = "label") val label: LabelResponse?
+    @field:Json(name = "label") val label: LabelResponse
 )
 
 enum class LabelType(val type: String) {

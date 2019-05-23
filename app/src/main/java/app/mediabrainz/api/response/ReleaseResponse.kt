@@ -70,7 +70,7 @@ data class ReleaseResponse(
     /**
      * inc=media, inc=recordings equal inc=media with track infos
      */
-    @field:Json(name = "media") val media: List<Media>?,
+    @field:Json(name = "media") val media: List<MediaResponse>?,
     /**
      * inc=...-rels
      */
