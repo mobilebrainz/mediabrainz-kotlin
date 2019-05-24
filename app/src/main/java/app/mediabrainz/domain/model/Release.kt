@@ -11,6 +11,7 @@ class Release(
     val date: String = "",
     val barcode: String = "",
     val country: String = "",
+    val coverArtArchive: CoverArtArchive,
     val labels: List<LabelInfo> = ArrayList(),
     val media: List<Media> = ArrayList()
 

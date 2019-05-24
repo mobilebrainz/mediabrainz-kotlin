@@ -95,7 +95,7 @@ class ReleaseAdapter(private val fragment: Fragment) :
                 val f = Media.buildReleaseFormatsString(itemView.context, media)
                 formatView.text = itemView.resources.getString(R.string.r_tracks, f, trackCount)
 
-                if (GlobalPreferences.isLoadImagesEnabled()) {
+                if (GlobalPreferences.isLoadImagesEnabled() && coverArtArchive.front) {
                     initCoverArt(mbid)
                 } else {
                     coverartView.visibility = VISIBLE

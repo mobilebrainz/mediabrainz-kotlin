@@ -20,6 +20,7 @@ class ReleaseMapper {
                 date ?: "",
                 barcode ?: "",
                 country ?: "",
+                CoverArtArchiveMapper().mapTo(coverArtArchive),
                 PageMapper<LabelInfoResponse, LabelInfo> { LabelInfoMapper().mapTo(it) }.mapToList(labelInfo),
                 PageMapper<MediaResponse, Media> { MediaMapper().mapTo(it) }.mapToList(media)
             )
