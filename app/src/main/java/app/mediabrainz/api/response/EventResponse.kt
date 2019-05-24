@@ -1,5 +1,6 @@
 package app.mediabrainz.api.response
 
+import app.mediabrainz.api.lookupbrowse.BaseLookupEntity
 import app.mediabrainz.api.lookupbrowse.BrowseResponseInterface
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
 import app.mediabrainz.api.search.SearchResponseInterface
@@ -39,12 +40,8 @@ data class EventResponse(
     /**
      * inc=user-tags
      */
-    @field:Json(name = "user-tags") val userTags: List<TagResponse>?,
-    /**
-     * inc=...-rels
-     */
-    @field:Json(name = "relations") val relations: List<RelationResponse>?
-) : LookupResponseInterface
+    @field:Json(name = "user-tags") val userTags: List<TagResponse>?
+) : BaseLookupEntity(), LookupResponseInterface
 
 class EventSearchResponse : BaseItemsResponse<EventResponse>(), SearchResponseInterface {
     @field:Json(name = "events")

@@ -1,5 +1,6 @@
 package app.mediabrainz.api.response
 
+import app.mediabrainz.api.lookupbrowse.BaseLookupEntity
 import app.mediabrainz.api.lookupbrowse.BrowseResponseInterface
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
 import app.mediabrainz.api.search.SearchResponseInterface
@@ -14,12 +15,8 @@ data class UrlResponse(
     /**
      * from search request
      */
-    @field:Json(name = "relation-list") val relationList: List<RelationList>?,
-    /**
-     * inc=...-rels
-     */
-    @field:Json(name = "relations") val relations: List<RelationResponse>?
-) : LookupResponseInterface, BrowseResponseInterface
+    @field:Json(name = "relation-list") val relationList: List<RelationList>?
+) : BaseLookupEntity(), LookupResponseInterface, BrowseResponseInterface
 
 class UrlSearchResponse : BaseItemsResponse<UrlResponse>(), SearchResponseInterface {
     @field:Json(name = "urls")

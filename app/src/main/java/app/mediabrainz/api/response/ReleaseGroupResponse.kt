@@ -1,5 +1,6 @@
 package app.mediabrainz.api.response
 
+import app.mediabrainz.api.lookupbrowse.BaseLookupEntity
 import app.mediabrainz.api.lookupbrowse.BrowseResponseInterface
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
 import app.mediabrainz.api.search.SearchResponseInterface
@@ -56,12 +57,8 @@ data class ReleaseGroupResponse(
     /**
      * inc=user-genres
      */
-    @field:Json(name = "user-genres") val userGenres: List<TagResponse>?,
-    /**
-     * inc=...-rels
-     */
-    @field:Json(name = "relations") val relations: List<RelationResponse>?
-) : LookupResponseInterface
+    @field:Json(name = "user-genres") val userGenres: List<TagResponse>?
+) : BaseLookupEntity(), LookupResponseInterface
 
 class ReleaseGroupSearchResponse : BaseItemsResponse<ReleaseGroupResponse>(), SearchResponseInterface {
     @field:Json(name = "release-groups")

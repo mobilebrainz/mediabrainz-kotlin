@@ -1,5 +1,6 @@
 package app.mediabrainz.api.response
 
+import app.mediabrainz.api.lookupbrowse.BaseLookupEntity
 import app.mediabrainz.api.lookupbrowse.BrowseResponseInterface
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
 import app.mediabrainz.api.search.SearchResponseInterface
@@ -70,12 +71,8 @@ data class ReleaseResponse(
     /**
      * inc=media, inc=recordings equal inc=media with track infos
      */
-    @field:Json(name = "media") val media: List<MediaResponse>?,
-    /**
-     * inc=...-rels
-     */
-    @field:Json(name = "relations") val relations: List<RelationResponse>?
-) : LookupResponseInterface
+    @field:Json(name = "media") val media: List<MediaResponse>?
+) : BaseLookupEntity(), LookupResponseInterface
 
 class ReleaseSearchResponse : BaseItemsResponse<ReleaseResponse>(), SearchResponseInterface {
     @field:Json(name = "releases")

@@ -11,9 +11,12 @@ import app.mediabrainz.domain.model.Tag
 
 class ArtistMapper {
 
-    fun mapTo(response: ArtistResponse): Artist =
+    fun mapTo(response: ArtistResponse): Artist {
+
+        val relationMapper = RelationMapper(response)
+
         with(response) {
-            Artist(
+            return Artist(
                 mbid,
                 name,
                 disambiguation ?: "",
@@ -32,8 +35,11 @@ class ArtistMapper {
                 PageMapper<TagResponse, Tag> { TagMapper().mapTo(it) }.mapToList(userGenres),
                 PageMapper<ReleaseGroupResponse, ReleaseGroup> { ReleaseGroupMapper().mapTo(it) }.mapToList(
                     releaseGroups
-                )
+                ),
+                relationMapper.artistRels,
+                relationMapper.urlRels
             )
         }
+    }
 
 }

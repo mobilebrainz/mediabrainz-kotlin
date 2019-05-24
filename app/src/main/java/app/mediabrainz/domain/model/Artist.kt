@@ -23,7 +23,12 @@ class Artist(
     val userTags: List<Tag> = ArrayList(),
     val genres: List<Tag> = ArrayList(),
     val userGenres: List<Tag> = ArrayList(),
-    val releaseGroups: List<ReleaseGroup> = ArrayList()
+    val releaseGroups: List<ReleaseGroup> = ArrayList(),
+
+    // relations
+    val artistRelations: List<Relation<Artist>> = ArrayList(),
+    val urlRelations: List<Relation<Url>> = ArrayList()
+
 ) : Entity()
 
 

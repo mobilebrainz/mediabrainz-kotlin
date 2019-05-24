@@ -1,5 +1,6 @@
 package app.mediabrainz.api.response
 
+import app.mediabrainz.api.lookupbrowse.BaseLookupEntity
 import app.mediabrainz.api.lookupbrowse.LookupResponseInterface
 import app.mediabrainz.api.search.SearchResponseInterface
 import com.squareup.moshi.Json
@@ -28,12 +29,8 @@ data class InstrumentResponse(
     /**
      * inc=user-tags
      */
-    @field:Json(name = "user-tags") val userTags: List<TagResponse>?,
-    /**
-     * inc=...-rels
-     */
-    @field:Json(name = "relations") val relations: List<RelationResponse>?
-) : LookupResponseInterface
+    @field:Json(name = "user-tags") val userTags: List<TagResponse>?
+) : BaseLookupEntity(), LookupResponseInterface
 
 class InstrumentSearchResponse : BaseItemsResponse<InstrumentResponse>(), SearchResponseInterface {
     @field:Json(name = "instruments")
