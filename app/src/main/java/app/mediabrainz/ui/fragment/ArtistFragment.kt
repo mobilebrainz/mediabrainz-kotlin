@@ -10,7 +10,9 @@ import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import app.mediabrainz.domain.model.Artist
 import app.mediabrainz.domain.repository.Resource.Status.*
+import app.mediabrainz.ui.NavGraphDirections
 import app.mediabrainz.ui.R
+import app.mediabrainz.ui.viewmodel.event.LinksEvent
 import app.mediabrainz.ui.viewmodel.lookupRepository.ArtistLookupViewModel
 
 
@@ -131,16 +133,13 @@ class ArtistFragment : BaseFragment(), View.OnClickListener {
                     */
                 }
                 R.id.linksItem -> {
-                    /*
-                    val urls = RelationExtractor(artist).getUrls()
-                    if (!urls.isEmpty()) {
-                        getActivityViewModel(LinksEvent::class.java).urls.setValue(urls)
-                        val linksAction = NavGraphDirections.actionGlobalLinksFragment(artist.getName())
-                        navigate(linksAction)
+                    val urlRels = artist.urlRelations
+                    if (urlRels.isNotEmpty()) {
+                        getActivityViewModel(LinksEvent::class.java).urlRelations.value = urlRels
+                        navigate(NavGraphDirections.actionGlobalLinksFragment(artist.name))
                     } else {
                         showInfoSnackbar(R.string.no_results)
                     }
-                    */
                 }
                 R.id.wikiItem -> {
                     /*

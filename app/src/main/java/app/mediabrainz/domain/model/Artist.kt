@@ -2,7 +2,6 @@ package app.mediabrainz.domain.model
 
 import androidx.annotation.StringRes
 import app.mediabrainz.api.response.ArtistTypeResponse
-import app.mediabrainz.api.response.ReleaseGroupResponse
 import app.mediabrainz.ui.R
 
 

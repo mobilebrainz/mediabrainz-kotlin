@@ -130,6 +130,20 @@
                 app:nullable="false"/>
     </action>
 
+    <fragment
+            android:id="@+id/linksFragment"
+            android:name="app.mediabrainz.ui.fragment.LinksFragment"
+            android:label="@string/links_fragment_label">
+        <argument
+                android:name="subTitle"
+                app:argType="string"
+                app:nullable="true"/>
+    </fragment>
+
+    <action
+            android:id="@+id/action_global_linksFragment"
+            app:destination="@id/linksFragment"/>
+
     <!--
     <fragment
         android:id="@+id/aboutFragment"
@@ -150,20 +164,6 @@
     <action
         android:id="@+id/action_global_loginFragment"
         app:destination="@id/loginFragment"/>
-
-    <fragment
-        android:id="@+id/linksFragment"
-        android:name="app.mediabrainz.fragment.LinksFragment"
-        android:label="@string/links_fragment_label">
-        <argument
-            android:name="subTitle"
-            app:argType="string"
-            app:nullable="true"/>
-    </fragment>
-
-    <action
-        android:id="@+id/action_global_linksFragment"
-        app:destination="@id/linksFragment"/>
 
     <fragment
         android:id="@+id/wikiFragment"
