@@ -35,34 +35,37 @@ class LinkAdapter(urlRels: List<Relation<Url>>) :
         private val typeView: TextView = findViewById(R.id.typeView)
         private val linkView: TextView = findViewById(R.id.linkView)
 
-        override fun bindTo(urlRel: Relation<Url>) {
-            typeView.text = urlRel.getPrettyType()
-            linkView.text = urlRel.relation.getPrettyUrl()
+        override fun bindTo(item: Relation<Url>) {
+            with(item) {
+                typeView.text = getPrettyType()
+                linkView.text = relation.getPrettyUrl()
 
-            urlRel.type?.let {
-                val t = it.toLowerCase()
-                var iconId = R.drawable.ic_link_24_dark
-                when (t) {
-                    "youtube" -> iconId = R.drawable.ic_youtube_24_light
-                    "official homepage" -> iconId = R.drawable.ic_home_24_dark
-                    "imdb" -> iconId = R.drawable.ic_film_24
-                    "fanpage" -> iconId = R.drawable.ic_community_24_dark
-                    "online community" -> iconId = R.drawable.ic_community_24_dark
-                    "wikipedia" -> iconId = R.drawable.ic_wikipedia_24
-                    "lyrics" -> iconId = R.drawable.ic_lyrics_24
-                    "download for free" -> iconId = R.drawable.ic_download_24
-                    "soundcloud" -> iconId = R.drawable.ic_soundcloud_24
+                type?.let {
+                    val t = it.toLowerCase()
+                    var iconId = R.drawable.ic_link_24_dark
+                    when (t) {
+                        "youtube" -> iconId = R.drawable.ic_youtube_24_light
+                        "official homepage" -> iconId = R.drawable.ic_home_24_dark
+                        "imdb" -> iconId = R.drawable.ic_film_24
+                        "fanpage" -> iconId = R.drawable.ic_community_24_dark
+                        "online community" -> iconId = R.drawable.ic_community_24_dark
+                        "wikipedia" -> iconId = R.drawable.ic_wikipedia_24
+                        "lyrics" -> iconId = R.drawable.ic_lyrics_24
+                        "download for free" -> iconId = R.drawable.ic_download_24
+                        "soundcloud" -> iconId = R.drawable.ic_soundcloud_24
+                    }
+                    val r = relation.resource
+                    when {
+                        t.startsWith("streaming") -> iconId = R.drawable.ic_streaming_24
+                        t.startsWith("purchase") -> iconId = R.drawable.ic_basket_24
+                        r.contains("twitter") -> iconId = R.drawable.ic_twitter_24
+                        r.contains("facebook") -> iconId = R.drawable.ic_facebook_24
+                        t.contains("discog") -> iconId = R.drawable.ic_album_24_dark
+                        r.contains("vimeo") -> iconId = R.drawable.ic_vimeo_24
+                    }
+                    iconView.setImageResource(iconId)
                 }
-                val r = urlRel.relation.resource
-                when {
-                    t.startsWith("streaming") -> iconId = R.drawable.ic_streaming_24
-                    t.startsWith("purchase") -> iconId = R.drawable.ic_basket_24
-                    r.contains("twitter") -> iconId = R.drawable.ic_twitter_24
-                    r.contains("facebook") -> iconId = R.drawable.ic_facebook_24
-                    t.contains("discog") -> iconId = R.drawable.ic_album_24_dark
-                    r.contains("vimeo") -> iconId = R.drawable.ic_vimeo_24
-                }
-                iconView.setImageResource(iconId)
+
             }
         }
     }

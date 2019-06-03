@@ -95,7 +95,13 @@ class RelationMapper(baseLookupEntity: BaseLookupEntity) {
     }
 
     private fun <T> mapRelationArgs(relation: Relation<T>, response: RelationResponse) {
-        relation.type = response.type
+        with(response) {
+            relation.type = type
+            relation.begin = begin ?: ""
+            relation.end = end ?: ""
+            relation.ended = ended ?: false
+            relation.attributes = attributes ?: ArrayList()
+        }
     }
 
 }

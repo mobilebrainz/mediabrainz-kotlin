@@ -262,7 +262,7 @@
     <string name="select_all">Select all</string>
 
     <!-- ArtistRelations -->
-    <string name="rel_cuttent_member_of_band">Current Member Of Band</string>
+    <string name="rel_current_member_of_band">Current Member Of Band</string>
     <string name="rel_past_member_of_band">Past Member Of Band</string>
     <string name="rel_subgroup">Subgroup</string>
     <string name="rel_conductor_position">Conductor Position</string>
@@ -276,6 +276,21 @@
     <string name="rel_is_person">Is Person</string>
     <string name="rel_teacher">Teacher</string>
     <string name="rel_composer_in_residence">Composer In Residence</string>
+
+    <string name="tab_current_member">Current Member</string>
+    <string name="tab_past_member">Past Member</string>
+    <string name="tab_subgroup">Subgroup</string>
+    <string name="tab_conductor">Conductor</string>
+    <string name="tab_founder">Founder</string>
+    <string name="tab_supporting">Supporting</string>
+    <string name="tab_vocal_supporting">Vocal Supporting</string>
+    <string name="tab_instrumental_supporting">Instrumental Supporting</string>
+    <string name="tab_tribute">Tribute</string>
+    <string name="tab_voice_actor">Voice Actor</string>
+    <string name="tab_collaboration">Collaboration</string>
+    <string name="tab_is_person">Is Person</string>
+    <string name="tab_teacher">Teacher</string>
+    <string name="tab_composer">Composer</string>
 
     <string name="rel_current_member_of_band_description">This indicates a person is a member of a group.</string>
     <string name="rel_past_member_of_band_description">This indicates a person was a member of a group.</string>

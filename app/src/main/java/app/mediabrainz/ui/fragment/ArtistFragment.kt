@@ -12,6 +12,7 @@ import app.mediabrainz.domain.model.Artist
 import app.mediabrainz.domain.repository.Resource.Status.*
 import app.mediabrainz.ui.NavGraphDirections
 import app.mediabrainz.ui.R
+import app.mediabrainz.ui.viewmodel.event.ArtistRelationsEvent
 import app.mediabrainz.ui.viewmodel.event.LinksEvent
 import app.mediabrainz.ui.viewmodel.lookupRepository.ArtistLookupViewModel
 
@@ -114,17 +115,13 @@ class ArtistFragment : BaseFragment(), View.OnClickListener {
                     }
                 }
                 R.id.relationsItem -> {
-                    /*
-                    val relations = RelationExtractor(artist).getArtistRelations()
-                    if (!relations.isEmpty()) {
-                        getActivityViewModel(ArtistRelationsEvent::class.java).relations.setValue(relations)
-                        val relActin =
-                            ArtistFragmentDirections.actionArtistFragmentToArtistRelationsFragment(artist.getName())
-                        navigate(relActin)
+                    val artistRels = artist.artistRelations
+                    if (artistRels.isNotEmpty()) {
+                        getActivityViewModel(ArtistRelationsEvent::class.java).artistRelations.value = artistRels
+                        navigate(ArtistFragmentDirections.actionArtistFragmentToArtistRelationsFragment(artist.name))
                     } else {
                         showInfoSnackbar(R.string.no_results)
                     }
-                    */
                 }
                 R.id.tagsItem -> {
                     /*

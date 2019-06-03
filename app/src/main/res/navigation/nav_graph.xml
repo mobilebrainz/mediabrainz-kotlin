@@ -58,10 +58,11 @@
         <action
                 android:id="@+id/action_artistFragment_to_artistReleasesFragment"
                 app:destination="@id/artistReleasesFragment"/>
-        <!--
+
         <action
                 android:id="@+id/action_artistFragment_to_artistRelationsFragment"
                 app:destination="@id/artistRelationsFragment"/>
+        <!--
         <action
                 android:id="@+id/action_artistFragment_to_artistTagsPagerFragment"
                 app:destination="@id/artistTagsPagerFragment"/>
@@ -143,6 +144,20 @@
     <action
             android:id="@+id/action_global_linksFragment"
             app:destination="@id/linksFragment"/>
+
+    <fragment
+            android:id="@+id/artistRelationsFragment"
+            android:name="app.mediabrainz.ui.fragment.RelationPagerFragment"
+            android:label="@string/artist_relations_fragment_label"
+            tools:layout="@layout/fragment_pager_without_icons">
+        <action
+                android:id="@+id/action_artistRelationsFragment_to_artistFragment"
+                app:destination="@id/artistFragment"/>
+        <argument
+                android:name="subTitle"
+                app:argType="string"
+                app:nullable="true"/>
+    </fragment>
 
     <!--
     <fragment
