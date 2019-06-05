@@ -10,10 +10,9 @@ import retrofit2.HttpException
 
 object OAuthManager {
 
-    //new test authorization
     const val OAUTH_SCOPE = "profile email tag rating collection submit_isrc submit_barcode"
-    const val OAUTH_CLIENT_ID = "dTpi8z_VZngp0_eYMGLENw"
-    const val OAUTH_CLIENT_SECRET = "cu6v9jpgF5O7wyRpoGMPrQ"
+    const val OAUTH_CLIENT_ID = "KoSg5TjyO7cMYXjt2kvz8g"
+    const val OAUTH_CLIENT_SECRET = "XL84wz60G4tscOLZ4b2Leg"
     const val OAUTH_REDIRECT_URI = "org.metabrainz.mobile://oauth"
     const val OAUTH_RESPONSE_TYPE = "code"
     const val OAUTH_AUTHORIZE_GRANT_TYPE = "authorization_code"
@@ -88,6 +87,6 @@ object OAuthManager {
         job.cancel()
     }
 
-    fun getAuthorizeUrl() = Config.TEST_WEB_SERVICE + Config.OAUTH_AUTHORIZE_QUERY
+    fun getAuthorizeUrl() = Config.WEB_SERVICE + Config.OAUTH_AUTHORIZE_QUERY
 
 }

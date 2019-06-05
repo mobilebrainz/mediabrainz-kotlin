@@ -66,7 +66,7 @@ abstract class BaseLookupRequest<R, P>(val mbid: String) : LookupRequestInterfac
         return map
     }
 
-    protected fun createJsonRetrofitService(webServiceUrl: String = Config.TEST_WEB_SERVICE) =
+    protected fun createJsonRetrofitService(webServiceUrl: String = Config.WEB_SERVICE) =
         WebService.createJsonRetrofitService(LookupRequestService::class.java, webServiceUrl)
 
 }

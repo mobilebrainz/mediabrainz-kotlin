@@ -75,7 +75,7 @@ abstract class BaseBrowseRequest<R, P1, P2>(val entityType: P2, val mbid: String
         return map
     }
 
-    protected fun createJsonRetrofitService(webServiceUrl: String = Config.TEST_WEB_SERVICE) =
+    protected fun createJsonRetrofitService(webServiceUrl: String = Config.WEB_SERVICE) =
         WebService.createJsonRetrofitService(BrowseRequestService::class.java, webServiceUrl)
 
 
