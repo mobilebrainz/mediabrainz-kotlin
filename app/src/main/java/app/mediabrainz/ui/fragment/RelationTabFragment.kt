@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.mediabrainz.domain.model.ArtistArtistRelationshipType
@@ -29,10 +28,14 @@ class RelationTabFragment : BaseFragment() {
     }
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var headerTitleView: TextView
+    private lateinit var infoView: ImageView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflate(R.layout.relation_tab_fragment, container)
         recyclerView = view.findViewById(R.id.recyclerView)
+        headerTitleView = view.findViewById(R.id.headerTitleView)
+        infoView = view.findViewById(R.id.infoView)
         return view
     }
 
@@ -53,10 +56,9 @@ class RelationTabFragment : BaseFragment() {
             recyclerView.setHasFixedSize(true)
             recyclerView.adapter = adapter
 
-            view!!.findViewById<TextView>(R.id.headerTitleView).text = getString(type.relationRes)
-            view!!.findViewById<ImageView>(R.id.infoView).setOnClickListener {
-                Toast.makeText(context, type.descriptionRes, Toast.LENGTH_LONG).show()
-            }
+
+            headerTitleView.text = getString(type.relationRes)
+            infoView.setOnClickListener { showInfoSnackbar(type.descriptionRes, 15000, 6) }
         }
     }
 

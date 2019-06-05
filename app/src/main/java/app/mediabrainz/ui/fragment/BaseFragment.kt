@@ -3,6 +3,7 @@ package app.mediabrainz.ui.fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.MainThread
@@ -22,10 +23,20 @@ abstract class BaseFragment : Fragment() {
     private var infoSnackbar: Snackbar? = null
 
     @MainThread
-    protected fun showInfoSnackbar(@StringRes resId: Int) {
+    protected fun showInfoSnackbar(
+        @StringRes resId: Int,
+        duration: Int = Snackbar.LENGTH_LONG,
+        maxLines: Int = 2
+    ) {
         view?.let {
-            infoSnackbar = Snackbar.make(it, resId, Snackbar.LENGTH_LONG)
-            infoSnackbar?.show()
+            infoSnackbar = Snackbar.make(it, resId, duration).apply {
+                if (maxLines > 2) {
+                    //todo: in future android updates check R.id.snackbar_text
+                    val textView = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+                    textView.maxLines = maxLines
+                }
+                show()
+            }
         }
     }
 

@@ -23,20 +23,20 @@ class RelationPagerFragment : BaseFragment() {
     private val TAB = "RelationPagerFragment.TAB"
 
     val items = hashMapOf<ArtistArtistRelationshipType, ArrayList<Relation<Artist>>>(
-        Pair(CURRENT_MEMBER_OF_BANDS, ArrayList()),
-        Pair(PAST_MEMBER_OF_BANDS, ArrayList()),
-        Pair(SUBGROUPS, ArrayList()),
-        Pair(CONDUCTOR_POSITIONS, ArrayList()),
-        Pair(FOUNDERS, ArrayList()),
-        Pair(SUPPORTING_MUSICIANS, ArrayList()),
-        Pair(VOCAL_SUPPORTING_MUSICIANS, ArrayList()),
-        Pair(INSTRUMENTAL_SUPPORTING_MUSICIANS, ArrayList()),
-        Pair(TRIBUTES, ArrayList()),
-        Pair(VOICE_ACTORS, ArrayList()),
-        Pair(COLLABORATIONS, ArrayList()),
-        Pair(IS_PERSONS, ArrayList()),
-        Pair(TEACHERS, ArrayList()),
-        Pair(COMPOSER_IN_RESIDENCES, ArrayList())
+        CURRENT_MEMBER_OF_BANDS to ArrayList(),
+        PAST_MEMBER_OF_BANDS to ArrayList(),
+        SUBGROUPS to ArrayList(),
+        CONDUCTOR_POSITIONS to ArrayList(),
+        FOUNDERS to ArrayList(),
+        SUPPORTING_MUSICIANS to ArrayList(),
+        VOCAL_SUPPORTING_MUSICIANS to ArrayList(),
+        INSTRUMENTAL_SUPPORTING_MUSICIANS to ArrayList(),
+        TRIBUTES to ArrayList(),
+        VOICE_ACTORS to ArrayList(),
+        COLLABORATIONS to ArrayList(),
+        IS_PERSONS to ArrayList(),
+        TEACHERS to ArrayList(),
+        COMPOSER_IN_RESIDENCES to ArrayList()
     )
 
     private var tab = 0
@@ -106,6 +106,7 @@ class RelationPagerFragment : BaseFragment() {
         for (item in items) {
             if (item.value.isNotEmpty()) keys.add(item.key)
         }
+        keys.sort()
         val pagerAdapter = RelationPagerAdapter(childFragmentManager, resources, keys)
         pagerView.adapter = pagerAdapter
         pagerView.offscreenPageLimit = pagerAdapter.count
