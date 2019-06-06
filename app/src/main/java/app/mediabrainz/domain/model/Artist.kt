@@ -5,7 +5,7 @@ import app.mediabrainz.api.response.ArtistTypeResponse
 import app.mediabrainz.ui.R
 
 
-class Artist(
+class Artist (
     val mbid: String,
     val name: String,
     val disambiguation: String = "",
@@ -18,17 +18,17 @@ class Artist(
     val lifeSpan: LifeSpan,
     val rating: Rating?,
     val userRating: Rating?,
-    val tags: List<Tag> = ArrayList(),
-    val userTags: List<Tag> = ArrayList(),
-    val genres: List<Tag> = ArrayList(),
-    val userGenres: List<Tag> = ArrayList(),
+    override var tags: List<Tag> = ArrayList(),
+    override var userTags: List<Tag> = ArrayList(),
+    override var genres: List<Tag> = ArrayList(),
+    override var userGenres: List<Tag> = ArrayList(),
     val releaseGroups: List<ReleaseGroup> = ArrayList(),
 
     // relations
     val artistRelations: List<Relation<Artist>> = ArrayList(),
     val urlRelations: List<Relation<Url>> = ArrayList()
 
-) : Entity()
+) : Entity(), Tagged
 
 
 enum class ArtistType(val type: ArtistTypeResponse, @StringRes val id: Int) {

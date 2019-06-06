@@ -18,7 +18,7 @@ class ReleaseGroupMapper {
                 }
             }
 
-            ReleaseGroup(
+            val rg = ReleaseGroup(
                 mbid,
                 title,
                 RGPrimaryType.typeOf(primaryType),
@@ -35,6 +35,10 @@ class ReleaseGroupMapper {
                 PageMapper<TagResponse, Tag> { TagMapper().mapTo(it) }.mapToList(genres),
                 PageMapper<TagResponse, Tag> { TagMapper().mapTo(it) }.mapToList(userGenres)
             )
+
+            TagMapper().filterTagged(rg)
+
+            return rg
         }
 
 }

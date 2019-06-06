@@ -13,7 +13,7 @@ class ReleaseMapper {
 
     fun mapTo(response: ReleaseResponse): Release =
         with(response) {
-            Release(
+            val release = Release(
                 mbid,
                 title,
                 ReleaseStatus.typeOf(status ?: ""),
@@ -24,6 +24,10 @@ class ReleaseMapper {
                 PageMapper<LabelInfoResponse, LabelInfo> { LabelInfoMapper().mapTo(it) }.mapToList(labelInfo),
                 PageMapper<MediaResponse, Media> { MediaMapper().mapTo(it) }.mapToList(media)
             )
+
+            TagMapper().filterTagged(release)
+
+            return release
         }
 
 }

@@ -16,7 +16,7 @@ class ArtistMapper {
         val relationMapper = RelationMapper(response)
 
         with(response) {
-            return Artist(
+            val artist = Artist(
                 mbid,
                 name,
                 disambiguation ?: "",
@@ -39,6 +39,10 @@ class ArtistMapper {
                 relationMapper.artistRels,
                 relationMapper.urlRels
             )
+
+            TagMapper().filterTagged(artist)
+
+            return artist
         }
     }
 

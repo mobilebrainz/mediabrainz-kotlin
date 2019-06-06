@@ -8,7 +8,14 @@ class RecordingMapper {
 
     fun mapTo(response: RecordingResponse): Recording =
         with(response) {
-            Recording(mbid, title)
+            val recording = Recording(
+                mbid,
+                title
+            )
+
+            TagMapper().filterTagged(recording)
+
+            return recording
         }
 
 }

@@ -20,11 +20,11 @@ class ReleaseGroup(
     val artistCredits: List<ArtistCredit> = ArrayList(),
     val rating: Rating?,
     val userRating: Rating?,
-    val tags: List<Tag> = ArrayList(),
-    val userTags: List<Tag> = ArrayList(),
-    val genres: List<Tag> = ArrayList(),
-    val userGenres: List<Tag> = ArrayList()
-) : Entity() {
+    override var tags: List<Tag> = ArrayList(),
+    override var userTags: List<Tag> = ArrayList(),
+    override var genres: List<Tag> = ArrayList(),
+    override var userGenres: List<Tag> = ArrayList()
+) : Entity(), Tagged {
 
     fun getPrimaryTypeString() =
         if (primaryType != null) getStringFromRes(primaryType.id) else ""

@@ -13,9 +13,13 @@ class Release(
     val country: String = "",
     val coverArtArchive: CoverArtArchive,
     val labels: List<LabelInfo> = ArrayList(),
-    val media: List<Media> = ArrayList()
+    val media: List<Media> = ArrayList(),
+    override var tags: List<Tag> = ArrayList(),
+    override var userTags: List<Tag> = ArrayList(),
+    override var genres: List<Tag> = ArrayList(),
+    override var userGenres: List<Tag> = ArrayList()
 
-) : Entity() {
+) : Entity(), Tagged {
 
 }
 

@@ -12,6 +12,8 @@ import app.mediabrainz.domain.model.Artist
 import app.mediabrainz.domain.repository.Resource.Status.*
 import app.mediabrainz.ui.NavGraphDirections
 import app.mediabrainz.ui.R
+import app.mediabrainz.ui.preference.OAuthPreferences
+import app.mediabrainz.ui.viewmodel.event.ArtistEvent
 import app.mediabrainz.ui.viewmodel.event.ArtistRelationsEvent
 import app.mediabrainz.ui.viewmodel.event.LinksEvent
 import app.mediabrainz.ui.viewmodel.lookupRepository.ArtistLookupViewModel
@@ -38,9 +40,15 @@ class ArtistFragment : BaseFragment(), View.OnClickListener {
         arguments?.let {
             artistLookupViewModel = getViewModel(ArtistLookupViewModel::class.java)
             observeArtistLookupViewModel(artistLookupViewModel)
-            artistLookupViewModel.lookup(ArtistFragmentArgs.fromBundle(it).mbid)
 
-            swipeRefreshLayout.setOnRefreshListener { artistLookupViewModel.lookup() }
+            artistLookupViewModel.lookup(ArtistFragmentArgs.fromBundle(it).mbid, OAuthPreferences.isNotEmpty())
+
+            swipeRefreshLayout.setOnRefreshListener {
+                artistLookupViewModel.refresh(
+                    ArtistFragmentArgs.fromBundle(it).mbid,
+                    OAuthPreferences.isNotEmpty()
+                )
+            }
             initMenu()
         }
     }
@@ -124,10 +132,8 @@ class ArtistFragment : BaseFragment(), View.OnClickListener {
                     }
                 }
                 R.id.tagsItem -> {
-                    /*
-                    getActivityViewModel(ArtistEvent::class.java).artist.setValue(artist)
+                    getActivityViewModel(ArtistEvent::class.java).artist.value = artist
                     navigate(R.id.action_artistFragment_to_artistTagsPagerFragment)
-                    */
                 }
                 R.id.linksItem -> {
                     val urlRels = artist.urlRelations
