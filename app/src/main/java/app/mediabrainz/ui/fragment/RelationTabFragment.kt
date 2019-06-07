@@ -16,7 +16,7 @@ import app.mediabrainz.ui.adapter.ArtistRelationsAdapter
 class RelationTabFragment : BaseFragment() {
 
     companion object {
-        private const val REL_TAB = "RelationTabFragment.REL_TAB"
+        private val REL_TAB = "RelationTabFragment.REL_TAB"
 
         fun newInstance(relTab: Int): RelationTabFragment {
             val args = Bundle()

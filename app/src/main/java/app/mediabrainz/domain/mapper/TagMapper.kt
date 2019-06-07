@@ -9,7 +9,7 @@ class TagMapper {
 
     fun mapTo(response: TagResponse): Tag =
         with(response) {
-            Tag(name)
+            Tag(name, count ?: 0)
         }
 
     fun filterTagged(tagged: Tagged) {

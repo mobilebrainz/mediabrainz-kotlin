@@ -15,9 +15,9 @@ import app.mediabrainz.ui.extension.findViewById
 class LinkAdapter(urlRels: List<Relation<Url>>) :
     BaseRecyclerViewAdapter<Relation<Url>>(urlRels) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LinkViewHolder {
-        return LinkViewHolder.create(parent)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        LinkViewHolder.create(parent)
+
 
     class LinkViewHolder(v: View) : BaseRecyclerViewAdapter.BaseViewHolder<Relation<Url>>(v) {
 

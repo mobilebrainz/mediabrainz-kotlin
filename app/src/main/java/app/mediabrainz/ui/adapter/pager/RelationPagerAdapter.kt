@@ -20,8 +20,7 @@ class RelationPagerAdapter(
         }
     }
 
-    override fun getItem(position: Int): Fragment {
-        return RelationTabFragment.newInstance(relationTabs[position].ordinal)
-    }
+    override fun getItem(position: Int) =
+        RelationTabFragment.newInstance(relationTabs[position].ordinal)
 
 }

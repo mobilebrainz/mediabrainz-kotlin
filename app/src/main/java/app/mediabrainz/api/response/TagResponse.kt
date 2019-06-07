@@ -17,6 +17,6 @@ class TagSearchResponse : BaseItemsResponse<TagResponse>(), SearchResponseInterf
     override var items: List<TagResponse> = ArrayList()
 }
 
-enum class TagType {
+enum class TagTypeResponse {
     GENRE, TAG
 }
