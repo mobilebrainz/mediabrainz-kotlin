@@ -48,4 +48,20 @@ class ArtistLookupRepository : BaseLookupRepository<Artist>() {
         }
     }
 
+    fun lookupTags(mutableLiveData: MutableLiveData<Resource<Artist>>, mbid: String) {
+        if (mbid.isNotBlank()) {
+            call(
+                mutableLiveData,
+                {
+                    ApiRequestProvider.createArtistLookupRequest(mbid)
+                        .addIncs(GENRES, TAGS, USER_GENRES, USER_TAGS)
+                        .addAccessToken(OAuthManager.accessToken?.token ?: "")
+                        .lookup()
+                },
+                { ArtistMapper().mapTo(this) },
+                true
+            )
+        }
+    }
+
 }

@@ -5,6 +5,8 @@ import app.mediabrainz.api.coverartrequest.CoverArtRequest
 import app.mediabrainz.api.lookuprequest.*
 import app.mediabrainz.api.oauth.OAuthRequest
 import app.mediabrainz.api.searchrequest.*
+import app.mediabrainz.api.xml.XMLRequest
+import app.mediabrainz.api.xml.entity.UserTagXML
 
 
 object ApiRequestProvider {

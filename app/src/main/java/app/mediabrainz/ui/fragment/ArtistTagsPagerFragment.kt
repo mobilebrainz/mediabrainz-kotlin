@@ -10,14 +10,19 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager.widget.ViewPager
+import app.mediabrainz.api.xml.entity.TagVoteType
 import app.mediabrainz.domain.model.Artist
 import app.mediabrainz.domain.model.TagType
+import app.mediabrainz.domain.repository.Resource
+import app.mediabrainz.domain.repository.Resource.Status.*
 import app.mediabrainz.ui.R
 import app.mediabrainz.ui.adapter.pager.EditTagsPagerAdapter
+import app.mediabrainz.ui.preference.GlobalPreferences
 import app.mediabrainz.ui.preference.OAuthPreferences
 import app.mediabrainz.ui.viewmodel.activity.TaggedVM
 import app.mediabrainz.ui.viewmodel.event.ArtistEvent
 import app.mediabrainz.ui.viewmodel.fragment.ArtistTagsPagerFragmentVM
+import app.mediabrainz.ui.viewmodel.lookupRepository.ArtistLookupViewModel
 import com.google.android.material.tabs.TabLayout
 
 
@@ -30,6 +35,7 @@ class ArtistTagsPagerFragment : BaseFragment() {
     private lateinit var artist: Artist
     private lateinit var artistTagsPagerFragmentVM: ArtistTagsPagerFragmentVM
     private lateinit var taggedVM: TaggedVM
+    private lateinit var artistLookupViewModel: ArtistLookupViewModel
 
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var loginWarningView: TextView
@@ -42,7 +48,7 @@ class ArtistTagsPagerFragment : BaseFragment() {
         val view = inflate(R.layout.edit_tags_pager_fragment, container)
 
         tab = if (savedInstanceState != null) savedInstanceState.getInt(TAGS_TAB, defaultTab)
-            else defaultTab
+        else defaultTab
 
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
         loginWarningView = view.findViewById(R.id.loginWarningView)
@@ -63,15 +69,9 @@ class ArtistTagsPagerFragment : BaseFragment() {
             artistTagsPagerFragmentVM = getViewModel(ArtistTagsPagerFragmentVM::class.java)
             taggedVM = getActivityViewModel(TaggedVM::class.java)
 
-            getActivityViewModel(ArtistEvent::class.java).artist.observe(this,
-                Observer { artistTagsPagerFragmentVM.artistld.value = it })
+            artistLookupViewModel = getViewModel(ArtistLookupViewModel::class.java)
 
-            artistTagsPagerFragmentVM.artistld.observe(this, Observer {
-                artist = it
-                setSubtitle(it.name)
-                taggedVM.tagged = it
-                configTags()
-            })
+            observe()
         }
 
     }
@@ -100,5 +100,80 @@ class ArtistTagsPagerFragment : BaseFragment() {
         pagerAdapter.setupTabViews(tabsView)
         pagerView.currentItem = tab
     }
+
+    private fun postArtistTag(tag: String, voteType: TagVoteType) {
+        artistTagsPagerFragmentVM.postArtistTag(tag, voteType)
+    }
+
+    fun observe() {
+        getActivityViewModel(ArtistEvent::class.java).artist.observe(this,
+            Observer { artistTagsPagerFragmentVM.artistld.value = it })
+
+        artistTagsPagerFragmentVM.artistld.observe(this, Observer {
+            artist = it
+            setSubtitle(it.name)
+            taggedVM.tagged = it
+            configTags()
+        })
+
+        taggedVM.postTag.observe(this, Observer { it?.apply { postArtistTag(tag, voteType) } })
+
+        artistTagsPagerFragmentVM.postTag.observe(this, Observer {
+            it?.apply {
+                when (status) {
+                    LOADING -> swipeRefreshLayout.isRefreshing = true
+                    SUCCESS -> {
+                        if (data != null && data) {
+                            artistLookupViewModel.lookupTags(artist.mbid)
+                            //artistLookupViewModel.lookupTags(artist.mbid)
+                            if (GlobalPreferences.isPropagateArtistTags()) {
+                                //artistTagsPagerFragmentVM.propagateTagToAlbums(tag, voteType)
+                            }
+                        } else {
+                            swipeRefreshLayout.isRefreshing = false
+                            showInfoSnackbar(R.string.error_post_tag)
+                        }
+                        status = INVALID
+                    }
+                    ERROR -> {
+                        swipeRefreshLayout.isRefreshing = false
+                        showInfoSnackbar(R.string.connection_error)
+                    }
+                }
+            }
+        })
+
+        artistLookupViewModel.artistTags.observe(this, Observer {
+            it?.apply {
+                when (status) {
+                    SUCCESS -> {
+                        data?.apply {
+                            artist.tags = tags
+                            artist.genres = genres
+                            artist.userTags = userTags
+                            artist.userGenres = userGenres
+
+                            tab = pagerView.currentItem
+                            configTags()
+                        }
+                        swipeRefreshLayout.isRefreshing = false
+                        status = INVALID
+                    }
+                    ERROR -> {
+                        swipeRefreshLayout.isRefreshing = false
+                        showInfoSnackbar(R.string.connection_error)
+                    }
+                }
+            }
+        })
+
+        artistTagsPagerFragmentVM.propagateTag.observe(this, Observer {
+            it?.apply {
+
+            }
+        })
+    }
+
+
 
 }

@@ -7,6 +7,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 import java.util.concurrent.TimeUnit
 
 
@@ -45,4 +46,12 @@ object WebService {
             .addConverterFactory(MoshiConverterFactory.create())
             .client(httpClient).build()
             .create(retrofitClass)
+
+    fun <T> createXMLRetrofitService(retrofitClass: Class<T>, url: String) =
+        Retrofit.Builder().baseUrl(url)
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .addConverterFactory(SimpleXmlConverterFactory.create())
+            .client(httpClient).build()
+            .create(retrofitClass)
+
 }

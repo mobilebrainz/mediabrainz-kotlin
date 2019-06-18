@@ -8,12 +8,14 @@ import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import app.mediabrainz.api.xml.entity.TagVoteType.*
 import app.mediabrainz.domain.model.Tag
 import app.mediabrainz.domain.model.TagType
 import app.mediabrainz.ui.R
 import app.mediabrainz.ui.adapter.TagAdapter
 import app.mediabrainz.ui.preference.OAuthPreferences
 import app.mediabrainz.ui.viewmodel.activity.TaggedVM
+import app.mediabrainz.ui.viewmodel.activity.TaggedVM.*
 import java.util.*
 
 
@@ -64,8 +66,6 @@ class EditTagsTabFragment : BaseFragment() {
                     tags.addAll(it.genres)
                     userTags.addAll(it.userGenres)
                 }
-                else -> {
-                }
             }
 
             if (tags.isNotEmpty()) {
@@ -91,19 +91,19 @@ class EditTagsTabFragment : BaseFragment() {
                                 val voteUpButton = findViewById<ImageView>(R.id.voteUpButton)
                                 voteUpButton.setOnClickListener {
                                     alertDialog.dismiss()
-                                    //tagsVM.postTag.setValue(TagsVM.TagVote(tag, UserTagXML.VoteType.UPVOTE))
+                                    taggedVM.postTag.setValue(TagVote(tag, UPVOTE))
                                 }
 
                                 val voteWithdrawButton = findViewById<ImageView>(R.id.voteWithdrawButton)
                                 voteWithdrawButton.setOnClickListener {
                                     alertDialog.dismiss()
-                                    //tagsVM.postTag.setValue(TagsVM.TagVote(tag, UserTagXML.VoteType.WITHDRAW))
+                                    taggedVM.postTag.setValue(TagVote(tag, WITHDRAW))
                                 }
 
                                 val voteDownButton = findViewById<ImageView>(R.id.voteDownButton)
                                 voteDownButton.setOnClickListener {
                                     alertDialog.dismiss()
-                                    //tagsVM.postTag.setValue(TagsVM.TagVote(tag, UserTagXML.VoteType.DOWNVOTE))
+                                    taggedVM.postTag.setValue(TagVote(tag, DOWNVOTE))
                                 }
                             }
                         } else {
